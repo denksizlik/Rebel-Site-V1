@@ -37,10 +37,10 @@ app.get('/api/highlights', (req, res) => { res.json(highlights); });
 app.get('/api/leaderboard', (req, res) => { res.json(leaderboard); });
 app.get('/api/turf', (req, res) => { res.json(turfData); });
 
-// Highlight Ekleme (Rio Şifre Korumalı)
+// Highlight Ekleme (Rio Şifre: zwoxcan99)
 app.post('/api/highlights', (req, res) => {
     const { username, password, title, url } = req.body;
-    if (username !== 'Rio' || password !== 'zwoxzwoxzwox01') {
+    if (username !== 'Rio' || password !== 'zwoxcan99') {
         return res.status(401).json({ error: "Yetkisiz erişim! Yanlış şifre." });
     }
     if (!title || !url) return res.status(400).json({ error: "Alanlar boş bırakılamaz!" });
@@ -60,10 +60,21 @@ app.post('/api/highlights', (req, res) => {
     res.json({ success: true, highlight: newHighlight });
 });
 
-// Leaderboard 25'li Liste Güncelleme (Rio Şifre Korumalı)
+// Highlight Silme API (Rio Şifre: zwoxcan99)
+app.post('/api/highlights/delete', (req, res) => {
+    const { username, password, id } = req.body;
+    if (username !== 'Rio' || password !== 'zwoxcan99') {
+        return res.status(401).json({ error: "Yetkisiz erişim! Yanlış şifre." });
+    }
+
+    highlights = highlights.filter(item => item.id !== id);
+    res.json({ success: true, highlights });
+});
+
+// Leaderboard Güncelleme (Rio Şifre: zwoxcan99)
 app.post('/api/leaderboard', (req, res) => {
     const { username, password, newLeaderboard } = req.body;
-    if (username !== 'Rio' || password !== 'zwoxzwoxzwox01') {
+    if (username !== 'Rio' || password !== 'zwoxcan99') {
         return res.status(401).json({ error: "Yetkisiz erişim! Yanlış şifre." });
     }
     if (!Array.isArray(newLeaderboard)) {
@@ -74,10 +85,10 @@ app.post('/api/leaderboard', (req, res) => {
     res.json({ success: true, leaderboard });
 });
 
-// Turf Güncelleme
+// Turf Güncelleme (Rio Şifre: zwoxcan99)
 app.post('/api/turf', (req, res) => {
     const { username, password, gangName, leader, territory } = req.body;
-    if (username !== 'admin' || password !== 'zwoxcan99') {
+    if (username !== 'Rio' || password !== 'zwoxcan99') {
         return res.status(401).json({ error: "Yetkisiz erişim! Yanlış şifre." });
     }
     if (gangName) turfData.gangName = gangName;
