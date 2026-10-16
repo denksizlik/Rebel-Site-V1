@@ -4,400 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rebel PvP • Ultimate FiveM PvP Experience</title>
-    <!-- FontAwesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        body { background: #08080c; color: #fff; overflow-x: hidden; background: linear-gradient(rgba(8, 8, 12, 0.88), rgba(8, 8, 12, 0.95)), url('pictures/serverbanner.png') no-repeat center center fixed; background-size: cover; min-height: 100vh; }
 
-        body {
-            background: #08080c;
-            color: #fff;
-            overflow-x: hidden;
-            background: linear-gradient(rgba(8, 8, 12, 0.88), rgba(8, 8, 12, 0.95)), url('pictures/serverbanner.png') no-repeat center center fixed;
-            background-size: cover;
-            min-height: 100vh;
-        }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 8%; background: rgba(12, 12, 18, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 69, 0, 0.25); position: fixed; width: 100%; top: 0; z-index: 1000; }
+        .logo-container { display: flex; align-items: center; gap: 15px; }
+        .logo-container img { width: 48px; height: 48px; border-radius: 10px; object-fit: cover; border: 2px solid #ff4500; box-shadow: 0 0 15px rgba(255, 69, 0, 0.6); }
+        .logo-text { font-size: 1.5rem; font-weight: 900; letter-spacing: 1px; }
+        .logo-text span { color: #ff4500; text-shadow: 0 0 12px rgba(255, 69, 0, 0.8); }
+        nav ul { display: flex; list-style: none; gap: 20px; align-items: center; }
+        nav ul li a { color: #c5c6c7; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: 0.3s; text-transform: uppercase; cursor: pointer; }
+        nav ul li a:hover { color: #ff4500; text-shadow: 0 0 10px rgba(255, 69, 0, 0.8); }
+        .nav-btn { background: linear-gradient(45deg, #ff4500, #ff8c00); color: #fff !important; padding: 8px 22px; border-radius: 6px; box-shadow: 0 0 15px rgba(255, 69, 0, 0.5); }
 
-        /* HEADER & NAVIGATION */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 8%;
-            background: rgba(12, 12, 18, 0.9);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 69, 0, 0.25);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
+        .hero { display: flex; justify-content: space-between; align-items: center; padding: 160px 8% 80px 8%; gap: 50px; min-height: 90vh; }
+        .hero-left { max-width: 620px; }
+        .badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 69, 0, 0.15); border: 1px solid #ff4500; color: #ff4500; padding: 6px 18px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; margin-bottom: 25px; text-transform: uppercase; }
+        .hero-left h1 { font-size: 3.8rem; font-weight: 900; line-height: 1.05; margin-bottom: 20px; text-transform: uppercase; }
+        .hero-left h1 span { color: #ff4500; text-shadow: 0 0 30px rgba(255, 69, 0, 0.8); }
+        .hero-left p { color: #b0b3b8; font-size: 1.1rem; line-height: 1.7; margin-bottom: 35px; }
+        .action-buttons { display: flex; gap: 20px; flex-wrap: wrap; }
+        .btn { display: inline-flex; align-items: center; gap: 12px; padding: 16px 32px; border-radius: 8px; font-weight: 800; text-decoration: none; transition: all 0.3s ease; cursor: pointer; font-size: 1rem; text-transform: uppercase; }
+        .btn-connect { background: linear-gradient(45deg, #d32f2f, #ff4500); color: #fff; box-shadow: 0 0 25px rgba(255, 69, 0, 0.6); }
+        .btn-discord { background: #5865F2; color: #fff; box-shadow: 0 0 25px rgba(88, 101, 242, 0.4); }
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+        .hero-right { width: 400px; background: rgba(18, 18, 26, 0.85); border: 1px solid rgba(255, 69, 0, 0.3); border-radius: 18px; padding: 30px; backdrop-filter: blur(15px); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8); }
+        .team-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 14px; text-transform: uppercase; }
+        .team-list { display: flex; flex-direction: column; gap: 18px; }
+        .team-card { display: flex; align-items: center; gap: 15px; background: rgba(255, 255, 255, 0.04); padding: 12px 16px; border-radius: 12px; border-left: 4px solid #ff4500; }
+        .team-card img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid #ff4500; }
+        .team-info h4 { font-size: 1.05rem; font-weight: 700; color: #fff; }
+        .team-info p { font-size: 0.8rem; color: #ff8c00; font-weight: 600; }
+        .discord-tag { font-size: 0.75rem; color: #8a8d93; display: flex; align-items: center; gap: 5px; margin-top: 3px; }
 
-        .logo-container img {
-            width: 48px;
-            height: 48px;
-            border-radius: 10px;
-            object-fit: cover;
-            border: 2px solid #ff4500;
-            box-shadow: 0 0 15px rgba(255, 69, 0, 0.6);
-        }
+        .content-section { padding: 60px 8%; }
+        .section-title { text-align: center; font-size: 2.2rem; font-weight: 800; margin-bottom: 40px; text-transform: uppercase; }
+        .section-title span { color: #ff4500; }
 
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: 900;
-            letter-spacing: 1px;
-        }
+        /* LEADERBOARD & HEADER */
+        .leaderboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
+        .leaderboard-container { max-width: 900px; margin: 0 auto; background: rgba(18, 18, 26, 0.85); border: 1px solid rgba(255, 69, 0, 0.3); border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.7); }
+        .leaderboard-table { width: 100%; border-collapse: collapse; }
+        .leaderboard-table th, .leaderboard-table td { padding: 16px 20px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.95rem; }
+        .leaderboard-table th { background: rgba(255, 69, 0, 0.2); color: #ff4500; font-weight: 800; text-transform: uppercase; font-size: 0.85rem; }
 
-        .logo-text span {
-            color: #ff4500;
-            text-shadow: 0 0 12px rgba(255, 69, 0, 0.8);
-        }
+        /* TURF %100 DOMINANCE BOX */
+        .turf-dominance-box { margin-top: 30px; background: rgba(20, 20, 30, 0.9); border: 2px solid #10b981; border-radius: 16px; padding: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; box-shadow: 0 0 25px rgba(16, 185, 129, 0.3); }
+        .turf-info h3 { color: #10b981; font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        .turf-info p { color: #ccc; font-size: 0.95rem; margin: 4px 0; }
+        .turf-badge-100 { background: #10b981; color: #000; font-weight: 900; padding: 6px 14px; border-radius: 20px; font-size: 0.9rem; display: inline-block; margin-bottom: 10px; }
+        .turf-img { width: 220px; height: 120px; border-radius: 10px; object-fit: cover; border: 2px solid #10b981; }
 
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 25px;
-        }
+        /* HIGHLIGHTS */
+        .highlights-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
+        .highlights-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 25px; }
+        .highlight-card { background: rgba(20, 20, 30, 0.85); border: 1px solid rgba(255,69,0,0.3); border-radius: 12px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.6); }
+        .highlight-card iframe { width: 100%; height: 200px; border: none; }
+        .highlight-info { padding: 18px; }
+        .highlight-title { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+        .highlight-meta { font-size: 0.8rem; color: #aaa; }
 
-        nav ul li a {
-            color: #c5c6c7;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+        /* ADMIN BUTTONS & MODALS */
+        .btn-admin-action { background: linear-gradient(45deg, #10b981, #059669); color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
+        .btn-lb-action { background: linear-gradient(45deg, #f59e0b, #d97706); color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; box-shadow: 0 0 15px rgba(245, 158, 11, 0.4); }
+        .btn-turf-action { background: linear-gradient(45deg, #3b82f6, #1d4ed8); color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.85rem; margin-top: 10px; }
+        
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; z-index: 2000; }
+        .modal-content { background: #14141f; padding: 30px; border-radius: 14px; width: 550px; max-width: 90%; max-height: 85vh; overflow-y: auto; border: 1px solid #ff4500; box-shadow: 0 15px 35px rgba(0,0,0,0.9); }
+        .modal-content h3 { margin-bottom: 20px; color: #ff4500; display: flex; align-items: center; gap: 10px; }
+        .modal-content label { font-size: 0.85rem; color: #bbb; display: block; margin-bottom: 5px; }
+        .modal-content input { width: 100%; padding: 12px; margin-bottom: 15px; background: rgba(10,10,15,0.9); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff; font-size: 0.95rem; }
+        .modal-buttons { display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px; }
+        .hidden { display: none !important; }
 
-        nav ul li a:hover {
-            color: #ff4500;
-            text-shadow: 0 0 10px rgba(255, 69, 0, 0.8);
-        }
+        .lb-row-inputs { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.08); }
+        .lb-row-inputs input { margin-bottom: 0; }
 
-        .nav-btn {
-            background: linear-gradient(45deg, #ff4500, #ff8c00);
-            color: #fff !important;
-            padding: 8px 22px;
-            border-radius: 6px;
-            box-shadow: 0 0 15px rgba(255, 69, 0, 0.5);
-        }
-
-        .nav-btn:hover {
-            box-shadow: 0 0 25px rgba(255, 69, 0, 0.9);
-            transform: scale(1.05);
-        }
-
-        /* HERO SECTION */
-        .hero {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 160px 8% 80px 8%;
-            gap: 50px;
-            min-height: 90vh;
-        }
-
-        .hero-left {
-            max-width: 620px;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 69, 0, 0.15);
-            border: 1px solid #ff4500;
-            color: #ff4500;
-            padding: 6px 18px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 0 12px rgba(255, 69, 0, 0.3);
-        }
-
-        .hero-left h1 {
-            font-size: 3.8rem;
-            font-weight: 900;
-            line-height: 1.05;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        .hero-left h1 span {
-            color: #ff4500;
-            text-shadow: 0 0 30px rgba(255, 69, 0, 0.8);
-        }
-
-        .hero-left p {
-            color: #b0b3b8;
-            font-size: 1.1rem;
-            line-height: 1.7;
-            margin-bottom: 35px;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            padding: 16px 32px;
-            border-radius: 8px;
-            font-weight: 800;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            font-size: 1rem;
-            text-transform: uppercase;
-        }
-
-        .btn-connect {
-            background: linear-gradient(45deg, #d32f2f, #ff4500);
-            color: #fff;
-            box-shadow: 0 0 25px rgba(255, 69, 0, 0.6);
-        }
-
-        .btn-connect:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 0 40px rgba(255, 69, 0, 0.9);
-        }
-
-        .btn-discord {
-            background: #5865F2;
-            color: #fff;
-            box-shadow: 0 0 25px rgba(88, 101, 242, 0.4);
-        }
-
-        .btn-discord:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 0 40px rgba(88, 101, 242, 0.8);
-            background: #4752C4;
-        }
-
-        /* RIGHT TEAM PANEL */
-        .hero-right {
-            width: 400px;
-            background: rgba(18, 18, 26, 0.85);
-            border: 1px solid rgba(255, 69, 0, 0.3);
-            border-radius: 18px;
-            padding: 30px;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
-        }
-
-        .team-title {
-            font-size: 1.3rem;
-            font-weight: 800;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 14px;
-            text-transform: uppercase;
-        }
-
-        .team-title i {
-            color: #ff4500;
-        }
-
-        .team-list {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
-        .team-card {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: rgba(255, 255, 255, 0.04);
-            padding: 12px 16px;
-            border-radius: 12px;
-            border-left: 4px solid #ff4500;
-            transition: 0.3s;
-        }
-
-        .team-card:hover {
-            background: rgba(255, 69, 0, 0.15);
-            transform: translateX(6px);
-        }
-
-        .team-card img {
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #ff4500;
-            box-shadow: 0 0 10px rgba(255, 69, 0, 0.4);
-        }
-
-        .team-info h4 {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .team-info p {
-            font-size: 0.8rem;
-            color: #ff8c00;
-            font-weight: 600;
-        }
-
-        .discord-tag {
-            font-size: 0.75rem;
-            color: #8a8d93;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin-top: 3px;
-        }
-
-        /* FEATURES SECTION */
-        .features-section {
-            padding: 80px 8%;
-            background: rgba(10, 10, 15, 0.9);
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.2rem;
-            font-weight: 800;
-            margin-bottom: 50px;
-            text-transform: uppercase;
-        }
-
-        .section-title span {
-            color: #ff4500;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .feature-box {
-            background: rgba(20, 20, 30, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 30px;
-            border-radius: 14px;
-            transition: 0.3s;
-            text-align: center;
-        }
-
-        .feature-box:hover {
-            border-color: #ff4500;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(255, 69, 0, 0.2);
-        }
-
-        .feature-box i {
-            font-size: 2.5rem;
-            color: #ff4500;
-            margin-bottom: 20px;
-        }
-
-        .feature-box h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .feature-box p {
-            color: #909399;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
+        /* FEATURES & RULES */
+        .features-section { padding: 60px 8%; background: rgba(10, 10, 15, 0.7); }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .feature-box { background: rgba(20, 20, 30, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 14px; text-align: center; }
+        .feature-box i { font-size: 2.5rem; color: #ff4500; margin-bottom: 20px; }
+        .feature-box h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; }
+        .feature-box p { color: #909399; font-size: 0.9rem; line-height: 1.6; }
 
         /* RULES SECTION */
-        .rules-section {
-            padding: 80px 8%;
-        }
+        .rules-section { padding: 60px 8%; }
+        .rules-category { margin-bottom: 40px; }
+        .rules-category-title { font-size: 1.4rem; font-weight: 800; color: #ff4500; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; border-bottom: 2px solid rgba(255, 69, 0, 0.3); padding-bottom: 8px; text-transform: uppercase; }
+        .rules-list { display: flex; flex-direction: column; gap: 12px; }
+        .rule-item { background: rgba(18, 18, 26, 0.7); border-left: 4px solid #ff4500; padding: 16px 20px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .rule-text { color: #d1d5db; font-size: 0.95rem; line-height: 1.5; flex: 1; }
+        .rule-punishment { background: rgba(255, 69, 0, 0.15); border: 1px solid rgba(255, 69, 0, 0.4); color: #ff8c00; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; white-space: nowrap; }
 
-        .rules-category {
-            margin-bottom: 40px;
-        }
-
-        .rules-category-title {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: #ff4500;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 2px solid rgba(255, 69, 0, 0.3);
-            padding-bottom: 8px;
-            text-transform: uppercase;
-        }
-
-        .rules-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .rule-item {
-            background: rgba(18, 18, 26, 0.7);
-            border-left: 4px solid #ff4500;
-            padding: 16px 20px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .rule-text {
-            color: #d1d5db;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            flex: 1;
-        }
-
-        .rule-punishment {
-            background: rgba(255, 69, 0, 0.15);
-            border: 1px solid rgba(255, 69, 0, 0.4);
-            color: #ff8c00;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            white-space: nowrap;
-        }
-
-        /* FOOTER */
-        footer {
-            text-align: center;
-            padding: 25px;
-            background: #050508;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            color: #777;
-            font-size: 0.85rem;
-        }
+        footer { text-align: center; padding: 25px; background: #050508; border-top: 1px solid rgba(255, 255, 255, 0.05); color: #777; font-size: 0.85rem; }
 
         @media (max-width: 900px) {
             header { padding: 15px 5%; }
@@ -406,6 +110,7 @@
             .hero-right { width: 100%; }
             .hero-left h1 { font-size: 2.8rem; }
             .action-buttons { justify-content: center; }
+            .turf-dominance-box { flex-direction: column; text-align: center; align-items: center; }
             .rule-item { flex-direction: column; align-items: flex-start; }
         }
     </style>
@@ -422,10 +127,12 @@
             <ul>
                 <li><a href="#">Home</a></li>
                 <li><a href="#features">Features</a></li>
+                <li><a href="#leaderboard">Leaderboard</a></li>
+                <li><a href="#highlights">Highlights</a></li>
                 <li><a href="#rules">Rules</a></li>
                 <li><a href="#staff">Staff</a></li>
                 <li><a href="https://discord.gg/BTZnr2FhHA" target="_blank">Discord</a></li>
-                <li><a href="fivem://connect/mkq2yc4v.free.pwrp.cc:19716" class="nav-btn">Connect Server</a></li>
+                <li><a href="fivem://connect/mkq2yc4v.free.pwrp.cc:19716" class="nav-btn">Connect</a></li>
             </ul>
         </nav>
     </header>
@@ -454,7 +161,6 @@
             </div>
             
             <div class="team-list">
-                <!-- SAMET -->
                 <div class="team-card">
                     <img src="pictures/samet.png" alt="Samet Profile">
                     <div class="team-info">
@@ -463,8 +169,6 @@
                         <div class="discord-tag"><i class="fa-brands fa-discord"></i> smeash93</div>
                     </div>
                 </div>
-
-                <!-- LEE -->
                 <div class="team-card">
                     <img src="pictures/lee.png" alt="Lee Profile">
                     <div class="team-info">
@@ -473,8 +177,6 @@
                         <div class="discord-tag"><i class="fa-brands fa-discord"></i> 09cu</div>
                     </div>
                 </div>
-
-                <!-- RIO -->
                 <div class="team-card">
                     <img src="pictures/rio.png" alt="Rio Profile">
                     <div class="team-info">
@@ -487,6 +189,60 @@
         </div>
     </section>
 
+    <!-- LEADERBOARD & TURF SECTION -->
+    <section class="content-section" id="leaderboard">
+        <div class="leaderboard-header">
+            <h2 class="section-title" style="margin-bottom:0;">Top Killers & <span>Turf Dominance</span></h2>
+            <button class="btn-lb-action" onclick="openLeaderboardModal()">
+                <i class="fa-solid fa-trophy"></i> Rio: Edit 25 Leaderboard
+            </button>
+        </div>
+        
+        <div class="leaderboard-container">
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player Name</th>
+                        <th>Kills</th>
+                        <th>Deaths</th>
+                        <th>K/D Ratio</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-body">
+                    <!-- Dinamik doldurulacak -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- TURF %100 DOMINANCE BOX -->
+        <div class="turf-dominance-box">
+            <div class="turf-info">
+                <span class="turf-badge-100"><i class="fa-solid fa-crown"></i> TURF DOMINANCE: 100%</span>
+                <h3 id="turf-gang-title"><i class="fa-solid fa-flag"></i> Families (Rebel FamQ)</h3>
+                <p><strong>Dominating Leader:</strong> <span id="turf-leader-name" style="color:#ff8c00;">Rio Rebel</span></p>
+                <p><strong>Territory Controlled:</strong> <span id="turf-territory" style="color:#fff;">Los Santos Entire Turf / South Central</span></p>
+                <button class="btn-turf-action" onclick="openTurfModal()"><i class="fa-solid fa-pen-to-square"></i> Rio: Edit Turf Status</button>
+            </div>
+            <div>
+                <img id="turf-display-img" src="pictures/serverbanner.png" alt="Turf Dominance" class="turf-img">
+            </div>
+        </div>
+    </section>
+
+    <!-- HIGHLIGHTS & MEDIA SECTION -->
+    <section class="content-section" id="highlights">
+        <div class="highlights-header">
+            <h2 class="section-title" style="margin-bottom:0;">Media & <span>Highlights</span></h2>
+            <button class="btn-admin-action" onclick="openUploadModal()">
+                <i class="fa-solid fa-upload"></i> Rio: Upload Highlight
+            </button>
+        </div>
+        <div id="highlights-grid" class="highlights-grid">
+            <!-- Dinamik yüklenecek -->
+        </div>
+    </section>
+
     <!-- FEATURES SECTION -->
     <section class="features-section" id="features">
         <h2 class="section-title">Why Choose <span>Rebel PvP</span>?</h2>
@@ -494,22 +250,22 @@
             <div class="feature-box">
                 <i class="fa-solid fa-bolt"></i>
                 <h3>Ultra FPS Optimization</h3>
-                <p>Enjoy buttery smooth performance without stuttering or FPS drops, thanks to our custom-built maps and stripped-down assets.</p>
+                <p>Enjoy buttery smooth performance without stuttering or FPS drops with custom-built maps.</p>
             </div>
             <div class="feature-box">
                 <i class="fa-solid fa-crosshair"></i>
                 <h3>Advanced Gunplay</h3>
-                <p>Fine-tuned weapon recoil, custom hit-marker sound effects, and competitive weapon balance designed for pure skill combat.</p>
+                <p>Fine-tuned weapon recoil, custom hit-marker sound effects, and competitive weapon balance.</p>
             </div>
             <div class="feature-box">
                 <i class="fa-solid fa-shield-cat"></i>
                 <h3>Kernel Anti-Cheat</h3>
-                <p>Zero tolerance for cheaters. Our strict anti-cheat software actively monitors and bans unauthorized scripts, macros, and hacks.</p>
+                <p>Zero tolerance for cheaters. Active monitoring against unauthorized scripts and macros.</p>
             </div>
             <div class="feature-box">
                 <i class="fa-solid fa-trophy"></i>
                 <h3>Tournaments & Turf Wars</h3>
-                <p>Compete in weekly 1v1 ladder matches, squad tournaments, and territorial gang wars with exclusive rewards.</p>
+                <p>Compete in weekly 1v1 ladder matches, squad tournaments, and territorial gang wars.</p>
             </div>
         </div>
     </section>
@@ -617,13 +373,221 @@
                 </div>
             </div>
         </div>
-
     </section>
 
-    <!-- FOOTER -->
+    <!-- RIO LEADERBOARD EDIT MODAL (25 KİŞİLİK LİSTE) -->
+    <div id="lb-modal" class="modal hidden">
+        <div class="modal-content" style="width: 700px;">
+            <h3><i class="fa-solid fa-lock"></i> Rio Security Access (25 Leaderboard Editor)</h3>
+            <label>Security Password:</label>
+            <input type="password" id="lb-pass" placeholder="Enter password..." style="margin-bottom: 20px;">
+            
+            <p style="color:#ff4500; font-weight:700; margin-bottom:10px; font-size:0.9rem;">Enter up to 25 Players (Name, Kills, Deaths):</p>
+            <div id="lb-inputs-container">
+                <!-- Javascript ile 25 satır üretilecek -->
+            </div>
+
+            <div class="modal-buttons" style="margin-top: 20px;">
+                <button class="btn" style="background:#333; padding:10px 20px; font-size:0.85rem;" onclick="closeLeaderboardModal()">Cancel</button>
+                <button class="btn btn-connect" style="padding:10px 20px; font-size:0.85rem;" onclick="submitLeaderboardUpdate()">Save Leaderboard</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIO HIGHLIGHT UPLOAD MODAL -->
+    <div id="upload-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3><i class="fa-solid fa-lock"></i> Rio Security Access (Highlights)</h3>
+            <label>Username:</label>
+            <input type="text" value="Rio" readonly style="color:#ff8c00; font-weight:bold;">
+            <label>Security Password:</label>
+            <input type="password" id="up-pass" placeholder="Enter password...">
+            <label>Clip Title:</label>
+            <input type="text" id="up-title" placeholder="e.g. 1v5 Clutch by Rio">
+            <label>YouTube / Video Link:</label>
+            <input type="text" id="up-url" placeholder="https://www.youtube.com/watch?v=...">
+            <div class="modal-buttons">
+                <button class="btn" style="background:#333; padding:10px 20px; font-size:0.85rem;" onclick="closeUploadModal()">Cancel</button>
+                <button class="btn btn-connect" style="padding:10px 20px; font-size:0.85rem;" onclick="submitHighlight()">Upload Clip</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIO TURF EDIT MODAL -->
+    <div id="turf-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3><i class="fa-solid fa-lock"></i> Rio Security Access (Turf Edit)</h3>
+            <label>Username:</label>
+            <input type="text" value="Rio" readonly style="color:#ff8c00; font-weight:bold;">
+            <label>Security Password:</label>
+            <input type="password" id="turf-pass" placeholder="Enter password...">
+            <label>Dominating Gang Name:</label>
+            <input type="text" id="turf-gang" placeholder="e.g. Families (Rebel FamQ)">
+            <label>Leader Name:</label>
+            <input type="text" id="turf-lead" placeholder="e.g. Rio Rebel">
+            <label>Territory Details:</label>
+            <input type="text" id="turf-terr" placeholder="e.g. Los Santos Entire Turf">
+            <div class="modal-buttons">
+                <button class="btn" style="background:#333; padding:10px 20px; font-size:0.85rem;" onclick="closeTurfModal()">Cancel</button>
+                <button class="btn btn-connect" style="padding:10px 20px; font-size:0.85rem;" onclick="submitTurfUpdate()">Update Turf</button>
+            </div>
+        </div>
+    </div>
+
     <footer>
         &copy; 2026 Rebel PvP FiveM Server. All Rights Reserved.
     </footer>
 
+    <script>
+        window.onload = function() {
+            loadLeaderboard();
+            loadHighlights();
+            loadTurfData();
+            buildLeaderboardInputs();
+        };
+
+        let cachedLeaderboard = [];
+
+        async function loadLeaderboard() {
+            let res = await fetch('/api/leaderboard');
+            cachedLeaderboard = await res.json();
+            let tbody = document.getElementById('leaderboard-body');
+            tbody.innerHTML = '';
+            cachedLeaderboard.forEach(p => {
+                let medal = p.rank === 1 ? '🥇' : p.rank === 2 ? '🥈' : p.rank === 3 ? '🥉' : `#${p.rank}`;
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${medal}</strong></td>
+                        <td><i class="fa-solid fa-user-shield" style="color:#ff4500; margin-right:8px;"></i> ${p.name}</td>
+                        <td>${p.kills}</td>
+                        <td>${p.deaths}</td>
+                        <td><span style="color:#10b981; font-weight:bold;">${p.kd}</span></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function buildLeaderboardInputs() {
+            let container = document.getElementById('lb-inputs-container');
+            container.innerHTML = '';
+            for (let i = 1; i <= 25; i++) {
+                let existing = cachedLeaderboard[i - 1] || { name: '', kills: '', deaths: '' };
+                container.innerHTML += `
+                    <div class="lb-row-inputs">
+                        <input type="text" id="lb-name-${i}" placeholder="${i}. Player Name" value="${existing.name}">
+                        <input type="number" id="lb-kills-${i}" placeholder="Kills" value="${existing.kills !== '' ? existing.kills : ''}">
+                        <input type="number" id="lb-deaths-${i}" placeholder="Deaths" value="${existing.deaths !== '' ? existing.deaths : ''}">
+                    </div>
+                `;
+            }
+        }
+
+        async function loadHighlights() {
+            let res = await fetch('/api/highlights');
+            let data = await res.json();
+            let grid = document.getElementById('highlights-grid');
+            grid.innerHTML = data.length === 0 ? '<p style="color:#777;">Henüz klip eklenmemiş.</p>' : '';
+            data.forEach(item => {
+                grid.innerHTML += `
+                    <div class="highlight-card">
+                        <iframe src="${item.url}" allowfullscreen></iframe>
+                        <div class="highlight-info">
+                            <div class="highlight-title">${item.title}</div>
+                            <div class="highlight-meta">Added by <span style="color:#ff8c00; font-weight:600;">${item.author}</span> • ${item.date}</div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        async function loadTurfData() {
+            let res = await fetch('/api/turf');
+            let turf = await res.json();
+            document.getElementById('turf-gang-title').innerHTML = `<i class="fa-solid fa-flag"></i> ${turf.gangName}`;
+            document.getElementById('turf-leader-name').innerText = turf.leader;
+            document.getElementById('turf-territory').innerText = turf.territory;
+            document.getElementById('turf-display-img').src = turf.image;
+        }
+
+        function openLeaderboardModal() { 
+            buildLeaderboardInputs(); 
+            document.getElementById('lb-modal').classList.remove('hidden'); 
+        }
+        function closeLeaderboardModal() { document.getElementById('lb-modal').classList.add('hidden'); document.getElementById('lb-pass').value = ''; }
+
+        function openUploadModal() { document.getElementById('upload-modal').classList.remove('hidden'); }
+        function closeUploadModal() { document.getElementById('upload-modal').classList.add('hidden'); document.getElementById('up-pass').value = ''; }
+        
+        function openTurfModal() { document.getElementById('turf-modal').classList.remove('hidden'); }
+        function closeTurfModal() { document.getElementById('turf-modal').classList.add('hidden'); document.getElementById('turf-pass').value = ''; }
+
+        async function submitLeaderboardUpdate() {
+            let password = document.getElementById('lb-pass').value;
+            let newLeaderboard = [];
+
+            for (let i = 1; i <= 25; i++) {
+                let name = document.getElementById(`lb-name-${i}`).value.trim();
+                let kills = parseInt(document.getElementById(`lb-kills-${i}`).value) || 0;
+                let deaths = parseInt(document.getElementById(`lb-deaths-${i}`).value) || 0;
+
+                if (name !== "") {
+                    let kd = deaths === 0 ? kills.toFixed(2) : (kills / deaths).toFixed(2);
+                    newLeaderboard.push({
+                        rank: newLeaderboard.length + 1,
+                        name: name,
+                        kills: kills,
+                        deaths: deaths,
+                        kd: parseFloat(kd)
+                    });
+                }
+            }
+
+            let res = await fetch('/api/leaderboard', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: 'Rio', password, newLeaderboard })
+            });
+            let result = await res.json();
+            if (res.status === 401) { alert(result.error); return; }
+            if (result.success) {
+                alert("Leaderboard başarıyla güncellendi!");
+                closeLeaderboardModal();
+                loadLeaderboard();
+            }
+        }
+
+        async function submitHighlight() {
+            let password = document.getElementById('up-pass').value;
+            let title = document.getElementById('up-title').value;
+            let url = document.getElementById('up-url').value;
+
+            let res = await fetch('/api/highlights', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: 'Rio', password, title, url })
+            });
+            let result = await res.json();
+            if (res.status === 401) { alert(result.error); return; }
+            if (result.success) { alert("Highlight eklendi!"); closeUploadModal(); loadHighlights(); }
+        }
+
+        async function submitTurfUpdate() {
+            let password = document.getElementById('turf-pass').value;
+            let gangName = document.getElementById('turf-gang').value;
+            let leader = document.getElementById('turf-lead').value;
+            let territory = document.getElementById('turf-terr').value;
+
+            let res = await fetch('/api/turf', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: 'Rio', password, gangName, leader, territory })
+            });
+            let result = await res.json();
+            if (res.status === 401) { alert("Yetkisiz şifre!"); return; }
+            alert("Turf bilgileri güncellendi!");
+            closeTurfModal();
+            loadTurfData();
+        }
+    </script>
 </body>
 </html>
