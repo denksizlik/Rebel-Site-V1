@@ -382,7 +382,7 @@
         <div class="modal-content" style="width: 700px;">
             <h3><i class="fa-solid fa-lock"></i> Rio Security Access (25 Leaderboard Editor)</h3>
             <label>Security Password:</label>
-            <input type="password" id="lb-pass" placeholder="Enter password (zwoxcan99)..." style="margin-bottom: 20px;">
+            <input type="password" id="lb-pass" placeholder="Enter password..." style="margin-bottom: 20px;">
             <p style="color:#ff4500; font-weight:700; margin-bottom:10px; font-size:0.9rem;">Enter up to 25 Players (Name, Kills, Deaths):</p>
             <div id="lb-inputs-container"></div>
             <div class="modal-buttons" style="margin-top: 20px;">
@@ -399,7 +399,7 @@
             <label>Username:</label>
             <input type="text" value="Rio" readonly style="color:#ff8c00; font-weight:bold;">
             <label>Security Password:</label>
-            <input type="password" id="up-pass" placeholder="Enter password (zwoxcan99)...">
+            <input type="password" id="up-pass" placeholder="Enter password...">
             <label>Clip Title:</label>
             <input type="text" id="up-title" placeholder="e.g. 1v5 Clutch by Rio">
             <label>YouTube / Video Link:</label>
@@ -418,7 +418,7 @@
             <label>Username:</label>
             <input type="text" value="Rio" readonly style="color:#ff8c00; font-weight:bold;">
             <label>Security Password:</label>
-            <input type="password" id="turf-pass" placeholder="Enter password (zwoxcan99)...">
+            <input type="password" id="turf-pass" placeholder="Enter password...">
             <label>Dominating Gang Name:</label>
             <input type="text" id="turf-gang" placeholder="e.g. Families (Rebel FamQ)">
             <label>Leader Name:</label>
@@ -503,7 +503,7 @@
         }
 
         async function deleteHighlight(id) {
-            let password = prompt("Enter Rio Security Password (zwoxcan99) to delete this clip:");
+            let password = prompt("Enter Rio Security Password to delete this clip:");
             if (!password) return;
 
             let res = await fetch('/api/highlights/delete', {
