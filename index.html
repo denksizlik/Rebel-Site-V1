@@ -62,11 +62,13 @@
         /* HIGHLIGHTS */
         .highlights-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
         .highlights-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 25px; }
-        .highlight-card { background: rgba(20, 20, 30, 0.85); border: 1px solid rgba(255,69,0,0.3); border-radius: 12px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.6); }
+        .highlight-card { background: rgba(20, 20, 30, 0.85); border: 1px solid rgba(255,69,0,0.3); border-radius: 12px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.6); position: relative; }
         .highlight-card iframe { width: 100%; height: 200px; border: none; }
-        .highlight-info { padding: 18px; }
-        .highlight-title { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+        .highlight-info { padding: 18px; display: flex; justify-content: space-between; align-items: center; }
+        .highlight-title { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
         .highlight-meta { font-size: 0.8rem; color: #aaa; }
+        .btn-delete-clip { background: #ef4444; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.8rem; transition: 0.3s; }
+        .btn-delete-clip:hover { background: #dc2626; box-shadow: 0 0 10px rgba(239, 68, 68, 0.6); }
 
         /* ADMIN BUTTONS & MODALS */
         .btn-admin-action { background: linear-gradient(45deg, #10b981, #059669); color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
@@ -375,18 +377,14 @@
         </div>
     </section>
 
-    <!-- RIO LEADERBOARD EDIT MODAL (25 KİŞİLİK LİSTE) -->
+    <!-- RIO LEADERBOARD EDIT MODAL -->
     <div id="lb-modal" class="modal hidden">
         <div class="modal-content" style="width: 700px;">
             <h3><i class="fa-solid fa-lock"></i> Rio Security Access (25 Leaderboard Editor)</h3>
             <label>Security Password:</label>
-            <input type="password" id="lb-pass" placeholder="Enter password..." style="margin-bottom: 20px;">
-            
+            <input type="password" id="lb-pass" placeholder="Enter password (zwoxcan99)..." style="margin-bottom: 20px;">
             <p style="color:#ff4500; font-weight:700; margin-bottom:10px; font-size:0.9rem;">Enter up to 25 Players (Name, Kills, Deaths):</p>
-            <div id="lb-inputs-container">
-                <!-- Javascript ile 25 satır üretilecek -->
-            </div>
-
+            <div id="lb-inputs-container"></div>
             <div class="modal-buttons" style="margin-top: 20px;">
                 <button class="btn" style="background:#333; padding:10px 20px; font-size:0.85rem;" onclick="closeLeaderboardModal()">Cancel</button>
                 <button class="btn btn-connect" style="padding:10px 20px; font-size:0.85rem;" onclick="submitLeaderboardUpdate()">Save Leaderboard</button>
@@ -401,7 +399,7 @@
             <label>Username:</label>
             <input type="text" value="Rio" readonly style="color:#ff8c00; font-weight:bold;">
             <label>Security Password:</label>
-            <input type="password" id="up-pass" placeholder="Enter password...">
+            <input type="password" id="up-pass" placeholder="Enter password (zwoxcan99)...">
             <label>Clip Title:</label>
             <input type="text" id="up-title" placeholder="e.g. 1v5 Clutch by Rio">
             <label>YouTube / Video Link:</label>
@@ -420,7 +418,7 @@
             <label>Username:</label>
             <input type="text" value="Rio" readonly style="color:#ff8c00; font-weight:bold;">
             <label>Security Password:</label>
-            <input type="password" id="turf-pass" placeholder="Enter password...">
+            <input type="password" id="turf-pass" placeholder="Enter password (zwoxcan99)...">
             <label>Dominating Gang Name:</label>
             <input type="text" id="turf-gang" placeholder="e.g. Families (Rebel FamQ)">
             <label>Leader Name:</label>
@@ -487,17 +485,38 @@
             let data = await res.json();
             let grid = document.getElementById('highlights-grid');
             grid.innerHTML = data.length === 0 ? '<p style="color:#777;">Henüz klip eklenmemiş.</p>' : '';
+            
             data.forEach(item => {
                 grid.innerHTML += `
                     <div class="highlight-card">
                         <iframe src="${item.url}" allowfullscreen></iframe>
                         <div class="highlight-info">
-                            <div class="highlight-title">${item.title}</div>
-                            <div class="highlight-meta">Added by <span style="color:#ff8c00; font-weight:600;">${item.author}</span> • ${item.date}</div>
+                            <div>
+                                <div class="highlight-title">${item.title}</div>
+                                <div class="highlight-meta">Added by <span style="color:#ff8c00; font-weight:600;">${item.author}</span> • ${item.date}</div>
+                            </div>
+                            <button class="btn-delete-clip" onclick="deleteHighlight(${item.id})"><i class="fa-solid fa-trash"></i> Delete</button>
                         </div>
                     </div>
                 `;
             });
+        }
+
+        async function deleteHighlight(id) {
+            let password = prompt("Enter Rio Security Password (zwoxcan99) to delete this clip:");
+            if (!password) return;
+
+            let res = await fetch('/api/highlights/delete', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: 'Rio', password, id })
+            });
+            let result = await res.json();
+            if (res.status === 401) { alert(result.error); return; }
+            if (result.success) {
+                alert("Klip başarıyla silindi!");
+                loadHighlights();
+            }
         }
 
         async function loadTurfData() {
