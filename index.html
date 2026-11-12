@@ -1,250 +1,329 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rebel PvP • Ultimate FiveM PvP Experience</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
-        body { background: #08080c; color: #fff; overflow-x: hidden; background: linear-gradient(rgba(8, 8, 12, 0.88), rgba(8, 8, 12, 0.95)), url('pictures/serverbanner.png') no-repeat center center fixed; background-size: cover; min-height: 100vh; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rebel PvP • Ultimate FiveM PvP Experience</title>
+<link rel="icon" href="pictures/serverprofile.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07060d; --panel:rgba(20,16,34,.88); --panel2:rgba(255,255,255,.04);
+  --line:rgba(168,85,247,.24); --a:#a855f7; --a2:#7c3aed; --a3:#c084fc;
+  --txt:#f3f0fa; --mut:#9a93b3; --ok:#10b981; --bad:#ef4444; --warn:#f59e0b;
+  --head:'Rajdhani',sans-serif; --body:'Poppins',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;line-height:1.5}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(900px 500px at 85% -5%,rgba(124,58,237,.22),transparent 60%),radial-gradient(700px 500px at -5% 40%,rgba(168,85,247,.10),transparent 60%),var(--bg)}
+a{color:inherit}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--a3);outline-offset:2px}
+.hidden{display:none!important}
 
-        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 8%; background: rgba(12, 12, 18, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 69, 0, 0.25); position: fixed; width: 100%; top: 0; z-index: 1000; }
-        .logo-container { display: flex; align-items: center; gap: 15px; }
-        .logo-container img { width: 48px; height: 48px; border-radius: 10px; object-fit: cover; border: 2px solid #ff4500; box-shadow: 0 0 15px rgba(255, 69, 0, 0.6); }
-        .logo-text { font-size: 1.5rem; font-weight: 900; letter-spacing: 1px; }
-        .logo-text span { color: #ff4500; text-shadow: 0 0 12px rgba(255, 69, 0, 0.8); }
-        nav ul { display: flex; list-style: none; gap: 20px; align-items: center; }
-        nav ul li a { color: #c5c6c7; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: 0.3s; text-transform: uppercase; cursor: pointer; }
-        nav ul li a:hover { color: #ff4500; text-shadow: 0 0 10px rgba(255, 69, 0, 0.8); }
-        .nav-btn { background: linear-gradient(45deg, #ff4500, #ff8c00); color: #fff !important; padding: 8px 22px; border-radius: 6px; box-shadow: 0 0 15px rgba(255, 69, 0, 0.5); }
+/* HEADER */
+header{position:fixed;top:0;width:100%;z-index:1000;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:12px 6%;background:rgba(9,7,16,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo img{width:44px;height:44px;border-radius:10px;object-fit:cover;border:2px solid var(--a);box-shadow:0 0 16px rgba(168,85,247,.55)}
+.logo b{font-family:var(--head);font-size:1.7rem;letter-spacing:1.5px;font-weight:700}
+.logo b span{color:var(--a3)}
+nav ul{display:flex;list-style:none;gap:22px;align-items:center}
+nav a{color:#cfc9e2;text-decoration:none;font-weight:500;font-size:.92rem;cursor:pointer;transition:.2s}
+nav a:hover,nav a.active{color:var(--a3)}
+.nav-btn{background:linear-gradient(45deg,var(--a2),var(--a));color:#fff!important;padding:8px 20px;border-radius:8px;box-shadow:0 0 16px rgba(168,85,247,.45)}
+.hdr-right{display:flex;align-items:center;gap:14px}
+.burger{display:none;background:none;border:1px solid var(--line);color:#fff;width:40px;height:40px;border-radius:8px;font-size:1.1rem;cursor:pointer}
+.user-chip{position:relative}
+.user-btn{display:flex;align-items:center;gap:10px;background:var(--panel2);border:1px solid var(--line);color:#fff;padding:5px 12px 5px 5px;border-radius:30px;cursor:pointer;font-weight:600;font-size:.9rem}
+.menu{position:absolute;right:0;top:calc(100% + 8px);min-width:210px;background:#120e1f;border:1px solid var(--line);border-radius:12px;padding:6px;box-shadow:0 18px 40px rgba(0,0,0,.7)}
+.menu a,.menu button{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border-radius:8px;color:#ddd6f0;text-decoration:none;background:none;border:none;font-size:.88rem;cursor:pointer;text-align:left}
+.menu a:hover,.menu button:hover{background:rgba(168,85,247,.16)}
+.menu hr{border:none;border-top:1px solid var(--line);margin:5px 0}
 
-        .hero { display: flex; justify-content: space-between; align-items: center; padding: 160px 8% 80px 8%; gap: 50px; min-height: 90vh; }
-        .hero-left { max-width: 620px; }
-        .badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 69, 0, 0.15); border: 1px solid #ff4500; color: #ff4500; padding: 6px 18px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; margin-bottom: 25px; text-transform: uppercase; }
-        .hero-left h1 { font-size: 3.8rem; font-weight: 900; line-height: 1.05; margin-bottom: 20px; text-transform: uppercase; }
-        .hero-left h1 span { color: #ff4500; text-shadow: 0 0 30px rgba(255, 69, 0, 0.8); }
-        .hero-left p { color: #b0b3b8; font-size: 1.1rem; line-height: 1.7; margin-bottom: 35px; }
-        .action-buttons { display: flex; gap: 20px; flex-wrap: wrap; }
-        .btn { display: inline-flex; align-items: center; gap: 12px; padding: 16px 32px; border-radius: 8px; font-weight: 800; text-decoration: none; transition: all 0.3s ease; cursor: pointer; font-size: 1rem; text-transform: uppercase; }
-        .btn-connect { background: linear-gradient(45deg, #d32f2f, #ff4500); color: #fff; box-shadow: 0 0 25px rgba(255, 69, 0, 0.6); }
-        .btn-discord { background: #5865F2; color: #fff; box-shadow: 0 0 25px rgba(88, 101, 242, 0.4); }
+/* GENERIC */
+main{padding-top:70px;min-height:80vh}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+.page{padding:42px 0 70px}
+.section-title{font-family:var(--head);text-align:center;font-size:2.4rem;font-weight:700;margin-bottom:34px;letter-spacing:.5px}
+.section-title span{color:var(--a3)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 24px;border-radius:9px;font-weight:600;text-decoration:none;cursor:pointer;border:none;font-size:.95rem;color:#fff;transition:.2s}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:linear-gradient(45deg,var(--a2),var(--a));box-shadow:0 0 20px rgba(168,85,247,.45)}
+.btn-discord{background:#5865F2;box-shadow:0 0 20px rgba(88,101,242,.35)}
+.btn-ghost{background:var(--panel2);border:1px solid var(--line)}
+.btn-ok{background:linear-gradient(45deg,#059669,var(--ok))}
+.btn-bad{background:linear-gradient(45deg,#b91c1c,var(--bad))}
+.btn-warn{background:linear-gradient(45deg,#d97706,var(--warn))}
+.btn-sm{padding:7px 14px;font-size:.8rem;border-radius:7px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.55)}
+.row-between{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+input,textarea,select{width:100%;padding:12px 14px;background:rgba(8,6,15,.9);border:1px solid rgba(255,255,255,.14);border-radius:9px;color:#fff;font-size:.95rem;font-family:inherit}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--a)}
+textarea{min-height:150px;resize:vertical}
+label{display:block;font-size:.82rem;color:var(--mut);margin:0 0 6px;font-weight:500}
+.field{margin-bottom:16px}
+.muted{color:var(--mut)}
+.err{color:#fca5a5;font-size:.88rem;min-height:1.3em;margin-bottom:10px}
 
-        .hero-right { width: 400px; background: rgba(18, 18, 26, 0.85); border: 1px solid rgba(255, 69, 0, 0.3); border-radius: 18px; padding: 30px; backdrop-filter: blur(15px); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8); }
-        .team-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 14px; text-transform: uppercase; }
-        .team-list { display: flex; flex-direction: column; gap: 18px; }
-        .team-card { display: flex; align-items: center; gap: 15px; background: rgba(255, 255, 255, 0.04); padding: 12px 16px; border-radius: 12px; border-left: 4px solid #ff4500; }
-        .team-card img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid #ff4500; }
-        .team-info h4 { font-size: 1.05rem; font-weight: 700; color: #fff; }
-        .team-info p { font-size: 0.8rem; color: #ff8c00; font-weight: 600; }
-        .discord-tag { font-size: 0.75rem; color: #8a8d93; display: flex; align-items: center; gap: 5px; margin-top: 3px; }
+/* AVATAR + BADGES */
+.av{position:relative;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;overflow:hidden;font-weight:700;color:#fff;flex-shrink:0;border:2px solid var(--c,#555);background:#1b1530}
+.av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.rank{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-weight:600;padding:2px 10px;border-radius:20px;border:1px solid var(--c);color:var(--c);background:color-mix(in srgb,var(--c) 14%,transparent);white-space:nowrap}
+.prefix{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 9px;border-radius:5px;color:#fff;background:var(--c);margin-right:8px;vertical-align:middle}
+.uname{font-weight:600;text-decoration:none}
+.uname:hover{text-decoration:underline}
 
-        .content-section { padding: 60px 8%; }
-        .section-title { text-align: center; font-size: 2.2rem; font-weight: 800; margin-bottom: 40px; text-transform: uppercase; }
-        .section-title span { color: #ff4500; }
+/* HERO */
+.hero-banner{height:clamp(300px,58vh,560px);background:url('pictures/serverbanner.png') center/cover no-repeat;position:relative;margin-top:-70px}
+.hero-banner::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(7,6,13,.55) 0,rgba(7,6,13,0) 28%,rgba(7,6,13,.65) 78%,var(--bg) 100%)}
+.hero-main{display:grid;grid-template-columns:1.25fr 1fr;gap:46px;align-items:start;margin-top:-70px;position:relative;z-index:2;padding-bottom:70px}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(168,85,247,.16);border:1px solid var(--a);color:var(--a3);padding:5px 16px;border-radius:20px;font-size:.82rem;font-weight:600;margin-bottom:18px}
+.hero-main h1{font-family:var(--head);font-size:3.9rem;line-height:1;font-weight:700;margin-bottom:16px}
+.hero-main h1 em{font-style:normal;color:var(--a3);text-shadow:0 0 26px rgba(168,85,247,.75)}
+.hero-main p.lead{color:#b4aecb;font-size:1.05rem;margin-bottom:26px;max-width:560px}
+.actions{display:flex;gap:14px;flex-wrap:wrap}
+.founders{padding:26px}
+.team-title{font-family:var(--head);font-size:1.4rem;font-weight:700;margin-bottom:18px;display:flex;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px}
+.team-list{display:flex;flex-direction:column;gap:12px}
+.team-card{display:flex;align-items:center;gap:14px;background:var(--panel2);padding:10px 14px;border-radius:12px;border-left:3px solid var(--a)}
+.team-card img{width:50px;height:50px;border-radius:50%;object-fit:cover;border:2px solid var(--a)}
+.team-card h4{font-size:1rem}
+.team-card p{font-size:.78rem;color:var(--a3);font-weight:600}
+.discord-tag{font-size:.74rem;color:var(--mut)}
 
-        /* LEADERBOARD & HEADER */
-        .leaderboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
-        .leaderboard-container { max-width: 900px; margin: 0 auto; background: rgba(18, 18, 26, 0.85); border: 1px solid rgba(255, 69, 0, 0.3); border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.7); }
-        .leaderboard-table { width: 100%; border-collapse: collapse; }
-        .leaderboard-table th, .leaderboard-table td { padding: 16px 20px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.95rem; }
-        .leaderboard-table th { background: rgba(255, 69, 0, 0.2); color: #ff4500; font-weight: 800; text-transform: uppercase; font-size: 0.85rem; }
+/* SECTIONS (home) */
+.content-section{padding:56px 0}
+.leaderboard-container{overflow:hidden;max-width:900px;margin:0 auto}
+.leaderboard-table{width:100%;border-collapse:collapse}
+.leaderboard-table th,.leaderboard-table td{padding:14px 18px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06);font-size:.93rem}
+.leaderboard-table th{background:rgba(168,85,247,.18);color:var(--a3);font-size:.8rem;font-weight:600}
+.turf-box{margin:28px auto 0;max-width:900px;border:2px solid var(--ok);padding:24px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;box-shadow:0 0 24px rgba(16,185,129,.25)}
+.turf-box h3{color:var(--ok);font-family:var(--head);font-size:1.6rem}
+.turf-box p{color:#ccc;font-size:.92rem;margin:3px 0}
+.turf-100{background:var(--ok);color:#000;font-weight:700;padding:4px 14px;border-radius:20px;font-size:.85rem;display:inline-block;margin-bottom:8px}
+.turf-img{width:220px;height:120px;border-radius:10px;object-fit:cover;border:2px solid var(--ok)}
+.hl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:22px}
+.hl-card{overflow:hidden}
+.hl-card iframe{width:100%;height:200px;border:none;display:block}
+.hl-info{padding:14px 16px}
+.hl-title{font-weight:600;margin-bottom:4px}
+.hl-meta{font-size:.78rem;color:var(--mut)}
+.hl-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.features-section{padding:56px 6%;background:rgba(10,8,18,.6)}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px;max-width:1120px;margin:0 auto}
+.feature-box{background:var(--panel);border:1px solid rgba(255,255,255,.06);padding:28px;border-radius:14px;text-align:center}
+.feature-box i{font-size:2.3rem;color:var(--a3);margin-bottom:16px}
+.feature-box h3{font-size:1.1rem;margin-bottom:10px}
+.feature-box p{color:var(--mut);font-size:.88rem}
+.rules-section{padding:56px 6%;max-width:1120px;margin:0 auto}
+.rules-category{margin-bottom:36px}
+.rules-category-title{font-family:var(--head);font-size:1.5rem;font-weight:700;color:var(--a3);margin-bottom:16px;display:flex;align-items:center;gap:10px;border-bottom:2px solid var(--line);padding-bottom:8px}
+.rules-list{display:flex;flex-direction:column;gap:10px}
+.rule-item{background:var(--panel);border-left:3px solid var(--a);padding:14px 18px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.rule-text{color:#d7d2e6;font-size:.93rem;flex:1}
+.rule-punishment{background:rgba(168,85,247,.14);border:1px solid var(--line);color:var(--a3);padding:3px 12px;border-radius:20px;font-size:.78rem;font-weight:600;white-space:nowrap}
 
-        /* TURF %100 DOMINANCE BOX */
-        .turf-dominance-box { margin-top: 30px; background: rgba(20, 20, 30, 0.9); border: 2px solid #10b981; border-radius: 16px; padding: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; box-shadow: 0 0 25px rgba(16, 185, 129, 0.3); }
-        .turf-info h3 { color: #10b981; font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
-        .turf-info p { color: #ccc; font-size: 0.95rem; margin: 4px 0; }
-        .turf-badge-100 { background: #10b981; color: #000; font-weight: 900; padding: 6px 14px; border-radius: 20px; font-size: 0.9rem; display: inline-block; margin-bottom: 10px; }
-        .turf-img { width: 220px; height: 120px; border-radius: 10px; object-fit: cover; border: 2px solid #10b981; }
+/* AUTH PAGE */
+.auth-page{min-height:calc(100vh - 70px);display:flex;align-items:center;justify-content:center;padding:36px 18px;background:linear-gradient(rgba(7,6,13,.7),rgba(7,6,13,.92)),url('pictures/serverbanner.png') center/cover fixed}
+.auth-shell{display:grid;grid-template-columns:1.05fr 1fr;width:100%;max-width:1000px;overflow:hidden;padding:0;border-color:rgba(168,85,247,.4);box-shadow:0 0 80px rgba(124,58,237,.25),0 25px 60px rgba(0,0,0,.7)}
+.auth-brand{padding:38px;display:flex;flex-direction:column;justify-content:space-between;gap:30px;background:linear-gradient(160deg,rgba(124,58,237,.38),rgba(8,6,15,.93) 62%),url('pictures/serverbanner.png') 30% center/cover}
+.auth-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.auth-logo img{width:46px;height:46px;border-radius:12px;border:2px solid var(--a);object-fit:cover}
+.auth-logo b{font-family:var(--head);font-size:1.7rem;letter-spacing:1.5px}.auth-logo b span{color:var(--a3)}
+.auth-brand h2{font-family:var(--head);font-size:2.7rem;line-height:1.02;margin-bottom:14px}
+.auth-brand p{color:#b9b2d1;font-size:.93rem;max-width:380px}
+.auth-points{list-style:none;margin-top:24px;display:flex;flex-direction:column;gap:14px}
+.auth-points li{display:flex;gap:14px;align-items:flex-start}
+.auth-points i{width:38px;height:38px;border-radius:10px;background:rgba(168,85,247,.18);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--a3);flex-shrink:0}
+.auth-points b{display:block;font-size:.92rem}.auth-points span{font-size:.8rem;color:var(--mut)}
+.auth-brand small{color:#6f6889;font-size:.76rem}
+.auth-form{padding:38px 40px;display:flex;flex-direction:column;justify-content:center;background:rgba(14,10,26,.96)}
+.auth-form h1{font-family:var(--head);font-size:2.2rem;line-height:1.05;margin-bottom:4px}
+.auth-form .sub{color:var(--mut);font-size:.88rem;margin-bottom:20px}
+.tabs{display:flex;background:rgba(0,0,0,.4);border-radius:11px;padding:4px;margin-bottom:24px}
+.tabs a{flex:1;text-align:center;padding:10px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.9rem;color:var(--mut);transition:.2s}
+.tabs a.on{background:linear-gradient(45deg,var(--a2),var(--a));color:#fff;box-shadow:0 0 16px rgba(168,85,247,.4)}
+.ico-input{position:relative}
+.ico-input>i.lead{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--a3);font-size:.95rem;pointer-events:none}
+.ico-input input{padding:14px 44px 14px 42px}
+.ico-input button{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--mut);width:36px;height:36px;cursor:pointer;border-radius:8px}
+.ico-input button:hover{color:#fff}
+.strength{height:4px;border-radius:4px;background:rgba(255,255,255,.08);margin-top:8px;overflow:hidden}
+.strength i{display:block;height:100%;width:0;transition:.25s;border-radius:4px}
+.strength-txt{font-size:.72rem;color:var(--mut);margin-top:5px;min-height:1em}
+.auth-err{display:flex;gap:10px;align-items:flex-start;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.45);color:#fecaca;padding:11px 14px;border-radius:10px;font-size:.85rem;margin-bottom:14px}
+.auth-note{display:flex;gap:10px;align-items:flex-start;font-size:.78rem;color:var(--mut);background:rgba(168,85,247,.07);border:1px solid var(--line);padding:10px 12px;border-radius:10px;margin-bottom:16px}
+.auth-note i{color:var(--a3);margin-top:2px}
+.auth-back{text-align:center;margin-top:18px;font-size:.82rem}.auth-back a{color:var(--mut);text-decoration:none}.auth-back a:hover{color:var(--a3)}
+@media(max-width:860px){.auth-shell{grid-template-columns:1fr}.auth-brand{display:none}.auth-form{padding:30px 24px}}
 
-        /* HIGHLIGHTS */
-        .highlights-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
-        .highlights-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 25px; }
-        .highlight-card { background: rgba(20, 20, 30, 0.85); border: 1px solid rgba(255,69,0,0.3); border-radius: 12px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.6); position: relative; }
-        .highlight-card iframe { width: 100%; height: 200px; border: none; }
-        .highlight-info { padding: 18px; display: flex; justify-content: space-between; align-items: center; }
-        .highlight-title { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
-        .highlight-meta { font-size: 0.8rem; color: #aaa; }
-        .btn-delete-clip { background: #ef4444; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.8rem; transition: 0.3s; }
-        .btn-delete-clip:hover { background: #dc2626; box-shadow: 0 0 10px rgba(239, 68, 68, 0.6); }
+/* FORUM */
+.crumbs{font-size:.85rem;color:var(--mut);margin-bottom:18px}
+.crumbs a{text-decoration:none;color:var(--a3)}
+.page-head{margin-bottom:24px}
+.page-head h1{font-family:var(--head);font-size:2.4rem}
+.cat-list{display:flex;flex-direction:column;gap:12px}
+.cat{display:grid;grid-template-columns:54px 1fr 150px 260px;gap:18px;align-items:center;padding:18px 22px;text-decoration:none;transition:.2s}
+.cat:hover{border-color:var(--a)}
+.cat-ico{width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;background:color-mix(in srgb,var(--c) 16%,transparent);color:var(--c);border:1px solid var(--c)}
+.cat h3{font-size:1.08rem}
+.cat p{font-size:.83rem;color:var(--mut)}
+.cat .stat{font-size:.82rem;color:var(--mut);text-align:center}
+.cat .stat b{display:block;color:#fff;font-size:1.05rem}
+.cat .last{font-size:.8rem;color:var(--mut);overflow:hidden}
+.cat .last a{display:block;color:#e6e1f5;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.toolbar input{max-width:280px}
+.t-list{overflow:hidden}
+.t-row{display:grid;grid-template-columns:1fr 90px 90px 190px;gap:14px;align-items:center;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.06);text-decoration:none}
+.t-row:last-child{border-bottom:none}
+.t-row:hover{background:rgba(168,85,247,.07)}
+.t-row.pin{background:rgba(168,85,247,.06)}
+.t-title{font-weight:600;font-size:.98rem}
+.t-sub{font-size:.78rem;color:var(--mut);margin-top:2px}
+.t-num{text-align:center;font-size:.8rem;color:var(--mut)}
+.t-num b{display:block;color:#fff;font-size:.98rem}
+.t-last{font-size:.78rem;color:var(--mut)}
+.empty{padding:44px;text-align:center;color:var(--mut)}
+.pager{display:flex;justify-content:center;gap:10px;margin-top:20px}
 
-        /* ADMIN BUTTONS & MODALS */
-        .btn-admin-action { background: linear-gradient(45deg, #10b981, #059669); color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
-        .btn-lb-action { background: linear-gradient(45deg, #f59e0b, #d97706); color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; box-shadow: 0 0 15px rgba(245, 158, 11, 0.4); }
-        .btn-turf-action { background: linear-gradient(45deg, #3b82f6, #1d4ed8); color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.85rem; margin-top: 10px; }
-        
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; z-index: 2000; }
-        .modal-content { background: #14141f; padding: 30px; border-radius: 14px; width: 550px; max-width: 90%; max-height: 85vh; overflow-y: auto; border: 1px solid #ff4500; box-shadow: 0 15px 35px rgba(0,0,0,0.9); }
-        .modal-content h3 { margin-bottom: 20px; color: #ff4500; display: flex; align-items: center; gap: 10px; }
-        .modal-content label { font-size: 0.85rem; color: #bbb; display: block; margin-bottom: 5px; }
-        .modal-content input { width: 100%; padding: 12px; margin-bottom: 15px; background: rgba(10,10,15,0.9); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff; font-size: 0.95rem; }
-        .modal-buttons { display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px; }
-        .hidden { display: none !important; }
+.thread-title{font-family:var(--head);font-size:2.1rem;line-height:1.15;margin-bottom:8px}
+.modbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:12px 16px;margin-bottom:18px;border-color:rgba(245,158,11,.4)}
+.modbar select{width:auto;padding:7px 10px;font-size:.82rem}
+.modbar .lbl{font-size:.78rem;color:var(--warn);font-weight:600;display:flex;gap:6px;align-items:center}
+.post{display:grid;grid-template-columns:190px 1fr;margin-bottom:14px;overflow:hidden}
+.post-side{padding:20px 14px;text-align:center;background:rgba(0,0,0,.25);border-right:1px solid var(--line)}
+.post-side .uname{display:block;margin:10px 0 6px;word-break:break-all}
+.post-side small{display:block;color:var(--mut);font-size:.72rem;margin-top:8px}
+.post-body{padding:18px 22px;display:flex;flex-direction:column;min-width:0}
+.post-meta{font-size:.78rem;color:var(--mut);display:flex;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.post-text{font-size:.96rem;word-wrap:break-word;overflow-wrap:anywhere;flex:1}
+.post-text a{color:var(--a3)}
+.post-foot{display:flex;gap:8px;margin-top:14px;justify-content:flex-end}
+.post.staff{border-color:color-mix(in srgb,var(--c) 55%,transparent)}
+.embed{margin-bottom:18px;overflow:hidden}
+.embed iframe{width:100%;aspect-ratio:16/9;border:none;display:block}
+.locked-note{padding:16px;text-align:center;color:var(--warn);background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:12px}
 
-        .lb-row-inputs { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.08); }
-        .lb-row-inputs input { margin-bottom: 0; }
+.profile-head{padding:30px;display:flex;gap:26px;align-items:center;flex-wrap:wrap}
+.profile-head h1{font-family:var(--head);font-size:2.3rem}
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.stat-row{display:flex;gap:26px;margin-top:10px}
+.stat-row div{font-size:.8rem;color:var(--mut)}
+.stat-row b{display:block;font-size:1.3rem;color:#fff}
+.set-card{padding:26px;max-width:640px;margin-bottom:20px}
+.set-card h3{font-family:var(--head);font-size:1.5rem;margin-bottom:16px}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th,.tbl td{padding:11px 14px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06);font-size:.88rem}
+.tbl th{color:var(--a3);font-size:.78rem;background:rgba(168,85,247,.12)}
+.tbl select{width:auto;padding:6px 8px;font-size:.82rem}
+.scroll-x{overflow-x:auto}
+.pf-chip{display:inline-flex;align-items:center;gap:8px;margin:0 8px 8px 0;padding:5px 6px 5px 12px;border-radius:20px;background:var(--panel2);border:1px solid var(--line);font-size:.82rem}
+.pf-chip button{background:none;border:none;color:var(--bad);cursor:pointer;width:22px;height:22px;border-radius:50%}
 
-        /* FEATURES & RULES */
-        .features-section { padding: 60px 8%; background: rgba(10, 10, 15, 0.7); }
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .feature-box { background: rgba(20, 20, 30, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 14px; text-align: center; }
-        .feature-box i { font-size: 2.5rem; color: #ff4500; margin-bottom: 20px; }
-        .feature-box h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; }
-        .feature-box p { color: #909399; font-size: 0.9rem; line-height: 1.6; }
+/* MODAL + TOAST */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.82);display:flex;align-items:center;justify-content:center;z-index:2000;padding:16px}
+.modal-content{background:#120e1f;padding:28px;border-radius:14px;width:560px;max-width:100%;max-height:88vh;overflow-y:auto;border:1px solid var(--a);box-shadow:0 18px 40px rgba(0,0,0,.9)}
+.modal-content h3{font-family:var(--head);font-size:1.5rem;margin-bottom:18px;color:var(--a3);display:flex;gap:10px;align-items:center}
+.modal-buttons{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
+.lb-row{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;margin-bottom:8px}
+#toasts{position:fixed;right:18px;bottom:18px;z-index:3000;display:flex;flex-direction:column;gap:10px}
+.toast{background:#1a1430;border:1px solid var(--line);border-left:4px solid var(--a);padding:12px 18px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.7);font-size:.9rem;max-width:340px;animation:tin .25s ease}
+.toast.bad{border-left-color:var(--bad)}.toast.ok{border-left-color:var(--ok)}
+@keyframes tin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+footer{text-align:center;padding:26px;background:#050409;border-top:1px solid rgba(255,255,255,.05);color:#777;font-size:.85rem}
 
-        /* RULES SECTION */
-        .rules-section { padding: 60px 8%; }
-        .rules-category { margin-bottom: 40px; }
-        .rules-category-title { font-size: 1.4rem; font-weight: 800; color: #ff4500; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; border-bottom: 2px solid rgba(255, 69, 0, 0.3); padding-bottom: 8px; text-transform: uppercase; }
-        .rules-list { display: flex; flex-direction: column; gap: 12px; }
-        .rule-item { background: rgba(18, 18, 26, 0.7); border-left: 4px solid #ff4500; padding: 16px 20px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .rule-text { color: #d1d5db; font-size: 0.95rem; line-height: 1.5; flex: 1; }
-        .rule-punishment { background: rgba(255, 69, 0, 0.15); border: 1px solid rgba(255, 69, 0, 0.4); color: #ff8c00; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; white-space: nowrap; }
+@media(max-width:960px){
+  header{padding:10px 4%}
+  .burger{display:block}
+  nav{position:absolute;top:100%;left:0;right:0;background:#0c0916;border-bottom:1px solid var(--line);display:none}
+  nav.open{display:block}
+  nav ul{flex-direction:column;align-items:stretch;gap:0;padding:8px 4%}
+  nav ul li a{display:block;padding:12px 4px}
+  .hero-main{grid-template-columns:1fr}
+  .hero-main h1{font-size:2.8rem}
+  .cat{grid-template-columns:48px 1fr}.cat .stat,.cat .last{display:none}
+  .t-row{grid-template-columns:1fr 60px}.t-row .t-views,.t-row .t-last{display:none}
+  .post{grid-template-columns:1fr}.post-side{border-right:none;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;text-align:left;padding:12px 16px}
+  .post-side .uname{margin:0}.post-side small{display:none}
+  .profile-grid{grid-template-columns:1fr}
+  .logo b{font-size:1.4rem}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
-        footer { text-align: center; padding: 25px; background: #050508; border-top: 1px solid rgba(255, 255, 255, 0.05); color: #777; font-size: 0.85rem; }
-
-        @media (max-width: 900px) {
-            header { padding: 15px 5%; }
-            nav ul { display: none; }
-            .hero { flex-direction: column; padding-top: 130px; text-align: center; }
-            .hero-right { width: 100%; }
-            .hero-left h1 { font-size: 2.8rem; }
-            .action-buttons { justify-content: center; }
-            .turf-dominance-box { flex-direction: column; text-align: center; align-items: center; }
-            .rule-item { flex-direction: column; align-items: flex-start; }
-        }
-    </style>
+/* ADMIN PANEL */
+.adm{display:grid;grid-template-columns:240px 1fr;gap:22px;align-items:start}
+.adm-side{padding:16px;position:sticky;top:86px}
+.adm-me{display:flex;align-items:center;gap:12px;padding:6px 6px 16px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.adm-me b{display:block;font-size:.95rem}
+.adm-nav{display:flex;flex-direction:column;gap:4px}
+.adm-nav button{display:flex;align-items:center;gap:12px;width:100%;padding:11px 14px;border:none;border-radius:10px;background:none;color:#c9c3de;font-size:.9rem;font-weight:500;cursor:pointer;text-align:left}
+.adm-nav button i{width:18px;text-align:center;color:var(--a3)}
+.adm-nav button:hover{background:rgba(168,85,247,.12)}
+.adm-nav button.on{background:linear-gradient(45deg,var(--a2),var(--a));color:#fff;font-weight:600}
+.adm-nav button.on i{color:#fff}
+.adm-nav .cnt{margin-left:auto;font-size:.72rem;background:rgba(0,0,0,.35);padding:2px 9px;border-radius:12px}
+.adm-title{font-family:var(--head);font-size:2.2rem;line-height:1;margin-bottom:4px}
+.adm-sub{color:var(--mut);font-size:.88rem;margin-bottom:22px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:20px}
+.stat{padding:18px 20px;position:relative;overflow:hidden;border-top:3px solid var(--c,var(--a))}
+.stat i{position:absolute;right:14px;top:16px;font-size:1.6rem;color:var(--c,var(--a));opacity:.3}
+.stat b{display:block;font-family:var(--head);font-size:2.4rem;line-height:1}
+.stat span{font-size:.78rem;color:var(--mut)}
+.two-col{display:grid;grid-template-columns:1.2fr 1fr;gap:16px}
+.panel{padding:20px}
+.panel h3{font-family:var(--head);font-size:1.35rem;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.bar-row{display:grid;grid-template-columns:130px 1fr 34px;gap:12px;align-items:center;margin-bottom:11px;font-size:.82rem}
+.bar-track{height:9px;border-radius:6px;background:rgba(255,255,255,.07);overflow:hidden}
+.bar-track i{display:block;height:100%;border-radius:6px;background:var(--c)}
+.bar-row b{text-align:right}
+.mini-u{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.mini-u:last-child{border-bottom:none}.mini-u small{display:block;color:var(--mut);font-size:.74rem}
+.adm-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.adm-bar input{flex:1;min-width:180px}.adm-bar select{width:auto;min-width:160px}
+.u-row{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:14px 18px;margin-bottom:10px}
+.u-row.banned{border-color:rgba(239,68,68,.5);background:rgba(239,68,68,.06)}
+.u-main{display:flex;align-items:center;gap:14px;min-width:0}
+.u-main small{display:block;color:var(--mut);font-size:.76rem}
+.u-act{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.u-act select{width:auto;padding:7px 10px;font-size:.82rem}
+.grp-title{font-family:var(--head);font-size:1.4rem;margin:18px 0 10px;display:flex;align-items:center;gap:10px}
+.grp-title small{font-family:var(--body);font-size:.78rem;color:var(--mut)}
+@media(max-width:980px){.adm{grid-template-columns:1fr}.adm-side{position:static}.adm-nav{flex-direction:row;overflow-x:auto}.adm-nav button{white-space:nowrap;width:auto}.adm-me{display:none}.two-col{grid-template-columns:1fr}}
+@media(max-width:700px){.u-row{grid-template-columns:1fr}.u-act{justify-content:flex-start}}
+</style>
 </head>
 <body>
 
-    <!-- HEADER MENU -->
-    <header>
-        <div class="logo-container">
-            <img src="pictures/serverprofile.png" alt="Rebel PvP Logo">
-            <div class="logo-text">REBEL <span>PVP</span></div>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#leaderboard">Leaderboard</a></li>
-                <li><a href="#highlights">Highlights</a></li>
-                <li><a href="#rules">Rules</a></li>
-                <li><a href="#staff">Staff</a></li>
-                <li><a href="https://discord.gg/BTZnr2FhHA" target="_blank">Discord</a></li>
-                <li><a href="fivem://connect/mkq2yc4v.free.pwrp.cc:19716" class="nav-btn">Connect</a></li>
-            </ul>
-        </nav>
-    </header>
+<header>
+  <a class="logo" href="#/home"><img src="pictures/serverprofile.png" alt="Rebel PvP"><b>REBEL <span>PVP</span></b></a>
+  <nav id="nav">
+    <ul>
+      <li><a href="#/home" data-nav="home">Home</a></li>
+      <li><a href="#/forum" data-nav="forum">Forum</a></li>
+      <li><a href="#/home/leaderboard">Leaderboard</a></li>
+      <li><a href="#/home/highlights">Highlights</a></li>
+      <li><a href="#/home/rules">Rules</a></li>
+      <li><a href="#/home/staff">Staff</a></li>
+      <li><a href="https://discord.gg/BTZnr2FhHA" target="_blank" rel="noopener">Discord</a></li>
+      <li><a href="fivem://connect/mkq2yc4v.free.pwrp.cc:19716" class="nav-btn">Connect</a></li>
+    </ul>
+  </nav>
+  <div class="hdr-right">
+    <div id="user-area"></div>
+    <button class="burger" id="burger" aria-label="Menü"><i class="fa-solid fa-bars"></i></button>
+  </div>
+</header>
 
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <div class="hero-left">
-            <div class="badge"><i class="fa-solid fa-fire"></i> High FPS & Custom Gunplay</div>
-            <h1>REBEL PVP <span>FIVEM</span> SERVER</h1>
-            <p>Experience the ultimate FiveM competitive PvP playground. Engineered with max FPS optimization, custom recoil mechanics, balanced gunplay, and strict 24/7 anti-cheat enforcement. Join the lobby and dominate the leaderboards!</p>
-            
-            <div class="action-buttons">
-                <a href="fivem://connect/mkq2yc4v.free.pwrp.cc:19716" class="btn btn-connect">
-                    <i class="fa-solid fa-play"></i> CONNECT SERVER
-                </a>
-                <a href="https://discord.gg/BTZnr2FhHA" target="_blank" class="btn btn-discord">
-                    <i class="fa-brands fa-discord"></i> DISCORD COMMUNITY
-                </a>
-            </div>
-        </div>
+<main id="view"></main>
 
-        <!-- FOUNDERS TEAM -->
-        <div class="hero-right" id="staff">
-            <div class="team-title">
-                <i class="fa-solid fa-shield-halved"></i> Project Founders
-            </div>
-            
-            <div class="team-list">
-                <div class="team-card">
-                    <img src="pictures/samet.png" alt="Samet Profile">
-                    <div class="team-info">
-                        <h4>Samet</h4>
-                        <p>Project Founder</p>
-                        <div class="discord-tag"><i class="fa-brands fa-discord"></i> smeash93</div>
-                    </div>
-                </div>
-                <div class="team-card">
-                    <img src="pictures/lee.png" alt="Lee Profile">
-                    <div class="team-info">
-                        <h4>Lee</h4>
-                        <p>Project Co Founder</p>
-                        <div class="discord-tag"><i class="fa-brands fa-discord"></i> 09cu</div>
-                    </div>
-                </div>
-                <div class="team-card">
-                    <img src="pictures/rio.png" alt="Rio Profile">
-                    <div class="team-info">
-                        <h4>Rio</h4>
-                        <p>Project Co Founder</p>
-                        <div class="discord-tag"><i class="fa-brands fa-discord"></i> onenightsuddenly</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<footer>&copy; 2026 Rebel PvP FiveM Server. All Rights Reserved.</footer>
+<div id="toasts"></div>
+<div id="modal-root"></div>
 
-    <!-- LEADERBOARD & TURF SECTION -->
-    <section class="content-section" id="leaderboard">
-        <div class="leaderboard-header">
-            <h2 class="section-title" style="margin-bottom:0;">Top Killers & <span>Turf Dominance</span></h2>
-            <button class="btn-lb-action" onclick="openLeaderboardModal()">
-                <i class="fa-solid fa-trophy"></i> Rio: Edit 25 Leaderboard
-            </button>
-        </div>
-        
-        <div class="leaderboard-container">
-            <table class="leaderboard-table">
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Player Name</th>
-                        <th>Kills</th>
-                        <th>Deaths</th>
-                        <th>K/D Ratio</th>
-                    </tr>
-                </thead>
-                <tbody id="leaderboard-body">
-                    <!-- Dinamik doldurulacak -->
-                </tbody>
-            </table>
-        </div>
-
-        <!-- TURF %100 DOMINANCE BOX -->
-        <div class="turf-dominance-box">
-            <div class="turf-info">
-                <span class="turf-badge-100"><i class="fa-solid fa-crown"></i> TURF DOMINANCE: 100%</span>
-                <h3 id="turf-gang-title"><i class="fa-solid fa-flag"></i> Families (Rebel FamQ)</h3>
-                <p><strong>Dominating Leader:</strong> <span id="turf-leader-name" style="color:#ff8c00;">Rio Rebel</span></p>
-                <p><strong>Territory Controlled:</strong> <span id="turf-territory" style="color:#fff;">Los Santos Entire Turf / South Central</span></p>
-                <button class="btn-turf-action" onclick="openTurfModal()"><i class="fa-solid fa-pen-to-square"></i> Rio: Edit Turf Status</button>
-            </div>
-            <div>
-                <img id="turf-display-img" src="pictures/serverbanner.png" alt="Turf Dominance" class="turf-img">
-            </div>
-        </div>
-    </section>
-
-    <!-- HIGHLIGHTS & MEDIA SECTION -->
-    <section class="content-section" id="highlights">
-        <div class="highlights-header">
-            <h2 class="section-title" style="margin-bottom:0;">Media & <span>Highlights</span></h2>
-            <button class="btn-admin-action" onclick="openUploadModal()">
-                <i class="fa-solid fa-upload"></i> Rio: Upload Highlight
-            </button>
-        </div>
-        <div id="highlights-grid" class="highlights-grid">
-            <!-- Dinamik yüklenecek -->
-        </div>
-    </section>
-
+<template id="tpl-static">
     <!-- FEATURES SECTION -->
     <section class="features-section" id="features">
         <h2 class="section-title">Why Choose <span>Rebel PvP</span>?</h2>
@@ -376,237 +455,547 @@
             </div>
         </div>
     </section>
+</template>
 
-    <!-- RIO LEADERBOARD EDIT MODAL -->
-    <div id="lb-modal" class="modal hidden">
-        <div class="modal-content" style="width: 700px;">
-            <h3><i class="fa-solid fa-lock"></i> Rio Security Access (25 Leaderboard Editor)</h3>
-            <label>Security Password:</label>
-            <input type="password" id="lb-pass" placeholder="Enter password..." style="margin-bottom: 20px;">
-            <p style="color:#ff4500; font-weight:700; margin-bottom:10px; font-size:0.9rem;">Enter up to 25 Players (Name, Kills, Deaths):</p>
-            <div id="lb-inputs-container"></div>
-            <div class="modal-buttons" style="margin-top: 20px;">
-                <button class="btn" style="background:#333; padding:10px 20px; font-size:0.85rem;" onclick="closeLeaderboardModal()">Cancel</button>
-                <button class="btn btn-connect" style="padding:10px 20px; font-size:0.85rem;" onclick="submitLeaderboardUpdate()">Save Leaderboard</button>
-            </div>
-        </div>
+<script>
+/* ============================ helpers ============================ */
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const fmt = t => esc(t).replace(/(https?:\/\/[^\s<]+)/g, u => `<a href="${u}" target="_blank" rel="noopener noreferrer nofollow">${u}</a>`).replace(/\n/g, '<br>');
+function ago(ts) {
+  const s = Math.floor((Date.now() - ts) / 1000);
+  if (s < 60) return 'şimdi';
+  if (s < 3600) return Math.floor(s / 60) + ' dk önce';
+  if (s < 86400) return Math.floor(s / 3600) + ' sa önce';
+  if (s < 2592000) return Math.floor(s / 86400) + ' gün önce';
+  return new Date(ts).toLocaleDateString('tr-TR');
+}
+const dt = ts => new Date(ts).toLocaleString('tr-TR', { dateStyle: 'medium', timeStyle: 'short' });
+
+async function api(method, url, body) {
+  const opt = { method, credentials: 'same-origin', headers: { 'X-Requested-With': 'rebel' } };
+  if (method !== 'GET' && method !== 'DELETE') { opt.headers['Content-Type'] = 'application/json'; opt.body = JSON.stringify(body || {}); }
+  const r = await fetch(url, opt);
+  let d = {}; try { d = await r.json(); } catch (e) {}
+  if (!r.ok) { const e = new Error(d.error || 'Bir hata oluştu.'); e.status = r.status; throw e; }
+  return d;
+}
+function toast(msg, type = '') {
+  const t = document.createElement('div'); t.className = 'toast ' + type; t.textContent = msg;
+  $('#toasts').appendChild(t); setTimeout(() => t.remove(), 3800);
+}
+const fail = e => toast(e.message || 'Hata', 'bad');
+
+const avatar = (u, size = 40) => `<span class="av" style="width:${size}px;height:${size}px;font-size:${Math.round(size * .42)}px;--c:${esc(u.color)}">${esc((u.username || '?')[0].toUpperCase())}${u.avatar ? `<img src="${esc(u.avatar)}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">` : ''}</span>`;
+const rankBadge = u => `<span class="rank" style="--c:${esc(u.color)}">${esc(u.rankName)}</span>`;
+const prefixBadge = p => p ? `<span class="prefix" style="--c:${esc(p.color)}">${esc(p.name)}</span>` : '';
+const userLink = u => `<a class="uname" href="#/u/${encodeURIComponent(u.username)}" style="color:${u.level >= 30 ? esc(u.color) : '#fff'}">${esc(u.username)}</a>`;
+
+let me = null, meta = { ranks: [], prefixes: [] }, routeToken = 0;
+
+/* ============================ header ============================ */
+function renderUserArea() {
+  const el = $('#user-area');
+  if (!me) { el.innerHTML = `<a class="btn btn-primary btn-sm" href="#/login"><i class="fa-solid fa-right-to-bracket"></i> Giriş Yap</a>`; return; }
+  el.innerHTML = `<div class="user-chip">
+    <button class="user-btn" id="user-btn">${avatar(me, 32)} ${esc(me.username)} <i class="fa-solid fa-chevron-down" style="font-size:.7rem"></i></button>
+    <div class="menu hidden" id="user-menu">
+      <div style="padding:8px 12px">${rankBadge(me)}</div><hr>
+      <a href="#/u/${encodeURIComponent(me.username)}"><i class="fa-solid fa-user"></i> Profilim</a>
+      <a href="#/settings"><i class="fa-solid fa-gear"></i> Ayarlar</a>
+      ${me.can.banUsers ? `<a href="#/admin"><i class="fa-solid fa-user-shield"></i> Yönetim Paneli</a>` : ''}
+      <hr><button id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Çıkış Yap</button>
+    </div></div>`;
+  $('#user-btn').onclick = e => { e.stopPropagation(); $('#user-menu').classList.toggle('hidden'); };
+  $('#logout-btn').onclick = async () => { await api('POST', '/api/auth/logout'); me = null; renderUserArea(); location.hash = '#/home'; toast('Çıkış yapıldı.'); };
+}
+document.addEventListener('click', () => { const m = $('#user-menu'); if (m) m.classList.add('hidden'); });
+$('#burger').onclick = () => $('#nav').classList.toggle('open');
+$('#nav').addEventListener('click', e => { if (e.target.tagName === 'A') $('#nav').classList.remove('open'); });
+
+/* ============================ router ============================ */
+const view = $('#view');
+function go(h) { location.hash = h; }
+async function route() {
+  const token = ++routeToken;
+  clearInterval(window._cd);
+  const parts = (location.hash.replace(/^#\/?/, '').split('?')[0] || 'home').split('/');
+  document.querySelectorAll('[data-nav]').forEach(a => a.classList.toggle('active', a.dataset.nav === (parts[0] === 'forum' || parts[0] === 'new' ? 'forum' : parts[0])));
+  window.scrollTo(0, 0);
+  try {
+    switch (parts[0]) {
+      case 'home': await homeView(parts[1]); break;
+      case 'login': authView('login'); break;
+      case 'register': authView('register'); break;
+      case 'forum':
+        if (parts[1] === 'c') await categoryView(parts[2], token);
+        else if (parts[1] === 't') await threadView(+parts[2], token);
+        else await forumView(token);
+        break;
+      case 'new': await newThreadView(parts[1]); break;
+      case 'u': await profileView(decodeURIComponent(parts[1] || '')); break;
+      case 'settings': settingsView(); break;
+      case 'admin': await adminView(); break;
+      default: await homeView();
+    }
+  } catch (e) {
+    if (token !== routeToken) return;
+    view.innerHTML = `<div class="wrap page"><div class="card empty"><i class="fa-solid fa-circle-exclamation" style="font-size:2rem;color:var(--bad)"></i><p style="margin-top:12px">${esc(e.message)}</p><p style="margin-top:16px"><a class="btn btn-ghost btn-sm" href="#/forum">Foruma dön</a></p></div></div>`;
+  }
+}
+window.addEventListener('hashchange', route);
+
+function needLogin(msg) {
+  view.innerHTML = `<div class="wrap page"><div class="card empty"><i class="fa-solid fa-lock" style="font-size:2rem;color:var(--a3)"></i><p style="margin:12px 0 18px">${esc(msg || 'Bu sayfayı görmek için giriş yapmalısın.')}</p><a class="btn btn-primary" href="#/login">Giriş Yap</a></div></div>`;
+}
+
+/* ============================ AUTH ============================ */
+function authView(mode) {
+  if (me) return go('#/forum');
+  const reg = mode === 'register';
+  view.innerHTML = `<div class="auth-page"><div class="card auth-shell">
+    <div class="auth-brand">
+      <a class="auth-logo" href="#/home"><img src="pictures/serverprofile.png" alt=""><b>REBEL <span>PVP</span></b></a>
+      <div>
+        <h2>Turfunu savun.<br>Sesini forumda duyur.</h2>
+        <p>Rebel PvP topluluğunun resmi forumu. Hesabınla konu aç, yetkililerle iletişime geç.</p>
+        <ul class="auth-points">
+          <li><i class="fa-solid fa-unlock-keyhole"></i><div><b>Unban itirazı</b><span>Yetkililer konunu inceleyip sonucu yazar.</span></div></li>
+          <li><i class="fa-solid fa-triangle-exclamation"></i><div><b>Oyuncu şikayeti</b><span>Kural ihlallerini kanıtla birlikte bildir.</span></div></li>
+          <li><i class="fa-solid fa-shield-halved"></i><div><b>Güvenli hesap</b><span>Şifren şifrelenerek saklanır.</span></div></li>
+        </ul>
+      </div>
+      <small>&copy; 2026 Rebel PvP</small>
     </div>
+    <div class="auth-form">
+      <div class="tabs"><a href="#/login" class="${reg ? '' : 'on'}">Giriş Yap</a><a href="#/register" class="${reg ? 'on' : ''}">Kayıt Ol</a></div>
+      <h1>${reg ? 'Hesap Oluştur' : 'Tekrar Hoş Geldin'}</h1>
+      <p class="sub">${reg ? 'Kullanıcı adını seç ve forumda yerini al.' : 'Kullanıcı adın ve şifrenle giriş yap.'}</p>
+      ${reg ? `<div class="auth-note"><i class="fa-solid fa-circle-info"></i><span>Her IP adresinden yalnızca <b>1 hesap</b> açılabilir.</span></div>` : ''}
+      <div id="a-err"></div>
+      <div class="field"><label for="a-user">Kullanıcı adı</label><div class="ico-input"><i class="fa-solid fa-user lead"></i><input id="a-user" autocomplete="username" maxlength="20" placeholder="kullanıcı adın"></div></div>
+      <div class="field"><label for="a-pass">Şifre</label><div class="ico-input"><i class="fa-solid fa-lock lead"></i><input id="a-pass" type="password" autocomplete="${reg ? 'new-password' : 'current-password'}" placeholder="••••••••"><button type="button" id="pw-eye" aria-label="Şifreyi göster"><i class="fa-solid fa-eye"></i></button></div>
+        ${reg ? `<div class="strength"><i id="pw-bar"></i></div><div class="strength-txt" id="pw-txt"></div>` : ''}</div>
+      ${reg ? `<div class="field"><label for="a-pass2">Şifre (tekrar)</label><div class="ico-input"><i class="fa-solid fa-lock lead"></i><input id="a-pass2" type="password" autocomplete="new-password" placeholder="••••••••"></div></div>` : ''}
+      <button class="btn btn-primary" id="a-go" style="width:100%;justify-content:center;padding:14px;margin-top:6px">${reg ? '<i class="fa-solid fa-user-plus"></i> Kayıt Ol' : '<i class="fa-solid fa-right-to-bracket"></i> Giriş Yap'}</button>
+      <div class="auth-back"><a href="#/home"><i class="fa-solid fa-arrow-left"></i> Ana sayfaya dön</a></div>
+    </div></div></div>`;
+  const showErr = m => { $('#a-err').innerHTML = m ? `<div class="auth-err"><i class="fa-solid fa-circle-exclamation"></i><span>${esc(m)}</span></div>` : ''; };
+  $('#pw-eye').onclick = () => { const i = $('#a-pass'); const show = i.type === 'password'; i.type = show ? 'text' : 'password'; $('#pw-eye i').className = 'fa-solid ' + (show ? 'fa-eye-slash' : 'fa-eye'); };
+  if (reg) $('#a-pass').addEventListener('input', e => {
+    const v = e.target.value; let sc = 0;
+    if (v.length >= 6) sc++; if (v.length >= 10) sc++; if (/[A-Z]/.test(v) && /[a-z]/.test(v)) sc++; if (/\d/.test(v) && /[^A-Za-z0-9]/.test(v)) sc++;
+    const L = [['', 0, 'transparent'], ['Zayıf', 25, '#ef4444'], ['Orta', 50, '#f59e0b'], ['İyi', 75, '#84cc16'], ['Güçlü', 100, '#10b981']][v ? Math.max(1, sc) : 0];
+    $('#pw-bar').style.width = L[1] + '%'; $('#pw-bar').style.background = L[2]; $('#pw-txt').textContent = L[0];
+  });
+  const submit = async () => {
+    const username = $('#a-user').value.trim(), password = $('#a-pass').value;
+    showErr('');
+    if (!username || !password) return showErr('Kullanıcı adı ve şifre gerekli.');
+    if (reg && password !== $('#a-pass2').value) return showErr('Şifreler eşleşmiyor.');
+    $('#a-go').disabled = true;
+    try {
+      const d = await api('POST', reg ? '/api/auth/register' : '/api/auth/login', { username, password });
+      me = d.user; renderUserArea(); toast(`Hoş geldin, ${me.username}!`, 'ok'); go('#/forum');
+    } catch (e) { showErr(e.message); $('#a-go').disabled = false; }
+  };
+  $('#a-go').onclick = submit;
+  view.querySelectorAll('.auth-form input').forEach(i => i.addEventListener('keydown', e => { if (e.key === 'Enter') submit(); }));
+  $('#a-user').focus();
+}
 
-    <!-- RIO HIGHLIGHT UPLOAD MODAL -->
-    <div id="upload-modal" class="modal hidden">
-        <div class="modal-content">
-            <h3><i class="fa-solid fa-lock"></i> Rio Security Access (Highlights)</h3>
-            <label>Username:</label>
-            <input type="text" value="Rio" readonly style="color:#ff8c00; font-weight:bold;">
-            <label>Security Password:</label>
-            <input type="password" id="up-pass" placeholder="Enter password...">
-            <label>Clip Title:</label>
-            <input type="text" id="up-title" placeholder="e.g. 1v5 Clutch by Rio">
-            <label>YouTube / Video Link:</label>
-            <input type="text" id="up-url" placeholder="https://www.youtube.com/watch?v=...">
-            <div class="modal-buttons">
-                <button class="btn" style="background:#333; padding:10px 20px; font-size:0.85rem;" onclick="closeUploadModal()">Cancel</button>
-                <button class="btn btn-connect" style="padding:10px 20px; font-size:0.85rem;" onclick="submitHighlight()">Upload Clip</button>
-            </div>
-        </div>
+/* ============================ HOME ============================ */
+async function homeView(section) {
+  view.innerHTML = `
+  <div class="hero-banner"></div>
+  <div class="wrap hero-main">
+    <div>
+      <div class="badge"><i class="fa-solid fa-fire"></i> High FPS & Custom Gunplay</div>
+      <h1>REBEL PVP <em>FIVEM</em> SERVER</h1>
+      <p class="lead">Experience the ultimate FiveM competitive PvP playground. Engineered with max FPS optimization, custom recoil mechanics, balanced gunplay, and strict 24/7 anti-cheat enforcement. Join the lobby and dominate the leaderboards!</p>
+      <div class="actions">
+        <a href="fivem://connect/mkq2yc4v.free.pwrp.cc:19716" class="btn btn-primary"><i class="fa-solid fa-play"></i> Connect Server</a>
+        <a href="https://discord.gg/BTZnr2FhHA" target="_blank" rel="noopener" class="btn btn-discord"><i class="fa-brands fa-discord"></i> Discord Community</a>
+        <a href="#/forum" class="btn btn-ghost"><i class="fa-solid fa-comments"></i> Forum</a>
+      </div>
     </div>
-
-    <!-- RIO TURF EDIT MODAL -->
-    <div id="turf-modal" class="modal hidden">
-        <div class="modal-content">
-            <h3><i class="fa-solid fa-lock"></i> Rio Security Access (Turf Edit)</h3>
-            <label>Username:</label>
-            <input type="text" value="Rio" readonly style="color:#ff8c00; font-weight:bold;">
-            <label>Security Password:</label>
-            <input type="password" id="turf-pass" placeholder="Enter password...">
-            <label>Dominating Gang Name:</label>
-            <input type="text" id="turf-gang" placeholder="e.g. Families (Rebel FamQ)">
-            <label>Leader Name:</label>
-            <input type="text" id="turf-lead" placeholder="e.g. Rio Rebel">
-            <label>Territory Details:</label>
-            <input type="text" id="turf-terr" placeholder="e.g. Los Santos Entire Turf">
-            <div class="modal-buttons">
-                <button class="btn" style="background:#333; padding:10px 20px; font-size:0.85rem;" onclick="closeTurfModal()">Cancel</button>
-                <button class="btn btn-connect" style="padding:10px 20px; font-size:0.85rem;" onclick="submitTurfUpdate()">Update Turf</button>
-            </div>
-        </div>
+    <div class="card founders" id="staff">
+      <div class="team-title"><i class="fa-solid fa-shield-halved"></i> Project Founders</div>
+      <div class="team-list">
+        <div class="team-card"><img src="pictures/samet.png" alt="Samet"><div><h4>Samet</h4><p>Project Founder</p><div class="discord-tag"><i class="fa-brands fa-discord"></i> smeash93</div></div></div>
+        <div class="team-card"><img src="pictures/lee.png" alt="Lee"><div><h4>Lee</h4><p>Project Co Founder</p><div class="discord-tag"><i class="fa-brands fa-discord"></i> 09cu</div></div></div>
+        <div class="team-card"><img src="pictures/rio.png" alt="Rio"><div><h4>Rio</h4><p>Project Co Founder</p><div class="discord-tag"><i class="fa-brands fa-discord"></i> onenightsuddenly</div></div></div>
+      </div>
     </div>
+  </div>
 
-    <footer>
-        &copy; 2026 Rebel PvP FiveM Server. All Rights Reserved.
-    </footer>
+  <section class="wrap content-section" id="leaderboard" style="padding-top:20px">
+    <div class="row-between" style="margin-bottom:24px;max-width:900px;margin-inline:auto">
+      <h2 class="section-title" style="margin:0">Top Killers & <span>Turf Dominance</span></h2>
+      ${me && me.can.siteAdmin ? `<button class="btn btn-warn btn-sm" id="lb-edit"><i class="fa-solid fa-trophy"></i> Leaderboard Düzenle</button>` : ''}
+    </div>
+    <div class="card leaderboard-container"><table class="leaderboard-table"><thead><tr><th>Rank</th><th>Player</th><th>Kills</th><th>Deaths</th><th>K/D</th></tr></thead><tbody id="lb-body"></tbody></table></div>
+    <div class="card turf-box">
+      <div>
+        <span class="turf-100"><i class="fa-solid fa-crown"></i> TURF DOMINANCE: 100%</span>
+        <h3 id="turf-gang"></h3>
+        <p><strong>Dominating Leader:</strong> <span id="turf-leader" style="color:var(--a3)"></span></p>
+        <p><strong>Territory Controlled:</strong> <span id="turf-terr"></span></p>
+        ${me && me.can.siteAdmin ? `<button class="btn btn-sm btn-primary" id="turf-edit" style="margin-top:10px"><i class="fa-solid fa-pen-to-square"></i> Turf Düzenle</button>` : ''}
+      </div>
+      <img id="turf-img" class="turf-img" alt="Turf">
+    </div>
+  </section>
 
-    <script>
-        window.onload = function() {
-            loadLeaderboard();
-            loadHighlights();
-            loadTurfData();
-            buildLeaderboardInputs();
-        };
+  <section class="wrap content-section" id="highlights">
+    <div class="row-between" style="margin-bottom:26px">
+      <h2 class="section-title" style="margin:0">Media & <span>Highlights</span></h2>
+      ${me ? `<button class="btn btn-ok btn-sm" id="hl-up"><i class="fa-solid fa-upload"></i> Highlight Yükle</button>` : `<a class="btn btn-ghost btn-sm" href="#/login"><i class="fa-solid fa-lock"></i> Yüklemek için giriş yap</a>`}
+    </div>
+    <div class="hl-grid" id="hl-grid"></div>
+  </section>`;
+  const st = $('#tpl-static').content.cloneNode(true);
+  view.appendChild(st);
 
-        let cachedLeaderboard = [];
+  if (me && me.can.siteAdmin) { $('#lb-edit').onclick = openLbModal; $('#turf-edit').onclick = openTurfModal; }
+  if (me) $('#hl-up').onclick = openUploadModal;
 
-        async function loadLeaderboard() {
-            let res = await fetch('/api/leaderboard');
-            cachedLeaderboard = await res.json();
-            let tbody = document.getElementById('leaderboard-body');
-            tbody.innerHTML = '';
-            cachedLeaderboard.forEach(p => {
-                let medal = p.rank === 1 ? '🥇' : p.rank === 2 ? '🥈' : p.rank === 3 ? '🥉' : `#${p.rank}`;
-                tbody.innerHTML += `
-                    <tr>
-                        <td><strong>${medal}</strong></td>
-                        <td><i class="fa-solid fa-user-shield" style="color:#ff4500; margin-right:8px;"></i> ${p.name}</td>
-                        <td>${p.kills}</td>
-                        <td>${p.deaths}</td>
-                        <td><span style="color:#10b981; font-weight:bold;">${p.kd}</span></td>
-                    </tr>
-                `;
-            });
-        }
+  const [lb, turf] = await Promise.all([api('GET', '/api/leaderboard'), api('GET', '/api/turf')]);
+  window._lb = lb;
+  $('#lb-body').innerHTML = lb.map(p => `<tr><td><strong>${p.rank === 1 ? '🥇' : p.rank === 2 ? '🥈' : p.rank === 3 ? '🥉' : '#' + p.rank}</strong></td><td><i class="fa-solid fa-user-shield" style="color:var(--a3);margin-right:8px"></i>${esc(p.name)}</td><td>${p.kills}</td><td>${p.deaths}</td><td><span style="color:var(--ok);font-weight:600">${p.kd}</span></td></tr>`).join('');
+  $('#turf-gang').innerHTML = `<i class="fa-solid fa-flag"></i> ${esc(turf.gangName)}`;
+  $('#turf-leader').textContent = turf.leader; $('#turf-terr').textContent = turf.territory; $('#turf-img').src = turf.image;
+  await loadHighlights();
+  if (section) { const t = document.getElementById(section); if (t) setTimeout(() => t.scrollIntoView({ behavior: 'smooth' }), 50); }
+}
 
-        function buildLeaderboardInputs() {
-            let container = document.getElementById('lb-inputs-container');
-            container.innerHTML = '';
-            for (let i = 1; i <= 25; i++) {
-                let existing = cachedLeaderboard[i - 1] || { name: '', kills: '', deaths: '' };
-                container.innerHTML += `
-                    <div class="lb-row-inputs">
-                        <input type="text" id="lb-name-${i}" placeholder="${i}. Player Name" value="${existing.name}">
-                        <input type="number" id="lb-kills-${i}" placeholder="Kills" value="${existing.kills !== '' ? existing.kills : ''}">
-                        <input type="number" id="lb-deaths-${i}" placeholder="Deaths" value="${existing.deaths !== '' ? existing.deaths : ''}">
-                    </div>
-                `;
-            }
-        }
+async function loadHighlights() {
+  const data = await api('GET', '/api/highlights');
+  const g = $('#hl-grid'); if (!g) return;
+  g.innerHTML = data.length ? data.map(h => `<div class="card hl-card">
+    <iframe src="${esc(h.url)}" allowfullscreen loading="lazy" title="${esc(h.title)}"></iframe>
+    <div class="hl-info">
+      <div class="hl-title">${esc(h.title)}</div>
+      <div class="hl-meta">Added by <a href="#/u/${encodeURIComponent(h.author.username)}" style="color:var(--a3)">${esc(h.author.username)}</a> • ${esc(h.date)}</div>
+      <div class="hl-actions">
+        ${me && (me.id === h.author.id || me.can.moderate) ? `<button class="btn btn-bad btn-sm" data-del="${h.id}"><i class="fa-solid fa-trash"></i> Sil</button>` : ''}
+      </div></div></div>`).join('') : `<div class="card empty" style="grid-column:1/-1">Henüz klip yok. İlk klibi sen yükle!</div>`;
+  g.querySelectorAll('[data-del]').forEach(b => b.onclick = async () => {
+    if (!confirm('Bu klip silinsin mi?')) return;
+    try { await api('DELETE', '/api/highlights/' + b.dataset.del); toast('Klip silindi.', 'ok'); loadHighlights(); } catch (e) { fail(e); }
+  });
+}
 
-        async function loadHighlights() {
-            let res = await fetch('/api/highlights');
-            let data = await res.json();
-            let grid = document.getElementById('highlights-grid');
-            grid.innerHTML = data.length === 0 ? '<p style="color:#777;">Henüz klip eklenmemiş.</p>' : '';
-            
-            data.forEach(item => {
-                grid.innerHTML += `
-                    <div class="highlight-card">
-                        <iframe src="${item.url}" allowfullscreen></iframe>
-                        <div class="highlight-info">
-                            <div>
-                                <div class="highlight-title">${item.title}</div>
-                                <div class="highlight-meta">Added by <span style="color:#ff8c00; font-weight:600;">${item.author}</span> • ${item.date}</div>
-                            </div>
-                            <button class="btn-delete-clip" onclick="deleteHighlight(${item.id})"><i class="fa-solid fa-trash"></i> Delete</button>
-                        </div>
-                    </div>
-                `;
-            });
-        }
+/* ---- modals ---- */
+function modal(html) {
+  const root = $('#modal-root');
+  root.innerHTML = `<div class="modal"><div class="modal-content">${html}</div></div>`;
+  root.querySelector('.modal').addEventListener('mousedown', e => { if (e.target.classList.contains('modal')) closeModal(); });
+  return root;
+}
+const closeModal = () => { $('#modal-root').innerHTML = ''; };
 
-        async function deleteHighlight(id) {
-            let password = prompt("Enter Rio Security Password to delete this clip:");
-            if (!password) return;
+function openUploadModal() {
+  modal(`<h3><i class="fa-solid fa-upload"></i> Highlight Yükle</h3>
+    <div class="field"><label>Klip başlığı</label><input id="m-title" maxlength="120" placeholder="örn. 1v5 Clutch by Rio"></div>
+    <div class="field"><label>YouTube bağlantısı</label><input id="m-url" placeholder="https://www.youtube.com/watch?v=..."></div>
+    <div class="modal-buttons"><button class="btn btn-ghost btn-sm" onclick="closeModal()">İptal</button><button class="btn btn-primary btn-sm" id="m-ok">Yükle</button></div>`);
+  $('#m-ok').onclick = async () => {
+    try { await api('POST', '/api/highlights', { title: $('#m-title').value, url: $('#m-url').value }); closeModal(); toast('Highlight eklendi!', 'ok'); loadHighlights(); } catch (e) { fail(e); }
+  };
+}
+function openLbModal() {
+  let rows = '';
+  for (let i = 1; i <= 25; i++) { const p = (window._lb || [])[i - 1] || {}; rows += `<div class="lb-row"><input id="lb-n-${i}" placeholder="${i}. Player" value="${esc(p.name || '')}"><input id="lb-k-${i}" type="number" placeholder="Kills" value="${p.kills ?? ''}"><input id="lb-d-${i}" type="number" placeholder="Deaths" value="${p.deaths ?? ''}"></div>`; }
+  modal(`<h3><i class="fa-solid fa-trophy"></i> Leaderboard (25 oyuncuya kadar)</h3>${rows}<div class="modal-buttons"><button class="btn btn-ghost btn-sm" onclick="closeModal()">İptal</button><button class="btn btn-primary btn-sm" id="m-ok">Kaydet</button></div>`);
+  $('#m-ok').onclick = async () => {
+    const list = [];
+    for (let i = 1; i <= 25; i++) { const name = $('#lb-n-' + i).value.trim(); if (name) list.push({ name, kills: $('#lb-k-' + i).value, deaths: $('#lb-d-' + i).value }); }
+    try { await api('POST', '/api/leaderboard', { newLeaderboard: list }); closeModal(); toast('Leaderboard güncellendi.', 'ok'); route(); } catch (e) { fail(e); }
+  };
+}
+function openTurfModal() {
+  modal(`<h3><i class="fa-solid fa-flag"></i> Turf Düzenle</h3>
+    <div class="field"><label>Gang adı</label><input id="t-g" value="${esc($('#turf-gang').textContent.trim())}"></div>
+    <div class="field"><label>Lider</label><input id="t-l" value="${esc($('#turf-leader').textContent)}"></div>
+    <div class="field"><label>Bölge</label><input id="t-t" value="${esc($('#turf-terr').textContent)}"></div>
+    <div class="modal-buttons"><button class="btn btn-ghost btn-sm" onclick="closeModal()">İptal</button><button class="btn btn-primary btn-sm" id="m-ok">Kaydet</button></div>`);
+  $('#m-ok').onclick = async () => {
+    try { await api('POST', '/api/turf', { gangName: $('#t-g').value, leader: $('#t-l').value, territory: $('#t-t').value }); closeModal(); toast('Turf güncellendi.', 'ok'); route(); } catch (e) { fail(e); }
+  };
+}
 
-            let res = await fetch('/api/highlights/delete', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username: 'Rio', password, id })
-            });
-            let result = await res.json();
-            if (res.status === 401) { alert(result.error); return; }
-            if (result.success) {
-                alert("Klip başarıyla silindi!");
-                loadHighlights();
-            }
-        }
+/* ============================ FORUM ============================ */
+async function forumView(token) {
+  const [cats, recent] = await Promise.all([api('GET', '/api/forum/categories'), api('GET', '/api/forum/threads')]);
+  if (token !== routeToken) return;
+  view.innerHTML = `<div class="wrap page">
+    <div class="page-head row-between"><div><h1>Forum</h1><p class="muted">Rebel PvP topluluğu: itirazlar, şikayetler, klipler ve sohbet.</p></div>
+      ${me ? `<a class="btn btn-primary" href="#/new/general"><i class="fa-solid fa-plus"></i> Yeni Konu</a>` : `<a class="btn btn-primary" href="#/login"><i class="fa-solid fa-right-to-bracket"></i> Giriş Yap</a>`}</div>
+    <div class="cat-list">${cats.map(c => `<a class="card cat" href="#/forum/c/${c.id}" style="--c:${esc(c.color)}">
+      <div class="cat-ico"><i class="fa-solid ${esc(c.icon)}"></i></div>
+      <div><h3>${esc(c.name)}</h3><p>${esc(c.description)}</p></div>
+      <div class="stat"><b>${c.threads}</b>konu • ${c.posts} mesaj</div>
+      <div class="last">${c.latest ? `<a href="#/forum/t/${c.latest.id}">${prefixBadge(c.latest.prefix)}${esc(c.latest.title)}</a>${esc(c.latest.lastPoster ? c.latest.lastPoster.username : '')} • ${ago(c.latest.lastActivity)}` : 'Henüz konu yok'}</div></a>`).join('')}</div>
+    <h2 style="font-family:var(--head);font-size:1.7rem;margin:34px 0 14px">Son Aktivite</h2>
+    <div class="card t-list">${threadRows(recent.threads.slice(0, 10), cats)}</div></div>`;
+}
 
-        async function loadTurfData() {
-            let res = await fetch('/api/turf');
-            let turf = await res.json();
-            document.getElementById('turf-gang-title').innerHTML = `<i class="fa-solid fa-flag"></i> ${turf.gangName}`;
-            document.getElementById('turf-leader-name').innerText = turf.leader;
-            document.getElementById('turf-territory').innerText = turf.territory;
-            document.getElementById('turf-display-img').src = turf.image;
-        }
+function threadRows(list, cats) {
+  if (!list.length) return `<div class="empty">Henüz konu yok.</div>`;
+  return list.map(t => { const c = cats && cats.find(x => x.id === t.categoryId); return `<a class="t-row ${t.pinned ? 'pin' : ''}" href="#/forum/t/${t.id}">
+    <div style="min-width:0">${t.pinned ? '<i class="fa-solid fa-thumbtack" style="color:var(--a3);margin-right:6px"></i>' : ''}${t.locked ? '<i class="fa-solid fa-lock" style="color:var(--warn);margin-right:6px"></i>' : ''}${prefixBadge(t.prefix)}<span class="t-title">${esc(t.title)}</span>
+      <div class="t-sub">${esc(t.author.username)} • ${ago(t.createdAt)}${c ? ' • ' + esc(c.name) : ''}</div></div>
+    <div class="t-num"><b>${t.replies}</b>cevap</div><div class="t-num t-views"><b>${t.views}</b>görüntülenme</div>
+    <div class="t-last">${t.lastPoster ? esc(t.lastPoster.username) : ''}<br>${ago(t.lastActivity)}</div></a>`; }).join('');
+}
 
-        function openLeaderboardModal() { 
-            buildLeaderboardInputs(); 
-            document.getElementById('lb-modal').classList.remove('hidden'); 
-        }
-        function closeLeaderboardModal() { document.getElementById('lb-modal').classList.add('hidden'); document.getElementById('lb-pass').value = ''; }
+async function categoryView(id, token) {
+  const page = parseInt(new URLSearchParams(location.hash.split('?')[1] || '').get('p')) || 1;
+  const q = new URLSearchParams(location.hash.split('?')[1] || '').get('q') || '';
+  const cats = await api('GET', '/api/forum/categories');
+  const cat = cats.find(c => c.id === id);
+  if (!cat) throw new Error('Kategori bulunamadı.');
+  const d = await api('GET', `/api/forum/threads?category=${encodeURIComponent(id)}&page=${page}&q=${encodeURIComponent(q)}`);
+  if (token !== routeToken) return;
+  const pages = Math.max(1, Math.ceil(d.total / d.per));
+  const base = `#/forum/c/${id}?q=${encodeURIComponent(q)}&p=`;
+  view.innerHTML = `<div class="wrap page">
+    <div class="crumbs"><a href="#/forum">Forum</a> / ${esc(cat.name)}</div>
+    <div class="page-head row-between"><div><h1 style="color:${esc(cat.color)}"><i class="fa-solid ${esc(cat.icon)}"></i> ${esc(cat.name)}</h1><p class="muted">${esc(cat.description)}</p></div>
+      ${me ? `<a class="btn btn-primary" href="#/new/${cat.id}"><i class="fa-solid fa-plus"></i> Konu Oluştur</a>` : `<a class="btn btn-primary" href="#/login">Konu açmak için giriş yap</a>`}</div>
+    <div class="toolbar"><input id="c-q" placeholder="Bu kategoride ara..." value="${esc(q)}"></div>
+    <div class="card t-list">${threadRows(d.threads, [cat])}</div>
+    ${pages > 1 ? `<div class="pager">${page > 1 ? `<a class="btn btn-ghost btn-sm" href="${base}${page - 1}">‹ Önceki</a>` : ''}<span class="muted" style="align-self:center">${page} / ${pages}</span>${page < pages ? `<a class="btn btn-ghost btn-sm" href="${base}${page + 1}">Sonraki ›</a>` : ''}</div>` : ''}</div>`;
+  $('#c-q').addEventListener('keydown', e => { if (e.key === 'Enter') go(`#/forum/c/${id}?q=${encodeURIComponent(e.target.value)}&p=1`); });
+}
 
-        function openUploadModal() { document.getElementById('upload-modal').classList.remove('hidden'); }
-        function closeUploadModal() { document.getElementById('upload-modal').classList.add('hidden'); document.getElementById('up-pass').value = ''; }
-        
-        function openTurfModal() { document.getElementById('turf-modal').classList.remove('hidden'); }
-        function closeTurfModal() { document.getElementById('turf-modal').classList.add('hidden'); document.getElementById('turf-pass').value = ''; }
+async function threadView(id, token) {
+  const d = await api('GET', '/api/forum/threads/' + id);
+  if (token !== routeToken) return;
+  const t = d.thread, canMod = me && me.can.moderate;
+  view.innerHTML = `<div class="wrap page">
+    <div class="crumbs"><a href="#/forum">Forum</a> / <a href="#/forum/c/${d.category.id}">${esc(d.category.name)}</a></div>
+    <div class="thread-title">${t.pinned ? '<i class="fa-solid fa-thumbtack" style="color:var(--a3);font-size:1.3rem"></i> ' : ''}${t.locked ? '<i class="fa-solid fa-lock" style="color:var(--warn);font-size:1.3rem"></i> ' : ''}${prefixBadge(t.prefix)}${esc(t.title)}</div>
+    <p class="muted" style="margin-bottom:18px;font-size:.85rem">${esc(t.author.username)} tarafından • ${dt(t.createdAt)} • ${t.views} görüntülenme</p>
+    ${canMod ? `<div class="card modbar"><span class="lbl"><i class="fa-solid fa-gavel"></i> Moderasyon</span>
+      <button class="btn btn-ghost btn-sm" id="m-pin"><i class="fa-solid fa-thumbtack"></i> ${t.pinned ? 'Sabitlemeyi Kaldır' : 'Sabitle'}</button>
+      <button class="btn btn-ghost btn-sm" id="m-lock"><i class="fa-solid fa-${t.locked ? 'lock-open' : 'lock'}"></i> ${t.locked ? 'Kilidi Aç' : 'Kilitle'}</button>
+      <select id="m-prefix"><option value="">Prefix yok</option>${meta.prefixes.map(p => `<option value="${esc(p.id)}" ${t.prefix && t.prefix.id === p.id ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}</select>
+      <button class="btn btn-bad btn-sm" id="m-del" style="margin-left:auto"><i class="fa-solid fa-trash"></i> Konuyu Sil</button></div>` : ''}
+    <div id="posts">${d.posts.map(p => postHTML(p, t)).join('')}</div>
+    <div id="reply-box" style="margin-top:22px">${replyBox(t)}</div></div>`;
 
-        async function submitLeaderboardUpdate() {
-            let password = document.getElementById('lb-pass').value;
-            let newLeaderboard = [];
+  if (canMod) {
+    const patch = async b => { try { await api('PATCH', '/api/forum/threads/' + id, b); route(); } catch (e) { fail(e); } };
+    $('#m-pin').onclick = () => patch({ pinned: !t.pinned });
+    $('#m-lock').onclick = () => patch({ locked: !t.locked });
+    $('#m-prefix').onchange = e => patch({ prefix: e.target.value || null });
+    $('#m-del').onclick = async () => { if (!confirm('Bu konu tamamen silinsin mi?')) return; try { await api('DELETE', '/api/forum/threads/' + id); toast('Konu silindi.', 'ok'); go('#/forum/c/' + d.category.id); } catch (e) { fail(e); } };
+  }
+  view.querySelectorAll('[data-pdel]').forEach(b => b.onclick = async () => {
+    if (!confirm('Bu mesaj silinsin mi?')) return;
+    try { await api('DELETE', '/api/forum/posts/' + b.dataset.pdel); toast('Silindi.', 'ok'); route(); } catch (e) { fail(e); }
+  });
+  view.querySelectorAll('[data-pedit]').forEach(b => b.onclick = () => {
+    const pid = b.dataset.pedit, p = d.posts.find(x => x.id == pid), box = $('#pt-' + pid);
+    box.innerHTML = `<textarea id="ed-${pid}" style="min-height:120px">${esc(p.content)}</textarea><div style="margin-top:8px;display:flex;gap:8px;justify-content:flex-end"><button class="btn btn-ghost btn-sm" id="ed-c-${pid}">İptal</button><button class="btn btn-primary btn-sm" id="ed-s-${pid}">Kaydet</button></div>`;
+    $('#ed-c-' + pid).onclick = route;
+    $('#ed-s-' + pid).onclick = async () => { try { await api('PATCH', '/api/forum/posts/' + pid, { content: $('#ed-' + pid).value }); route(); } catch (e) { fail(e); } };
+  });
+  const send = $('#r-send');
+  if (send) send.onclick = async () => {
+    send.disabled = true;
+    try { await api('POST', `/api/forum/threads/${id}/reply`, { content: $('#r-text').value }); toast('Cevap gönderildi.', 'ok'); await route(); window.scrollTo(0, document.body.scrollHeight); } catch (e) { fail(e); send.disabled = false; }
+  };
+}
+function postHTML(p, t) {
+  const a = p.author, staff = a.level >= 30;
+  const own = me && me.id === a.id, canMod = me && me.can.moderate;
+  return `<div class="card post ${staff ? 'staff' : ''}" style="--c:${esc(a.color)}">
+    <div class="post-side">${avatar(a, 64)}${userLink(a)}${rankBadge(a)}<small>${a.postCount} mesaj<br>Katılım: ${new Date(a.joined).toLocaleDateString('tr-TR')}</small></div>
+    <div class="post-body"><div class="post-meta"><span>${dt(p.createdAt)}${p.editedAt ? ' • düzenlendi ' + ago(p.editedAt) : ''}</span><span>${p.first ? 'Konu başlatıcı' : '#' + p.id}</span></div>
+      <div class="post-text" id="pt-${p.id}">${fmt(p.content)}</div>
+      ${(own || canMod) && (!t.locked || canMod) ? `<div class="post-foot"><button class="btn btn-ghost btn-sm" data-pedit="${p.id}"><i class="fa-solid fa-pen"></i> Düzenle</button>${(canMod || (own && !p.first)) ? `<button class="btn btn-bad btn-sm" data-pdel="${p.id}"><i class="fa-solid fa-trash"></i> Sil</button>` : ''}</div>` : ''}
+    </div></div>`;
+}
+function replyBox(t) {
+  if (!me) return `<div class="card empty">Cevap yazmak için <a href="#/login" style="color:var(--a3)">giriş yap</a> veya <a href="#/register" style="color:var(--a3)">kayıt ol</a>.</div>`;
+  if (t.locked && !me.can.moderate) return `<div class="locked-note"><i class="fa-solid fa-lock"></i> Bu konu kilitli, yeni cevap yazılamaz.</div>`;
+  return `<div class="card" style="padding:20px"><label>${me.can.moderate ? 'Yetkili cevabı' : 'Cevabın'}${t.locked ? ' (konu kilitli — sadece yetkililer yazabilir)' : ''}</label><textarea id="r-text" maxlength="5000" placeholder="Mesajını yaz..."></textarea><div style="margin-top:12px;text-align:right"><button class="btn btn-primary" id="r-send"><i class="fa-solid fa-paper-plane"></i> Gönder</button></div></div>`;
+}
 
-            for (let i = 1; i <= 25; i++) {
-                let name = document.getElementById(`lb-name-${i}`).value.trim();
-                let kills = parseInt(document.getElementById(`lb-kills-${i}`).value) || 0;
-                let deaths = parseInt(document.getElementById(`lb-deaths-${i}`).value) || 0;
+async function newThreadView(catId) {
+  if (!me) return needLogin('Konu oluşturmak için giriş yapmalısın.');
+  try { me = (await api('GET', '/api/me')).user || me; } catch (e) {}
+  const cats = await api('GET', '/api/forum/categories');
+  const cur = cats.find(c => c.id === catId) || cats[0];
+  view.innerHTML = `<div class="wrap page" style="max-width:820px"><div class="crumbs"><a href="#/forum">Forum</a> / Yeni Konu</div>
+    <div class="card" style="padding:28px"><h1 style="font-family:var(--head);font-size:2rem;margin-bottom:6px">Yeni Konu Oluştur</h1>
+    ${me.can.moderate ? '' : '<p class="muted" style="font-size:.84rem;margin-bottom:18px"><i class="fa-solid fa-clock"></i> 10 dakikada yalnızca 1 konu açabilirsin.</p>'}
+    <div id="cd-note"></div>
+    <div class="field"><label>Kategori</label><select id="n-cat">${cats.map(c => `<option value="${c.id}" ${c.id === cur.id ? 'selected' : ''}>${esc(c.name)}</option>`).join('')}</select></div>
+    <div class="field"><label>Başlık</label><input id="n-title" maxlength="120" placeholder="Kısa ve açıklayıcı bir başlık"></div>
+    <div class="field"><label>Mesaj</label><textarea id="n-text" style="min-height:240px" maxlength="5000"></textarea></div>
+    <div style="text-align:right"><button class="btn btn-primary" id="n-go"><i class="fa-solid fa-paper-plane"></i> Konuyu Yayınla</button></div></div></div>`;
+  const setTpl = () => { const c = cats.find(x => x.id === $('#n-cat').value); const ta = $('#n-text'); if (!ta.value.trim() || ta.dataset.tpl === '1') { ta.value = c.template || ''; ta.dataset.tpl = '1'; } };
+  $('#n-text').addEventListener('input', () => $('#n-text').dataset.tpl = '0');
+  $('#n-cat').onchange = setTpl; setTpl();
+  const tick = () => {
+    const left = Math.ceil(((me.nextThreadAt || 0) - Date.now()) / 1000);
+    if (left > 0) { $('#cd-note').innerHTML = `<div class="locked-note" style="margin-bottom:16px"><i class="fa-solid fa-hourglass-half"></i> Yeni konu açmak için <b>${Math.floor(left / 60)} dk ${left % 60} sn</b> beklemelisin.</div>`; $('#n-go').disabled = true; }
+    else { $('#cd-note').innerHTML = ''; $('#n-go').disabled = false; clearInterval(window._cd); }
+  };
+  if ((me.nextThreadAt || 0) > Date.now()) { tick(); window._cd = setInterval(tick, 1000); }
+  $('#n-go').onclick = async () => {
+    $('#n-go').disabled = true;
+    try { const r = await api('POST', '/api/forum/threads', { categoryId: $('#n-cat').value, title: $('#n-title').value, content: $('#n-text').value }); toast('Konu oluşturuldu!', 'ok'); go('#/forum/t/' + r.id); }
+    catch (e) { fail(e); if (e.status === 429) { try { me = (await api('GET', '/api/me')).user || me; } catch (x) {} tick(); window._cd = setInterval(tick, 1000); } else $('#n-go').disabled = false; }
+  };
+}
 
-                if (name !== "") {
-                    let kd = deaths === 0 ? kills.toFixed(2) : (kills / deaths).toFixed(2);
-                    newLeaderboard.push({
-                        rank: newLeaderboard.length + 1,
-                        name: name,
-                        kills: kills,
-                        deaths: deaths,
-                        kd: parseFloat(kd)
-                    });
-                }
-            }
+/* ============================ PROFILE / SETTINGS ============================ */
+async function profileView(name) {
+  const d = await api('GET', '/api/users/' + encodeURIComponent(name));
+  const u = d.user, own = me && me.id === u.id;
+  view.innerHTML = `<div class="wrap page" style="max-width:900px">
+    <div class="card profile-head" style="--c:${esc(u.color)}">${avatar(u, 110)}
+      <div style="flex:1;min-width:220px"><h1 style="color:${u.level >= 30 ? esc(u.color) : '#fff'}">${esc(u.username)}</h1>
+        <div style="margin:6px 0">${rankBadge(u)} ${u.banned ? '<span class="rank" style="--c:#ef4444">Banned</span>' : ''}</div>
+        <div class="stat-row"><div><b>${d.stats.threads}</b>konu</div><div><b>${d.stats.posts}</b>mesaj</div><div><b>${new Date(u.createdAt).toLocaleDateString('tr-TR')}</b>katılım</div></div></div>
+      ${own ? `<a class="btn btn-ghost btn-sm" href="#/settings"><i class="fa-solid fa-pen"></i> Profili Düzenle</a>` : ''}</div>
+    <div class="profile-grid">
+      <div class="card" style="padding:22px"><h3 style="font-family:var(--head);font-size:1.4rem;margin-bottom:10px">Bio</h3><p style="white-space:pre-wrap;overflow-wrap:anywhere" class="${u.bio ? '' : 'muted'}">${esc(u.bio) || 'Henüz bio yazılmamış.'}</p>
+        ${u.discord ? `<p style="margin-top:14px" class="muted"><i class="fa-brands fa-discord"></i> ${esc(u.discord)}</p>` : ''}</div>
+      <div class="card" style="padding:22px"><h3 style="font-family:var(--head);font-size:1.4rem;margin-bottom:10px">Son Konular</h3>
+        ${d.recent.length ? d.recent.map(t => `<p style="margin-bottom:8px"><a href="#/forum/t/${t.id}" style="color:var(--a3);text-decoration:none">${esc(t.title)}</a> <span class="muted" style="font-size:.78rem">• ${ago(t.createdAt)}</span></p>`).join('') : '<p class="muted">Henüz konu yok.</p>'}</div>
+    </div></div>`;
+}
 
-            let res = await fetch('/api/leaderboard', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username: 'Rio', password, newLeaderboard })
-            });
-            let result = await res.json();
-            if (res.status === 401) { alert(result.error); return; }
-            if (result.success) {
-                alert("Leaderboard başarıyla güncellendi!");
-                closeLeaderboardModal();
-                loadLeaderboard();
-            }
-        }
+function settingsView() {
+  if (!me) return needLogin();
+  view.innerHTML = `<div class="wrap page"><h1 style="font-family:var(--head);font-size:2.3rem;margin-bottom:22px">Hesap Ayarları</h1>
+    <div class="card set-card"><h3>Profil</h3>
+      <div class="field"><label>Kullanıcı adı</label><input id="s-user" maxlength="20" value="${esc(me.username)}"></div>
+      <div class="field"><label>Discord</label><input id="s-dc" maxlength="40" value="${esc(me.discord)}" placeholder="örn. onenightsuddenly"></div>
+      <div class="field"><label>Avatar bağlantısı (https://...)</label><input id="s-av" value="${esc(me.avatar)}" placeholder="Resim URL'si — boş bırakırsan harf avatarı kullanılır"></div>
+      <div class="field"><label>Bio (en fazla 300 karakter)</label><textarea id="s-bio" maxlength="300" style="min-height:100px">${esc(me.bio)}</textarea></div>
+      <button class="btn btn-primary" id="s-save">Kaydet</button></div>
+    <div class="card set-card"><h3>Şifre Değiştir</h3>
+      <div class="field"><label>Mevcut şifre</label><input id="p-cur" type="password" autocomplete="current-password"></div>
+      <div class="field"><label>Yeni şifre</label><input id="p-new" type="password" autocomplete="new-password"></div>
+      <button class="btn btn-ghost" id="p-save">Şifreyi Güncelle</button></div></div>`;
+  $('#s-save').onclick = async () => {
+    try { const d = await api('PATCH', '/api/me', { username: $('#s-user').value.trim(), discord: $('#s-dc').value, avatar: $('#s-av').value, bio: $('#s-bio').value }); me = d.user; renderUserArea(); toast('Profil güncellendi.', 'ok'); } catch (e) { fail(e); }
+  };
+  $('#p-save').onclick = async () => {
+    try { await api('POST', '/api/me/password', { current: $('#p-cur').value, next: $('#p-new').value }); $('#p-cur').value = $('#p-new').value = ''; toast('Şifre güncellendi.', 'ok'); } catch (e) { fail(e); }
+  };
+}
 
-        async function submitHighlight() {
-            let password = document.getElementById('up-pass').value;
-            let title = document.getElementById('up-title').value;
-            let url = document.getElementById('up-url').value;
+/* ============================ ADMIN ============================ */
+async function adminView() {
+  if (!me) return needLogin();
+  if (!me.can.banUsers) throw new Error('Bu sayfa için yetkin yok.');
+  const [users, stats] = await Promise.all([api('GET', '/api/admin/users'), api('GET', '/api/admin/stats')]);
+  const S = { tab: 'overview', q: '', rank: '', status: '' };
+  const reload = async () => { const [u, st] = await Promise.all([api('GET', '/api/admin/users'), api('GET', '/api/admin/stats')]); users.length = 0; users.push(...u); Object.keys(stats).forEach(k => delete stats[k]); Object.assign(stats, st); draw(); };
 
-            let res = await fetch('/api/highlights', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username: 'Rio', password, title, url })
-            });
-            let result = await res.json();
-            if (res.status === 401) { alert(result.error); return; }
-            if (result.success) { alert("Highlight eklendi!"); closeUploadModal(); loadHighlights(); }
-        }
+  const userRow = u => `<div class="card u-row ${u.banned ? 'banned' : ''}">
+    <div class="u-main">${avatar(u, 44)}<div style="min-width:0">${userLink(u)} ${rankBadge(u)} ${u.banned ? '<span class="rank" style="--c:#ef4444">Banned</span>' : ''}
+      <small>Katılım: ${new Date(u.createdAt).toLocaleDateString('tr-TR')}${u.banned && u.banReason ? ' • Sebep: ' + esc(u.banReason) + (u.bannedBy ? ' (' + esc(u.bannedBy) + ')' : '') : ''}</small></div></div>
+    <div class="u-act">
+      ${me.can.siteAdmin && !u.root && u.id !== me.id && u.level < 40 && !u.banned ? `<button class="btn btn-ok btn-sm" data-quick="${u.id}"><i class="fa-solid fa-user-shield"></i> Admin Yap</button>` : ''}
+      ${me.can.siteAdmin && !u.root ? `<select data-rank="${u.id}" title="Rank değiştir">${meta.ranks.map(r => `<option value="${r.id}" ${r.id === u.rank ? 'selected' : ''}>${esc(r.name)}</option>`).join('')}</select>` : ''}
+      ${me.can.siteAdmin && u.hasIp && !u.root ? `<button class="btn btn-ghost btn-sm" data-clearip="${u.id}" title="Bu IP'den yeni hesap açılmasına izin ver"><i class="fa-solid fa-network-wired"></i> IP Sıfırla</button>` : ''}
+      ${u.id !== me.id && !u.root ? (u.banned ? `<button class="btn btn-ghost btn-sm" data-unban="${u.id}"><i class="fa-solid fa-unlock"></i> Ban Kaldır</button>` : `<button class="btn btn-bad btn-sm" data-ban="${u.id}" data-name="${esc(u.username)}"><i class="fa-solid fa-ban"></i> Banla</button>`) : ''}
+    </div></div>`;
 
-        async function submitTurfUpdate() {
-            let password = document.getElementById('turf-pass').value;
-            let gangName = document.getElementById('turf-gang').value;
-            let leader = document.getElementById('turf-lead').value;
-            let territory = document.getElementById('turf-terr').value;
+  function body() {
+    if (S.tab === 'overview') {
+      const max = Math.max(1, ...stats.ranks.map(r => r.count));
+      return `<h1 class="adm-title">Genel Bakış</h1><p class="adm-sub">Sitenin anlık durumu.</p>
+      <div class="stats">
+        <div class="card stat" style="--c:#a855f7"><i class="fa-solid fa-users"></i><b>${stats.users}</b><span>Toplam kullanıcı</span></div>
+        <div class="card stat" style="--c:#3b82f6"><i class="fa-solid fa-user-plus"></i><b>${stats.newToday}</b><span>Son 24 saatte katılan</span></div>
+        <div class="card stat" style="--c:#10b981"><i class="fa-solid fa-user-shield"></i><b>${stats.staff}</b><span>Yetkili</span></div>
+        <div class="card stat" style="--c:#ef4444"><i class="fa-solid fa-ban"></i><b>${stats.banned}</b><span>Banlı</span></div>
+        <div class="card stat" style="--c:#f59e0b"><i class="fa-solid fa-comments"></i><b>${stats.threads}</b><span>Konu • ${stats.posts} mesaj</span></div></div>
+      <div class="two-col">
+        <div class="card panel"><h3><i class="fa-solid fa-chart-simple" style="color:var(--a3)"></i> Rank Dağılımı</h3>
+          ${stats.ranks.map(r => `<div class="bar-row"><span style="color:${esc(r.color)};font-weight:600">${esc(r.name)}</span><div class="bar-track"><i style="width:${Math.round(r.count / max * 100)}%;--c:${esc(r.color)}"></i></div><b>${r.count}</b></div>`).join('')}</div>
+        <div class="card panel"><h3><i class="fa-solid fa-clock-rotate-left" style="color:var(--a3)"></i> Son Kayıtlar</h3>
+          ${stats.recent.map(u => `<div class="mini-u">${avatar(u, 36)}<div>${userLink(u)}<small>${ago(u.createdAt)}</small></div><span style="margin-left:auto">${rankBadge(u)}</span></div>`).join('') || '<p class="muted">Henüz kayıt yok.</p>'}</div>
+      </div>`;
+    }
+    if (S.tab === 'prefix') return `<h1 class="adm-title">Forum Prefixleri</h1><p class="adm-sub">Konulara verilen etiketler (On Consideration, Approved...).</p>
+      <div class="card panel"><div>${meta.prefixes.map(p => `<span class="pf-chip"><span class="prefix" style="--c:${esc(p.color)};margin:0">${esc(p.name)}</span><button data-pfdel="${esc(p.id)}" title="Sil"><i class="fa-solid fa-xmark"></i></button></span>`).join('')}</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px"><input id="pf-name" placeholder="Yeni prefix adı" maxlength="24" style="max-width:240px"><input id="pf-color" type="color" value="#a855f7" style="width:60px;padding:4px;height:46px"><button class="btn btn-primary btn-sm" id="pf-add"><i class="fa-solid fa-plus"></i> Prefix Ekle</button></div></div>`;
+    if (S.tab === 'staff') {
+      const staff = users.filter(u => u.level >= 30);
+      return `<h1 class="adm-title">Yetkili Ekibi</h1><p class="adm-sub">Rank'a göre gruplanmış yetkililer.</p>` + meta.ranks.filter(r => r.level >= 30).map(r => { const l = staff.filter(u => u.rank === r.id); return `<div class="grp-title" style="color:${esc(r.color)}">${esc(r.name)} <small>${l.length} kişi</small></div>${l.length ? l.map(userRow).join('') : '<div class="card empty" style="padding:16px">Bu rankta kimse yok.</div>'}`; }).join('');
+    }
+    if (S.tab === 'banned') { const l = users.filter(u => u.banned); return `<h1 class="adm-title">Banlılar</h1><p class="adm-sub">${l.length} banlı hesap.</p>` + (l.length ? l.map(userRow).join('') : `<div class="card empty">Banlı kullanıcı yok.</div>`); }
+    const q = S.q.toLowerCase();
+    const l = users.filter(u => (!q || u.username.toLowerCase().includes(q)) && (!S.rank || u.rank === S.rank) && (!S.status || (S.status === 'banned' ? u.banned : !u.banned)));
+    return `<h1 class="adm-title">Kullanıcılar</h1><p class="adm-sub">${users.length} kayıtlı hesap. Rank ver, banla.</p>
+      <div class="adm-bar"><input id="u-q" placeholder="Kullanıcı ara..." value="${esc(S.q)}">
+      <select id="u-rank"><option value="">Tüm rankler</option>${meta.ranks.map(r => `<option value="${r.id}" ${S.rank === r.id ? 'selected' : ''}>${esc(r.name)}</option>`).join('')}</select>
+      <select id="u-status"><option value="">Tüm durumlar</option><option value="active" ${S.status === 'active' ? 'selected' : ''}>Aktif</option><option value="banned" ${S.status === 'banned' ? 'selected' : ''}>Banlı</option></select></div>
+      <div id="u-list">${l.length ? l.map(userRow).join('') : '<div class="card empty">Sonuç yok.</div>'}</div>`;
+  }
 
-            let res = await fetch('/api/turf', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username: 'Rio', password, gangName, leader, territory })
-            });
-            let result = await res.json();
-            if (res.status === 401) { alert("Yetkisiz şifre!"); return; }
-            alert("Turf bilgileri güncellendi!");
-            closeTurfModal();
-            loadTurfData();
-        }
-    </script>
+  function draw() {
+    const tabs = [['overview', 'fa-gauge-high', 'Genel Bakış', ''], ['users', 'fa-users', 'Kullanıcılar', stats.users], ['staff', 'fa-user-shield', 'Yetkili Ekibi', stats.staff], ['banned', 'fa-ban', 'Banlılar', stats.banned], ['prefix', 'fa-tags', 'Prefixler', meta.prefixes.length]];
+    view.innerHTML = `<div class="wrap page"><div class="adm">
+      <aside class="card adm-side"><div class="adm-me">${avatar(me, 42)}<div><b>${esc(me.username)}</b>${rankBadge(me)}</div></div>
+        <nav class="adm-nav">${tabs.map(t => `<button data-tab="${t[0]}" class="${S.tab === t[0] ? 'on' : ''}"><i class="fa-solid ${t[1]}"></i> ${t[2]}${t[3] !== '' ? `<span class="cnt">${t[3]}</span>` : ''}</button>`).join('')}</nav></aside>
+      <section id="adm-body">${body()}</section></div></div>`;
+    wire();
+  }
+
+  function refreshList() {
+    const q = S.q.toLowerCase();
+    const l = users.filter(u => (!q || u.username.toLowerCase().includes(q)) && (!S.rank || u.rank === S.rank) && (!S.status || (S.status === 'banned' ? u.banned : !u.banned)));
+    $('#u-list').innerHTML = l.length ? l.map(userRow).join('') : '<div class="card empty">Sonuç yok.</div>';
+    wireRows();
+  }
+
+  function wireRows() {
+    view.querySelectorAll('[data-rank]').forEach(s => s.onchange = async () => { try { await api('POST', `/api/admin/users/${s.dataset.rank}/rank`, { rank: s.value }); toast('Rank güncellendi.', 'ok'); } catch (e) { fail(e); } reload(); });
+    view.querySelectorAll('[data-quick]').forEach(b => b.onclick = async () => { try { await api('POST', `/api/admin/users/${b.dataset.quick}/rank`, { rank: 'administrator' }); toast('Administrator yapıldı.', 'ok'); } catch (e) { fail(e); } reload(); });
+    view.querySelectorAll('[data-unban]').forEach(b => b.onclick = async () => { try { await api('POST', `/api/admin/users/${b.dataset.unban}/ban`, { banned: false }); toast('Ban kaldırıldı.', 'ok'); } catch (e) { fail(e); } reload(); });
+    view.querySelectorAll('[data-clearip]').forEach(b => b.onclick = async () => { if (!confirm('Bu kullanıcının IP kaydı silinsin mi? (Aynı IP\'den yeni hesap açılabilir)')) return; try { await api('POST', `/api/admin/users/${b.dataset.clearip}/clear-ip`, {}); toast('IP kaydı silindi.', 'ok'); } catch (e) { fail(e); } reload(); });
+    view.querySelectorAll('[data-ban]').forEach(b => b.onclick = () => {
+      modal(`<h3><i class="fa-solid fa-ban"></i> ${esc(b.dataset.name)} banlansın mı?</h3>
+        <div class="field"><label>Ban sebebi (kullanıcı giriş yapmaya çalışınca görür)</label><input id="b-reason" maxlength="200" placeholder="örn. Hile kullanımı"></div>
+        <div class="modal-buttons"><button class="btn btn-ghost btn-sm" onclick="closeModal()">İptal</button><button class="btn btn-bad btn-sm" id="b-ok">Banla</button></div>`);
+      $('#b-ok').onclick = async () => { try { await api('POST', `/api/admin/users/${b.dataset.ban}/ban`, { banned: true, reason: $('#b-reason').value }); closeModal(); toast('Kullanıcı banlandı.', 'ok'); } catch (e) { fail(e); } reload(); };
+    });
+  }
+
+  function wire() {
+    view.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { S.tab = b.dataset.tab; draw(); });
+    const q = $('#u-q');
+    if (q) {
+      q.oninput = () => { S.q = q.value; refreshList(); };
+      $('#u-rank').onchange = e => { S.rank = e.target.value; refreshList(); };
+      $('#u-status').onchange = e => { S.status = e.target.value; refreshList(); };
+    }
+    wireRows();
+    const add = $('#pf-add');
+    if (add) add.onclick = async () => { try { const r = await api('POST', '/api/forum/prefixes', { name: $('#pf-name').value, color: $('#pf-color').value }); meta.prefixes = r.prefixes; draw(); } catch (e) { fail(e); } };
+    view.querySelectorAll('[data-pfdel]').forEach(b => b.onclick = async () => { if (!confirm('Prefix silinsin mi?')) return; try { const r = await api('DELETE', '/api/forum/prefixes/' + b.dataset.pfdel); meta.prefixes = r.prefixes; draw(); } catch (e) { fail(e); } });
+  }
+  draw();
+}
+
+/* ============================ boot ============================ */
+(async function () {
+  try { const [m, mt] = await Promise.all([api('GET', '/api/me'), api('GET', '/api/meta')]); me = m.user; meta = mt; } catch (e) {}
+  renderUserArea();
+  route();
+})();
+</script>
 </body>
 </html>
