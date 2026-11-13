@@ -293,6 +293,66 @@ footer{text-align:center;padding:26px;background:#050409;border-top:1px solid rg
 .grp-title small{font-family:var(--body);font-size:.78rem;color:var(--mut)}
 @media(max-width:980px){.adm{grid-template-columns:1fr}.adm-side{position:static}.adm-nav{flex-direction:row;overflow-x:auto}.adm-nav button{white-space:nowrap;width:auto}.adm-me{display:none}.two-col{grid-template-columns:1fr}}
 @media(max-width:700px){.u-row{grid-template-columns:1fr}.u-act{justify-content:flex-start}}
+
+/* ===== RANK ANIMASYONLARI ===== */
+@keyframes rbText{from{background-position:0% 0}to{background-position:200% 0}}
+@keyframes bwGlow{0%,100%{filter:drop-shadow(0 0 3px rgba(255,255,255,.55))}50%{filter:drop-shadow(0 0 11px rgba(255,255,255,.95))}}
+@keyframes bwBadge{0%,100%{box-shadow:0 0 6px rgba(255,255,255,.35)}50%{box-shadow:0 0 16px rgba(255,255,255,.8)}}
+.nm-project_co_leader,.rank.rk-project_co_leader .rt{background:linear-gradient(90deg,#ff3b3b,#ff9d00,#ffe600,#2bd957,#00c8ff,#6a5cff,#d946ef,#ff3b3b);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent!important;animation:rbText 3.5s linear infinite}
+.rank.rk-project_co_leader{border:1px solid transparent;background:linear-gradient(#150f26,#150f26) padding-box,linear-gradient(90deg,#ff3b3b,#ff9d00,#ffe600,#2bd957,#00c8ff,#6a5cff,#d946ef,#ff3b3b) border-box;background-size:100% 100%,200% 100%;animation:rbText 3.5s linear infinite}
+.nm-project_leader,.nm-project_leader:hover{background:linear-gradient(90deg,#fff,#8a8a8a,#050505,#8a8a8a,#fff);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent!important;animation:rbText 3s linear infinite,bwGlow 2s ease-in-out infinite}
+.rank.rk-project_leader{isolation:isolate;border:1px solid #fff;background:linear-gradient(90deg,#000,#fff,#000);background-size:200% 100%;animation:rbText 3s linear infinite,bwBadge 2s ease-in-out infinite;color:#fff}
+.rank.rk-project_leader .rt{mix-blend-mode:difference;color:#fff}
+
+/* ===== FORUM KATEGORİ KARTI ===== */
+.cat{cursor:pointer}
+.cat .last .by{display:block;margin-top:2px;color:var(--mut);font-size:.76rem}
+.arc-note{display:flex;gap:10px;align-items:center;margin-bottom:16px;padding:12px 16px;border-radius:12px;background:rgba(154,147,179,.1);border:1px solid rgba(154,147,179,.35);color:#cfc9e2;font-size:.88rem}
+
+/* ===== PROFİL KARTI ===== */
+.pcard{position:relative;overflow:hidden;--pa:#a855f7;background:#120e1f}
+.pbanner{height:230px;position:relative;overflow:hidden;background:linear-gradient(135deg,color-mix(in srgb,var(--pa) 85%,#000),color-mix(in srgb,var(--pa) 28%,#0a0814) 60%,#0a0814)}
+.pbanner::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 18% 28%,rgba(255,255,255,.2),transparent 45%),repeating-linear-gradient(45deg,rgba(255,255,255,.045) 0 2px,transparent 2px 16px)}
+.pbanner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pbanner::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,transparent 45%,rgba(18,14,31,.96))}
+.phead{display:flex;gap:22px;align-items:flex-end;padding:0 32px;margin-top:-62px;position:relative;z-index:2;flex-wrap:wrap}
+.pav .av{border-width:4px;box-shadow:0 0 0 4px #120e1f,0 0 32px color-mix(in srgb,var(--pa) 65%,transparent)}
+.pinfo{flex:1;min-width:220px;padding-bottom:8px}
+.pinfo h1{font-family:var(--head);font-size:2.6rem;line-height:1.05}
+.prow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px}
+.pstatus{margin-top:9px;color:#d4cee8;font-size:.92rem}
+.pstatus i{color:var(--pa);margin-right:7px;font-size:.75rem}
+.pbody{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;padding:26px 32px 32px;position:relative;z-index:2}
+.pbox{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:18px}
+.pbox h3{font-family:var(--head);font-size:1.25rem;margin-bottom:10px;color:var(--pa)}
+.pstats{display:flex;gap:28px;flex-wrap:wrap}
+.pstats div{font-size:.78rem;color:var(--mut)}
+.pstats b{display:block;font-family:var(--head);font-size:1.6rem;color:#fff;line-height:1.1}
+.pcard.compact .pbody{grid-template-columns:1fr;padding:20px}
+.pcard.compact .pbanner{height:150px}
+.pcard.compact .phead{padding:0 20px;gap:14px}
+.pcard.compact .pinfo h1{font-size:2rem}
+.pfx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
+@keyframes neonP{0%,100%{box-shadow:0 0 12px color-mix(in srgb,var(--pa) 55%,transparent),0 0 30px color-mix(in srgb,var(--pa) 25%,transparent)}50%{box-shadow:0 0 24px var(--pa),0 0 64px color-mix(in srgb,var(--pa) 55%,transparent)}}
+.pcard.fr-neon{border-color:var(--pa);animation:neonP 2.4s ease-in-out infinite}
+.pcard.fr-rainbow{border:3px solid transparent;background:linear-gradient(#120e1f,#120e1f) padding-box,linear-gradient(90deg,#ff3b3b,#ff9d00,#ffe600,#2bd957,#00c8ff,#6a5cff,#d946ef,#ff3b3b) border-box;background-size:100% 100%,200% 100%;animation:rbText 4s linear infinite}
+.pcard.fr-gold{border:3px solid transparent;background:linear-gradient(#120e1f,#120e1f) padding-box,linear-gradient(90deg,#b7791f,#fbbf24,#fff3b0,#fbbf24,#b7791f) border-box;background-size:100% 100%,200% 100%;animation:rbText 3s linear infinite;box-shadow:0 0 26px rgba(251,191,36,.25)}
+
+/* ===== AYARLAR ===== */
+.set-grid{display:grid;grid-template-columns:1fr 460px;gap:22px;align-items:start}
+.set-prev{position:sticky;top:86px}
+.set-prev h4{font-family:var(--head);font-size:1.2rem;margin-bottom:10px;color:var(--mut)}
+.set-card{max-width:none}
+.img-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.img-row .thumb{width:64px;height:64px;border-radius:50%;overflow:hidden;flex-shrink:0}
+.img-row .thumb.wide{width:150px;height:50px;border-radius:10px;background:#1b1530 center/cover;position:relative}
+.img-row .thumb.wide img{width:100%;height:100%;object-fit:cover}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:8px 15px;border-radius:20px;border:1px solid var(--line);background:var(--panel2);color:#ddd6f0;cursor:pointer;font-size:.82rem;font-weight:500}
+.chip:hover{border-color:var(--a)}
+.chip.on{background:linear-gradient(45deg,var(--a2),var(--a));color:#fff;border-color:transparent}
+.sec-label{font-size:.8rem;color:var(--a3);font-weight:600;margin:18px 0 8px;display:block;text-transform:uppercase;letter-spacing:.5px}
+@media(max-width:1000px){.set-grid{grid-template-columns:1fr}.set-prev{position:static;order:-1}.pbody{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -487,9 +547,11 @@ function toast(msg, type = '') {
 const fail = e => toast(e.message || 'Hata', 'bad');
 
 const avatar = (u, size = 40) => `<span class="av" style="width:${size}px;height:${size}px;font-size:${Math.round(size * .42)}px;--c:${esc(u.color)}">${esc((u.username || '?')[0].toUpperCase())}${u.avatar ? `<img src="${esc(u.avatar)}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">` : ''}</span>`;
-const rankBadge = u => `<span class="rank" style="--c:${esc(u.color)}">${esc(u.rankName)}</span>`;
+const SPECIAL_RANK = { project_co_leader: 1, project_leader: 1 };
+const rankBadge = u => `<span class="rank rk-${esc(u.rank)}" style="--c:${esc(u.color)}"><span class="rt">${esc(u.rankName)}</span></span>`;
 const prefixBadge = p => p ? `<span class="prefix" style="--c:${esc(p.color)}">${esc(p.name)}</span>` : '';
-const userLink = u => `<a class="uname" href="#/u/${encodeURIComponent(u.username)}" style="color:${u.level >= 30 ? esc(u.color) : '#fff'}">${esc(u.username)}</a>`;
+const nameAttr = u => SPECIAL_RANK[u.rank] ? `class="uname nm-${esc(u.rank)}"` : `class="uname" style="color:${u.level >= 30 ? esc(u.color) : '#fff'}"`;
+const userLink = u => `<a ${nameAttr(u)} href="#/u/${encodeURIComponent(u.username)}">${esc(u.username)}</a>`;
 
 let me = null, meta = { ranks: [], prefixes: [] }, routeToken = 0;
 
@@ -519,6 +581,7 @@ function go(h) { location.hash = h; }
 async function route() {
   const token = ++routeToken;
   clearInterval(window._cd);
+  if (window._fxStop) { window._fxStop(); window._fxStop = null; }
   const parts = (location.hash.replace(/^#\/?/, '').split('?')[0] || 'home').split('/');
   document.querySelectorAll('[data-nav]').forEach(a => a.classList.toggle('active', a.dataset.nav === (parts[0] === 'forum' || parts[0] === 'new' ? 'forum' : parts[0])));
   window.scrollTo(0, 0);
@@ -528,13 +591,14 @@ async function route() {
       case 'login': authView('login'); break;
       case 'register': authView('register'); break;
       case 'forum':
-        if (parts[1] === 'c') await categoryView(parts[2], token);
+        if (parts[1] === 'archive') await archiveView(token);
+        else if (parts[1] === 'c') await categoryView(parts[2], token);
         else if (parts[1] === 't') await threadView(+parts[2], token);
         else await forumView(token);
         break;
       case 'new': await newThreadView(parts[1]); break;
       case 'u': await profileView(decodeURIComponent(parts[1] || '')); break;
-      case 'settings': settingsView(); break;
+      case 'settings': await settingsView(); break;
       case 'admin': await adminView(); break;
       default: await homeView();
     }
@@ -730,21 +794,23 @@ async function forumView(token) {
   const [cats, recent] = await Promise.all([api('GET', '/api/forum/categories'), api('GET', '/api/forum/threads')]);
   if (token !== routeToken) return;
   view.innerHTML = `<div class="wrap page">
-    <div class="page-head row-between"><div><h1>Forum</h1><p class="muted">Rebel PvP topluluğu: itirazlar, şikayetler, klipler ve sohbet.</p></div>
+    <div class="page-head row-between"><div><h1>Forum</h1><p class="muted">Rebel PvP topluluğu: itirazlar, şikayetler, başvurular ve sohbet.</p></div>
       ${me ? `<a class="btn btn-primary" href="#/new/general"><i class="fa-solid fa-plus"></i> Yeni Konu</a>` : `<a class="btn btn-primary" href="#/login"><i class="fa-solid fa-right-to-bracket"></i> Giriş Yap</a>`}</div>
-    <div class="cat-list">${cats.map(c => `<a class="card cat" href="#/forum/c/${c.id}" style="--c:${esc(c.color)}">
+    ${me && me.can.moderate ? `<div style="margin-bottom:14px;text-align:right"><a class="btn btn-ghost btn-sm" href="#/forum/archive"><i class="fa-solid fa-box-archive"></i> Ticket Arşivi (${cats.reduce((n, c) => n + (c.archivedCount || 0), 0)})</a></div>` : ''}
+    <div class="cat-list">${cats.map(c => `<div class="card cat" data-href="#/forum/c/${c.id}" style="--c:${esc(c.color)}">
       <div class="cat-ico"><i class="fa-solid ${esc(c.icon)}"></i></div>
       <div><h3>${esc(c.name)}</h3><p>${esc(c.description)}</p></div>
       <div class="stat"><b>${c.threads}</b>konu • ${c.posts} mesaj</div>
-      <div class="last">${c.latest ? `<a href="#/forum/t/${c.latest.id}">${prefixBadge(c.latest.prefix)}${esc(c.latest.title)}</a>${esc(c.latest.lastPoster ? c.latest.lastPoster.username : '')} • ${ago(c.latest.lastActivity)}` : 'Henüz konu yok'}</div></a>`).join('')}</div>
+      <div class="last">${c.latest ? `<a href="#/forum/t/${c.latest.id}">${prefixBadge(c.latest.prefix)}${esc(c.latest.title)}</a><span class="by">${esc(c.latest.lastPoster ? c.latest.lastPoster.username : '')} • ${ago(c.latest.lastActivity)}</span>` : 'Henüz konu yok'}</div></div>`).join('')}</div>
     <h2 style="font-family:var(--head);font-size:1.7rem;margin:34px 0 14px">Son Aktivite</h2>
     <div class="card t-list">${threadRows(recent.threads.slice(0, 10), cats)}</div></div>`;
+  view.querySelectorAll('.cat[data-href]').forEach(c => c.addEventListener('click', e => { if (e.target.closest('a')) return; go(c.dataset.href); }));
 }
 
 function threadRows(list, cats) {
   if (!list.length) return `<div class="empty">Henüz konu yok.</div>`;
   return list.map(t => { const c = cats && cats.find(x => x.id === t.categoryId); return `<a class="t-row ${t.pinned ? 'pin' : ''}" href="#/forum/t/${t.id}">
-    <div style="min-width:0">${t.pinned ? '<i class="fa-solid fa-thumbtack" style="color:var(--a3);margin-right:6px"></i>' : ''}${t.locked ? '<i class="fa-solid fa-lock" style="color:var(--warn);margin-right:6px"></i>' : ''}${prefixBadge(t.prefix)}<span class="t-title">${esc(t.title)}</span>
+    <div style="min-width:0">${t.pinned ? '<i class="fa-solid fa-thumbtack" style="color:var(--a3);margin-right:6px"></i>' : ''}${t.locked ? '<i class="fa-solid fa-lock" style="color:var(--warn);margin-right:6px"></i>' : ''}${t.archived ? '<i class="fa-solid fa-box-archive" style="color:var(--mut);margin-right:6px"></i>' : ''}${prefixBadge(t.prefix)}<span class="t-title">${esc(t.title)}</span>
       <div class="t-sub">${esc(t.author.username)} • ${ago(t.createdAt)}${c ? ' • ' + esc(c.name) : ''}</div></div>
     <div class="t-num"><b>${t.replies}</b>cevap</div><div class="t-num t-views"><b>${t.views}</b>görüntülenme</div>
     <div class="t-last">${t.lastPoster ? esc(t.lastPoster.username) : ''}<br>${ago(t.lastActivity)}</div></a>`; }).join('');
@@ -781,8 +847,10 @@ async function threadView(id, token) {
     ${canMod ? `<div class="card modbar"><span class="lbl"><i class="fa-solid fa-gavel"></i> Moderasyon</span>
       <button class="btn btn-ghost btn-sm" id="m-pin"><i class="fa-solid fa-thumbtack"></i> ${t.pinned ? 'Sabitlemeyi Kaldır' : 'Sabitle'}</button>
       <button class="btn btn-ghost btn-sm" id="m-lock"><i class="fa-solid fa-${t.locked ? 'lock-open' : 'lock'}"></i> ${t.locked ? 'Kilidi Aç' : 'Kilitle'}</button>
+      <button class="btn btn-ghost btn-sm" id="m-arc"><i class="fa-solid fa-box-archive"></i> ${t.archived ? 'Arşivden Çıkar' : 'Arşivle'}</button>
       <select id="m-prefix"><option value="">Prefix yok</option>${meta.prefixes.map(p => `<option value="${esc(p.id)}" ${t.prefix && t.prefix.id === p.id ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}</select>
       <button class="btn btn-bad btn-sm" id="m-del" style="margin-left:auto"><i class="fa-solid fa-trash"></i> Konuyu Sil</button></div>` : ''}
+    ${t.archived ? `<div class="arc-note"><i class="fa-solid fa-box-archive"></i> Bu konu arşivlendi${t.archivedBy ? ` (${esc(t.archivedBy)})` : ''}. Yeni cevap yazılamaz.</div>` : ''}
     <div id="posts">${d.posts.map(p => postHTML(p, t)).join('')}</div>
     <div id="reply-box" style="margin-top:22px">${replyBox(t)}</div></div>`;
 
@@ -790,6 +858,9 @@ async function threadView(id, token) {
     const patch = async b => { try { await api('PATCH', '/api/forum/threads/' + id, b); route(); } catch (e) { fail(e); } };
     $('#m-pin').onclick = () => patch({ pinned: !t.pinned });
     $('#m-lock').onclick = () => patch({ locked: !t.locked });
+    $('#m-arc').onclick = async () => {
+      try { await api('PATCH', '/api/forum/threads/' + id, { archived: !t.archived }); toast(t.archived ? 'Arşivden çıkarıldı.' : 'Konu arşivlendi.', 'ok'); if (t.archived) route(); else go('#/forum/c/' + d.category.id); } catch (e) { fail(e); }
+    };
     $('#m-prefix').onchange = e => patch({ prefix: e.target.value || null });
     $('#m-del').onclick = async () => { if (!confirm('Bu konu tamamen silinsin mi?')) return; try { await api('DELETE', '/api/forum/threads/' + id); toast('Konu silindi.', 'ok'); go('#/forum/c/' + d.category.id); } catch (e) { fail(e); } };
   }
@@ -821,6 +892,7 @@ function postHTML(p, t) {
 }
 function replyBox(t) {
   if (!me) return `<div class="card empty">Cevap yazmak için <a href="#/login" style="color:var(--a3)">giriş yap</a> veya <a href="#/register" style="color:var(--a3)">kayıt ol</a>.</div>`;
+  if (t.archived && !me.can.moderate) return `<div class="locked-note"><i class="fa-solid fa-box-archive"></i> Bu konu arşivlendi, yeni cevap yazılamaz.</div>`;
   if (t.locked && !me.can.moderate) return `<div class="locked-note"><i class="fa-solid fa-lock"></i> Bu konu kilitli, yeni cevap yazılamaz.</div>`;
   return `<div class="card" style="padding:20px"><label>${me.can.moderate ? 'Yetkili cevabı' : 'Cevabın'}${t.locked ? ' (konu kilitli — sadece yetkililer yazabilir)' : ''}</label><textarea id="r-text" maxlength="5000" placeholder="Mesajını yaz..."></textarea><div style="margin-top:12px;text-align:right"><button class="btn btn-primary" id="r-send"><i class="fa-solid fa-paper-plane"></i> Gönder</button></div></div>`;
 }
@@ -855,38 +927,205 @@ async function newThreadView(catId) {
 }
 
 /* ============================ PROFILE / SETTINGS ============================ */
+async function archiveView(token) {
+  if (!me) return needLogin();
+  if (!me.can.moderate) throw new Error('Arşivi sadece yetkililer görebilir.');
+  const sp = new URLSearchParams(location.hash.split('?')[1] || '');
+  const page = parseInt(sp.get('p')) || 1, q = sp.get('q') || '', cat = sp.get('cat') || '';
+  const [cats, d] = await Promise.all([api('GET', '/api/forum/categories'), api('GET', `/api/forum/threads?archived=1&category=${encodeURIComponent(cat)}&page=${page}&q=${encodeURIComponent(q)}`)]);
+  if (token !== routeToken) return;
+  const pages = Math.max(1, Math.ceil(d.total / d.per));
+  const base = `#/forum/archive?cat=${encodeURIComponent(cat)}&q=${encodeURIComponent(q)}&p=`;
+  view.innerHTML = `<div class="wrap page"><div class="crumbs"><a href="#/forum">Forum</a> / Ticket Arşivi</div>
+    <div class="page-head"><h1><i class="fa-solid fa-box-archive" style="color:var(--a3)"></i> Ticket Arşivi</h1><p class="muted">Arşivlenen konular burada tutulur. Sadece yetkililer ve konunun sahibi görebilir.</p></div>
+    <div class="toolbar"><select id="ar-cat" style="max-width:240px"><option value="">Tüm kategoriler</option>${cats.map(c => `<option value="${c.id}" ${cat === c.id ? 'selected' : ''}>${esc(c.name)} (${c.archivedCount || 0})</option>`).join('')}</select>
+      <input id="ar-q" placeholder="Arşivde ara..." value="${esc(q)}"></div>
+    <div class="card t-list">${d.threads.length ? threadRows(d.threads, cats) : '<div class="empty">Arşivde konu yok.</div>'}</div>
+    ${pages > 1 ? `<div class="pager">${page > 1 ? `<a class="btn btn-ghost btn-sm" href="${base}${page - 1}">‹ Önceki</a>` : ''}<span class="muted" style="align-self:center">${page} / ${pages}</span>${page < pages ? `<a class="btn btn-ghost btn-sm" href="${base}${page + 1}">Sonraki ›</a>` : ''}</div>` : ''}</div>`;
+  const nav = () => go(`#/forum/archive?cat=${encodeURIComponent($('#ar-cat').value)}&q=${encodeURIComponent($('#ar-q').value)}&p=1`);
+  $('#ar-cat').onchange = nav;
+  $('#ar-q').addEventListener('keydown', e => { if (e.key === 'Enter') nav(); });
+}
+
+/* ============================ PROFİL EFEKTLERİ ============================ */
+function startFx(canvas, type) {
+  if (!canvas || !type || type === 'none') return null;
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return null;
+  const ctx = canvas.getContext('2d'), R = Math.random;
+  let w = 1, h = 1, raf = 0, dead = false, frame = 0;
+  const size = () => { const r = canvas.getBoundingClientRect(); w = canvas.width = Math.max(1, Math.floor(r.width)); h = canvas.height = Math.max(1, Math.floor(r.height)); };
+  size();
+  const ro = window.ResizeObserver ? new ResizeObserver(size) : null; if (ro) ro.observe(canvas);
+  const make = init => {
+    switch (type) {
+      case 'snow': return { x: R() * w, y: init ? R() * h : -6, r: 1 + R() * 2.6, v: .4 + R() * 1.1, s: R() * 6.28 };
+      case 'rain': return { x: R() * w, y: init ? R() * h : -20, l: 10 + R() * 14, v: 9 + R() * 6 };
+      case 'embers': return { x: R() * w, y: init ? R() * h : h + 6, r: 1 + R() * 2.2, v: .5 + R() * 1.3, s: R() * 6.28 };
+      default: return { x: R() * w, y: R() * h, r: 1.5 + R() * 2.5, t: R() * 6.28, sp: .03 + R() * .05 };
+    }
+  };
+  const COUNT = { snow: 80, rain: 100, embers: 55, sparkle: 45 };
+  const parts = [], cols = [], fs = 14, CH = 'アイウエオカキクケコサシスセソ0123456789ABCDEF';
+  if (type !== 'matrix') for (let i = 0; i < COUNT[type]; i++) parts.push(make(true));
+  const tick = () => {
+    if (dead) return;
+    frame++; ctx.clearRect(0, 0, w, h);
+    if (type === 'matrix') {
+      ctx.font = fs + 'px monospace';
+      const n = Math.ceil(w / fs); while (cols.length < n) cols.push(R() * 40);
+      for (let i = 0; i < n; i++) {
+        for (let k = 0; k < 12; k++) {
+          const y = (cols[i] - k) * fs; if (y < 0 || y > h) continue;
+          ctx.fillStyle = k === 0 ? 'rgba(200,255,220,.95)' : `rgba(34,255,119,${(1 - k / 12) * .55})`;
+          ctx.fillText(CH[(i * 7 + k * 3 + (k === 0 ? frame : 0)) % CH.length], i * fs, y);
+        }
+        if (frame % 3 === 0) { cols[i] += 1; if (cols[i] * fs > h + 12 * fs && R() > .975) cols[i] = 0; }
+      }
+    } else parts.forEach((p, i) => {
+      switch (type) {
+        case 'snow': p.y += p.v; p.s += .02; p.x += Math.sin(p.s) * .5; ctx.fillStyle = 'rgba(255,255,255,.8)'; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill(); if (p.y > h + 6) parts[i] = make(false); break;
+        case 'rain': p.y += p.v; ctx.strokeStyle = 'rgba(170,200,255,.5)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x - 2, p.y + p.l); ctx.stroke(); if (p.y > h + 20) parts[i] = make(false); break;
+        case 'embers': p.y -= p.v; p.s += .03; p.x += Math.sin(p.s) * .6; ctx.fillStyle = `rgba(255,${(90 + (p.y / h) * 120) | 0},40,${Math.max(0, p.y / h)})`; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill(); if (p.y < -6) parts[i] = make(false); break;
+        default: {
+          p.t += p.sp; const al = (Math.sin(p.t) + 1) / 2;
+          ctx.strokeStyle = ctx.fillStyle = `rgba(255,230,150,${al})`; ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(p.x - p.r * 2, p.y); ctx.lineTo(p.x + p.r * 2, p.y); ctx.moveTo(p.x, p.y - p.r * 2); ctx.lineTo(p.x, p.y + p.r * 2); ctx.stroke();
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.r * .6, 0, 6.283); ctx.fill();
+        }
+      }
+    });
+    raf = requestAnimationFrame(tick);
+  };
+  tick();
+  return () => { dead = true; cancelAnimationFrame(raf); if (ro) ro.disconnect(); };
+}
+
+function resizeImage(file, w, h, q = .86) {
+  return new Promise((ok, no) => {
+    if (!file || !/^image\//.test(file.type)) return no(new Error('Sadece resim dosyası seçebilirsin.'));
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => {
+      const c = document.createElement('canvas'); c.width = w; c.height = h;
+      const x = c.getContext('2d'); x.fillStyle = '#0c0916'; x.fillRect(0, 0, w, h);
+      const s = Math.max(w / img.width, h / img.height), dw = img.width * s, dh = img.height * s;
+      x.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh); URL.revokeObjectURL(url);
+      ok(c.toDataURL('image/jpeg', q));
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); no(new Error('Resim okunamadı.')); };
+    img.src = url;
+  });
+}
+
+function profileCard(u, stats, recent, opts = {}) {
+  const pa = /^#[0-9a-f]{6}$/i.test(u.accent || '') ? u.accent : '#a855f7';
+  const frame = ['neon', 'rainbow', 'gold'].includes(u.borderFx) ? ' fr-' + u.borderFx : '';
+  return `<div class="card pcard${frame}${opts.compact ? ' compact' : ''}" style="--pa:${pa}">
+    <div class="pbanner">${u.banner ? `<img src="${esc(u.banner)}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">` : ''}</div>
+    <div class="phead"><div class="pav">${avatar(u, opts.compact ? 92 : 116)}</div>
+      <div class="pinfo"><h1><span ${nameAttr(u)}>${esc(u.username)}</span></h1>
+        <div class="prow">${rankBadge(u)} ${u.banned ? '<span class="rank" style="--c:#ef4444">Banned</span>' : ''}</div>
+        ${u.status ? `<div class="pstatus"><i class="fa-solid fa-quote-left"></i>${esc(u.status)}</div>` : ''}</div>
+      <div>${opts.actions || ''}</div></div>
+    <div class="pbody"><div>
+        <div class="pbox"><h3>Hakkında</h3><p class="${u.bio ? '' : 'muted'}" style="white-space:pre-wrap;overflow-wrap:anywhere">${esc(u.bio) || 'Henüz bio yazılmamış.'}</p>
+          ${u.discord ? `<p class="muted" style="margin-top:14px"><i class="fa-brands fa-discord" style="color:#5865F2"></i> ${esc(u.discord)}</p>` : ''}</div></div>
+      <div><div class="pbox"><div class="pstats"><div><b>${stats.threads}</b>konu</div><div><b>${stats.posts}</b>mesaj</div><div><b>${new Date(u.createdAt).toLocaleDateString('tr-TR')}</b>katılım</div></div></div>
+        <div class="pbox" style="margin-top:14px"><h3>Son Konular</h3>${recent.length ? recent.map(t => `<p style="margin-bottom:8px"><a href="#/forum/t/${t.id}" style="color:var(--pa);text-decoration:none">${esc(t.title)}</a> <span class="muted" style="font-size:.78rem">• ${ago(t.createdAt)}</span></p>`).join('') : '<p class="muted">Henüz konu yok.</p>'}</div></div></div>
+    <canvas class="pfx"></canvas></div>`;
+}
+
 async function profileView(name) {
   const d = await api('GET', '/api/users/' + encodeURIComponent(name));
   const u = d.user, own = me && me.id === u.id;
-  view.innerHTML = `<div class="wrap page" style="max-width:900px">
-    <div class="card profile-head" style="--c:${esc(u.color)}">${avatar(u, 110)}
-      <div style="flex:1;min-width:220px"><h1 style="color:${u.level >= 30 ? esc(u.color) : '#fff'}">${esc(u.username)}</h1>
-        <div style="margin:6px 0">${rankBadge(u)} ${u.banned ? '<span class="rank" style="--c:#ef4444">Banned</span>' : ''}</div>
-        <div class="stat-row"><div><b>${d.stats.threads}</b>konu</div><div><b>${d.stats.posts}</b>mesaj</div><div><b>${new Date(u.createdAt).toLocaleDateString('tr-TR')}</b>katılım</div></div></div>
-      ${own ? `<a class="btn btn-ghost btn-sm" href="#/settings"><i class="fa-solid fa-pen"></i> Profili Düzenle</a>` : ''}</div>
-    <div class="profile-grid">
-      <div class="card" style="padding:22px"><h3 style="font-family:var(--head);font-size:1.4rem;margin-bottom:10px">Bio</h3><p style="white-space:pre-wrap;overflow-wrap:anywhere" class="${u.bio ? '' : 'muted'}">${esc(u.bio) || 'Henüz bio yazılmamış.'}</p>
-        ${u.discord ? `<p style="margin-top:14px" class="muted"><i class="fa-brands fa-discord"></i> ${esc(u.discord)}</p>` : ''}</div>
-      <div class="card" style="padding:22px"><h3 style="font-family:var(--head);font-size:1.4rem;margin-bottom:10px">Son Konular</h3>
-        ${d.recent.length ? d.recent.map(t => `<p style="margin-bottom:8px"><a href="#/forum/t/${t.id}" style="color:var(--a3);text-decoration:none">${esc(t.title)}</a> <span class="muted" style="font-size:.78rem">• ${ago(t.createdAt)}</span></p>`).join('') : '<p class="muted">Henüz konu yok.</p>'}</div>
-    </div></div>`;
+  view.innerHTML = `<div class="wrap page" style="max-width:980px">${profileCard(u, d.stats, d.recent, { actions: own ? `<a class="btn btn-ghost btn-sm" href="#/settings"><i class="fa-solid fa-palette"></i> Profili Özelleştir</a>` : '' })}</div>`;
+  window._fxStop = startFx($('.pfx'), u.fx);
 }
 
-function settingsView() {
+async function settingsView() {
   if (!me) return needLogin();
-  view.innerHTML = `<div class="wrap page"><h1 style="font-family:var(--head);font-size:2.3rem;margin-bottom:22px">Hesap Ayarları</h1>
-    <div class="card set-card"><h3>Profil</h3>
-      <div class="field"><label>Kullanıcı adı</label><input id="s-user" maxlength="20" value="${esc(me.username)}"></div>
-      <div class="field"><label>Discord</label><input id="s-dc" maxlength="40" value="${esc(me.discord)}" placeholder="örn. onenightsuddenly"></div>
-      <div class="field"><label>Avatar bağlantısı (https://...)</label><input id="s-av" value="${esc(me.avatar)}" placeholder="Resim URL'si — boş bırakırsan harf avatarı kullanılır"></div>
-      <div class="field"><label>Bio (en fazla 300 karakter)</label><textarea id="s-bio" maxlength="300" style="min-height:100px">${esc(me.bio)}</textarea></div>
-      <button class="btn btn-primary" id="s-save">Kaydet</button></div>
+  const info = await api('GET', '/api/users/' + encodeURIComponent(me.username));
+  const D = { username: me.username, status: me.status || '', discord: me.discord || '', bio: me.bio || '', accent: me.accent || '', borderFx: me.borderFx || 'none', fx: me.fx || 'none', avatarUrl: me.avatarUrl || '', bannerUrl: me.bannerUrl || '' };
+  const FRAMES = [['none', 'Yok'], ['neon', 'Neon'], ['rainbow', 'Gökkuşağı'], ['gold', 'Altın']];
+  const FXS = [['none', 'Yok'], ['snow', 'Kar'], ['rain', 'Yağmur'], ['embers', 'Ateş Közü'], ['sparkle', 'Yıldız Tozu'], ['matrix', 'Matrix']];
+  const pv = () => Object.assign({}, me, { username: D.username || me.username, status: D.status, bio: D.bio, discord: D.discord, accent: D.accent, borderFx: D.borderFx, fx: D.fx,
+    avatar: D.avatarUrl || (me.hasAvatarFile ? me.avatar : ''), banner: D.bannerUrl || (me.hasBannerFile ? me.banner : '') });
+  const chips = (key, list) => list.map(([v, l]) => `<button type="button" class="chip ${D[key] === v ? 'on' : ''}" data-set="${key}" data-v="${v}">${l}</button>`).join('');
+
+  view.innerHTML = `<div class="wrap page"><h1 style="font-family:var(--head);font-size:2.3rem;margin-bottom:22px">Profilini Özelleştir</h1>
+  <div class="set-grid"><div>
+    <div class="card set-card"><h3>Görünüm</h3>
+      <span class="sec-label" style="margin-top:0">Profil resmi</span>
+      <div class="img-row"><div class="thumb" id="th-av"></div><button class="btn btn-primary btn-sm" id="up-av"><i class="fa-solid fa-upload"></i> Dosya Yükle</button><button class="btn btn-ghost btn-sm" id="rm-av"><i class="fa-solid fa-trash"></i> Kaldır</button></div>
+      <input id="f-avatar" placeholder="veya resim bağlantısı (https://...) — GIF de olur" value="${esc(D.avatarUrl)}">
+      <span class="sec-label">Banner</span>
+      <div class="img-row"><div class="thumb wide" id="th-bn"></div><button class="btn btn-primary btn-sm" id="up-bn"><i class="fa-solid fa-upload"></i> Dosya Yükle</button><button class="btn btn-ghost btn-sm" id="rm-bn"><i class="fa-solid fa-trash"></i> Kaldır</button></div>
+      <input id="f-banner" placeholder="veya banner bağlantısı (https://...) — GIF de olur" value="${esc(D.bannerUrl)}">
+      <p class="muted" style="font-size:.75rem;margin-top:6px">Yüklenen resimler otomatik küçültülür. Bağlantı girersen yüklediğin dosyanın yerine geçer. Banner yoksa vurgu renginden otomatik oluşur.</p>
+      <span class="sec-label">Vurgu rengi</span>
+      <div style="display:flex;gap:10px;align-items:center"><input id="f-accent" type="color" value="${D.accent || '#a855f7'}" style="width:64px;height:44px;padding:4px"><button class="btn btn-ghost btn-sm" id="acc-reset">Varsayılana dön</button></div>
+      <span class="sec-label">Çerçeve efekti</span><div class="chips" id="ch-borderFx">${chips('borderFx', FRAMES)}</div>
+      <span class="sec-label">Parçacık efekti</span><div class="chips" id="ch-fx">${chips('fx', FXS)}</div>
+    </div>
+    <div class="card set-card"><h3>Profil Bilgileri</h3>
+      <div class="field"><label>Kullanıcı adı</label><input id="s-user" maxlength="20" value="${esc(D.username)}"></div>
+      <div class="field"><label>Durum yazısı (en fazla 80 karakter)</label><input id="s-status" maxlength="80" value="${esc(D.status)}" placeholder="örn. Turf benim."></div>
+      <div class="field"><label>Discord</label><input id="s-dc" maxlength="40" value="${esc(D.discord)}" placeholder="örn. onenightsuddenly"></div>
+      <div class="field"><label>Bio (en fazla 300 karakter)</label><textarea id="s-bio" maxlength="300" style="min-height:110px">${esc(D.bio)}</textarea></div>
+      <button class="btn btn-primary" id="s-save"><i class="fa-solid fa-floppy-disk"></i> Değişiklikleri Kaydet</button></div>
     <div class="card set-card"><h3>Şifre Değiştir</h3>
       <div class="field"><label>Mevcut şifre</label><input id="p-cur" type="password" autocomplete="current-password"></div>
       <div class="field"><label>Yeni şifre</label><input id="p-new" type="password" autocomplete="new-password"></div>
-      <button class="btn btn-ghost" id="p-save">Şifreyi Güncelle</button></div></div>`;
+      <button class="btn btn-ghost" id="p-save">Şifreyi Güncelle</button></div>
+  </div>
+  <div class="set-prev"><h4><i class="fa-solid fa-eye"></i> Canlı önizleme</h4><div id="pv"></div></div></div></div>`;
+
+  let timer;
+  const drawPreview = () => {
+    if (!$('#pv')) return;
+    if (window._fxStop) { window._fxStop(); window._fxStop = null; }
+    $('#pv').innerHTML = profileCard(pv(), info.stats, info.recent, { compact: true });
+    window._fxStop = startFx($('#pv .pfx'), D.fx);
+    $('#th-av').innerHTML = avatar(pv(), 64);
+    const bn = pv().banner; $('#th-bn').innerHTML = bn ? `<img src="${esc(bn)}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">` : '';
+  };
+  const soon = () => { clearTimeout(timer); timer = setTimeout(drawPreview, 200); };
+  drawPreview();
+
+  const bind = (id, key) => $(id).addEventListener('input', e => { D[key] = e.target.value; soon(); });
+  bind('#f-avatar', 'avatarUrl'); bind('#f-banner', 'bannerUrl'); bind('#s-user', 'username'); bind('#s-status', 'status'); bind('#s-dc', 'discord'); bind('#s-bio', 'bio'); bind('#f-accent', 'accent');
+  $('#acc-reset').onclick = () => { D.accent = ''; $('#f-accent').value = '#a855f7'; drawPreview(); };
+  view.querySelectorAll('.chip').forEach(c => c.onclick = () => {
+    D[c.dataset.set] = c.dataset.v;
+    $('#ch-' + c.dataset.set).querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x === c));
+    drawPreview();
+  });
+
+  const pick = (kind) => {
+    const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*';
+    inp.onchange = async () => {
+      if (!inp.files[0]) return;
+      try {
+        const data = await resizeImage(inp.files[0], kind === 'avatar' ? 256 : 1200, kind === 'avatar' ? 256 : 400);
+        const r = await api('POST', '/api/me/image', { kind, data }); me = r.user;
+        if (kind === 'avatar') { D.avatarUrl = ''; $('#f-avatar').value = ''; } else { D.bannerUrl = ''; $('#f-banner').value = ''; }
+        renderUserArea(); drawPreview(); toast('Resim yüklendi.', 'ok');
+      } catch (e) { fail(e); }
+    };
+    inp.click();
+  };
+  const remove = async kind => {
+    try { const r = await api('DELETE', '/api/me/image/' + kind); me = r.user;
+      if (kind === 'avatar') { D.avatarUrl = ''; $('#f-avatar').value = ''; } else { D.bannerUrl = ''; $('#f-banner').value = ''; }
+      renderUserArea(); drawPreview(); toast('Kaldırıldı.', 'ok'); } catch (e) { fail(e); }
+  };
+  $('#up-av').onclick = () => pick('avatar'); $('#up-bn').onclick = () => pick('banner');
+  $('#rm-av').onclick = () => remove('avatar'); $('#rm-bn').onclick = () => remove('banner');
+
   $('#s-save').onclick = async () => {
-    try { const d = await api('PATCH', '/api/me', { username: $('#s-user').value.trim(), discord: $('#s-dc').value, avatar: $('#s-av').value, bio: $('#s-bio').value }); me = d.user; renderUserArea(); toast('Profil güncellendi.', 'ok'); } catch (e) { fail(e); }
+    try {
+      const d = await api('PATCH', '/api/me', { username: D.username.trim(), status: D.status, discord: D.discord, bio: D.bio, accent: D.accent, borderFx: D.borderFx, fx: D.fx, avatar: D.avatarUrl, banner: D.bannerUrl });
+      me = d.user; renderUserArea(); drawPreview(); toast('Profil kaydedildi.', 'ok');
+    } catch (e) { fail(e); }
   };
   $('#p-save').onclick = async () => {
     try { await api('POST', '/api/me/password', { current: $('#p-cur').value, next: $('#p-new').value }); $('#p-cur').value = $('#p-new').value = ''; toast('Şifre güncellendi.', 'ok'); } catch (e) { fail(e); }
