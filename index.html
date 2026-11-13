@@ -353,6 +353,9 @@ footer{text-align:center;padding:26px;background:#050409;border-top:1px solid rg
 .chip.on{background:linear-gradient(45deg,var(--a2),var(--a));color:#fff;border-color:transparent}
 .sec-label{font-size:.8rem;color:var(--a3);font-weight:600;margin:18px 0 8px;display:block;text-transform:uppercase;letter-spacing:.5px}
 @media(max-width:1000px){.set-grid{grid-template-columns:1fr}.set-prev{position:static;order:-1}.pbody{grid-template-columns:1fr}}
+.lang-btn{display:inline-flex;align-items:center;gap:7px;background:var(--panel2);border:1px solid var(--line);color:#fff;padding:7px 13px;border-radius:30px;cursor:pointer;font-weight:600;font-size:.82rem;transition:.2s}
+.lang-btn:hover{border-color:var(--a);background:rgba(168,85,247,.16)}
+.lang-btn i{color:var(--a3)}
 </style>
 </head>
 <body>
@@ -372,6 +375,7 @@ footer{text-align:center;padding:26px;background:#050409;border-top:1px solid rg
     </ul>
   </nav>
   <div class="hdr-right">
+    <button class="lang-btn" id="lang-btn" title="Language / Dil" aria-label="Language / Dil"><i class="fa-solid fa-globe"></i> <span id="lang-lbl">EN</span></button>
     <div id="user-area"></div>
     <button class="burger" id="burger" aria-label="Menü"><i class="fa-solid fa-bars"></i></button>
   </div>
@@ -518,19 +522,318 @@ footer{text-align:center;padding:26px;background:#050409;border-top:1px solid rg
 </template>
 
 <script>
+/* ============================ DİL / LANGUAGE (TR ⇄ EN) ============================ */
+let LANG = (() => { try { return localStorage.getItem('lang') === 'en' ? 'en' : 'tr'; } catch (e) { return 'tr'; } })();
+const LOC = () => (LANG === 'en' ? 'en-GB' : LOC());
+const EN = {
+"Giriş Yap": "Log In",
+"Kayıt Ol": "Sign Up",
+"Profilim": "My Profile",
+"Ayarlar": "Settings",
+"Yönetim Paneli": "Admin Panel",
+"Çıkış Yap": "Log Out",
+"Foruma dön": "Back to forum",
+"Bu sayfayı görmek için giriş yapmalısın.": "You need to log in to view this page.",
+"Turfunu savun.": "Defend your turf.",
+"Sesini forumda duyur.": "Make your voice heard on the forum.",
+"Rebel PvP topluluğunun resmi forumu. Hesabınla konu aç, yetkililerle iletişime geç.": "The official forum of the Rebel PvP community. Create threads with your account and get in touch with staff.",
+"Unban itirazı": "Unban appeal",
+"Yetkililer konunu inceleyip sonucu yazar.": "Staff will review your thread and post the result.",
+"Oyuncu şikayeti": "Player report",
+"Kural ihlallerini kanıtla birlikte bildir.": "Report rule violations together with evidence.",
+"Güvenli hesap": "Secure account",
+"Şifren şifrelenerek saklanır.": "Your password is stored encrypted.",
+"Hesap Oluştur": "Create Account",
+"Tekrar Hoş Geldin": "Welcome Back",
+"Kullanıcı adını seç ve forumda yerini al.": "Pick a username and take your place on the forum.",
+"Kullanıcı adın ve şifrenle giriş yap.": "Log in with your username and password.",
+"Her IP adresinden yalnızca": "Only",
+"1 hesap": "1 account",
+"açılabilir.": "can be created per IP address.",
+"Kullanıcı adı": "Username",
+"Şifre": "Password",
+"Şifre (tekrar)": "Password (repeat)",
+"Ana sayfaya dön": "Back to home",
+"Leaderboard Düzenle": "Edit Leaderboard",
+"Turf Düzenle": "Edit Turf",
+"Highlight Yükle": "Upload Highlight",
+"Yüklemek için giriş yap": "Log in to upload",
+"Sil": "Delete",
+"Henüz klip yok. İlk klibi sen yükle!": "No clips yet. Be the first to upload one!",
+"Klip başlığı": "Clip title",
+"YouTube bağlantısı": "YouTube link",
+"İptal": "Cancel",
+"Yükle": "Upload",
+"Leaderboard (25 oyuncuya kadar)": "Leaderboard (up to 25 players)",
+"Kaydet": "Save",
+"Gang adı": "Gang name",
+"Lider": "Leader",
+"Bölge": "Territory",
+"Rebel PvP topluluğu: itirazlar, şikayetler, başvurular ve sohbet.": "Rebel PvP community: appeals, reports, applications and chat.",
+"Yeni Konu": "New Thread",
+"Son Aktivite": "Recent Activity",
+"Henüz konu yok.": "No threads yet.",
+"Henüz konu yok": "No threads yet",
+"cevap": "replies",
+"görüntülenme": "views",
+"Konu Oluştur": "Create Thread",
+"Konu açmak için giriş yap": "Log in to create a thread",
+"‹ Önceki": "‹ Previous",
+"Sonraki ›": "Next ›",
+"Moderasyon": "Moderation",
+"Sabitlemeyi Kaldır": "Unpin",
+"Sabitle": "Pin",
+"Kilidi Aç": "Unlock",
+"Kilitle": "Lock",
+"Arşivden Çıkar": "Unarchive",
+"Arşivle": "Archive",
+"Prefix yok": "No prefix",
+"Konuyu Sil": "Delete Thread",
+"Konu başlatıcı": "Thread starter",
+"Düzenle": "Edit",
+"Cevap yazmak için": "To reply,",
+"giriş yap": "log in",
+"veya": "or",
+"kayıt ol": "sign up",
+"Bu konu arşivlendi, yeni cevap yazılamaz.": "This thread is archived; new replies are not allowed.",
+"Bu konu kilitli, yeni cevap yazılamaz.": "This thread is locked; new replies are not allowed.",
+"Gönder": "Send",
+"Yeni Konu Oluştur": "Create New Thread",
+"10 dakikada yalnızca 1 konu açabilirsin.": "You can only create 1 thread every 10 minutes.",
+"Kategori": "Category",
+"Başlık": "Title",
+"Mesaj": "Message",
+"Konuyu Yayınla": "Publish Thread",
+"Ticket Arşivi": "Ticket Archive",
+"Arşivlenen konular burada tutulur. Sadece yetkililer ve konunun sahibi görebilir.": "Archived threads are kept here. Only staff and the thread owner can see them.",
+"Tüm kategoriler": "All categories",
+"Arşivde konu yok.": "No threads in the archive.",
+"Banlandıysan itirazını buradan yap. Yetkililer konunu inceleyip sonuç yazar.": "If you were banned, appeal here. Staff will review your thread and post the result.",
+"Kural ihlali yapan oyuncuları kanıtla birlikte bildir.": "Report players who broke the rules, with evidence.",
+"Sunucu hakkında her şey: öneriler, sohbet, takım arayışı.": "Everything about the server: suggestions, chat, looking for a team.",
+"Yetkili ekibine (Anti Cheats, Administrator...) başvurmak için başvuru konusu aç.": "Open an application thread to apply to the staff team (Anti Cheats, Administrator...).",
+"Hakkında": "About",
+"Henüz bio yazılmamış.": "No bio yet.",
+"konu": "threads",
+"mesaj": "posts",
+"katılım": "joined",
+"Son Konular": "Recent Threads",
+"Profili Özelleştir": "Customize Profile",
+"Profilini Özelleştir": "Customize Your Profile",
+"Görünüm": "Appearance",
+"Profil resmi": "Profile picture",
+"Dosya Yükle": "Upload File",
+"Kaldır": "Remove",
+"Yüklenen resimler otomatik küçültülür. Bağlantı girersen yüklediğin dosyanın yerine geçer. Banner yoksa vurgu renginden otomatik oluşur.": "Uploaded images are resized automatically. A link replaces an uploaded file. If there is no banner, one is generated from your accent color.",
+"Vurgu rengi": "Accent color",
+"Varsayılana dön": "Reset to default",
+"Çerçeve efekti": "Frame effect",
+"Parçacık efekti": "Particle effect",
+"Profil Bilgileri": "Profile Info",
+"Durum yazısı (en fazla 80 karakter)": "Status text (max 80 characters)",
+"Bio (en fazla 300 karakter)": "Bio (max 300 characters)",
+"Değişiklikleri Kaydet": "Save Changes",
+"Şifre Değiştir": "Change Password",
+"Mevcut şifre": "Current password",
+"Yeni şifre": "New password",
+"Şifreyi Güncelle": "Update Password",
+"Canlı önizleme": "Live preview",
+"Yok": "None",
+"Gökkuşağı": "Rainbow",
+"Altın": "Gold",
+"Kar": "Snow",
+"Yağmur": "Rain",
+"Ateş Közü": "Embers",
+"Yıldız Tozu": "Sparkles",
+"Admin Yap": "Make Admin",
+"IP Sıfırla": "Reset IP",
+"Ban Kaldır": "Unban",
+"Banla": "Ban",
+"Genel Bakış": "Overview",
+"Sitenin anlık durumu.": "Live status of the site.",
+"Toplam kullanıcı": "Total users",
+"Son 24 saatte katılan": "Joined in last 24h",
+"Yetkili": "Staff",
+"Banlı": "Banned",
+"Rank Dağılımı": "Rank Distribution",
+"Son Kayıtlar": "Recent Sign-ups",
+"Henüz kayıt yok.": "No sign-ups yet.",
+"Forum Prefixleri": "Forum Prefixes",
+"Konulara verilen etiketler (On Consideration, Approved...).": "Labels given to threads (On Consideration, Approved...).",
+"Prefix Ekle": "Add Prefix",
+"Yetkili Ekibi": "Staff Team",
+"Rank'a göre gruplanmış yetkililer.": "Staff grouped by rank.",
+"Bu rankta kimse yok.": "Nobody has this rank.",
+"Banlılar": "Banned Users",
+"Banlı kullanıcı yok.": "No banned users.",
+"Kullanıcılar": "Users",
+"Tüm rankler": "All ranks",
+"Tüm durumlar": "All statuses",
+"Aktif": "Active",
+"Sonuç yok.": "No results.",
+"Prefixler": "Prefixes",
+"Ban sebebi (kullanıcı giriş yapmaya çalışınca görür)": "Ban reason (shown to the user when they try to log in)",
+"kullanıcı adın": "your username",
+"Şifreyi göster": "Show password",
+"örn. 1v5 Clutch by Rio": "e.g. 1v5 Clutch by Rio",
+"Bu kategoride ara...": "Search in this category...",
+"Mesajını yaz...": "Write your message...",
+"Kısa ve açıklayıcı bir başlık": "A short, descriptive title",
+"Arşivde ara...": "Search archive...",
+"veya resim bağlantısı (https://...) — GIF de olur": "or image link (https://...) — GIFs work too",
+"veya banner bağlantısı (https://...) — GIF de olur": "or banner link (https://...) — GIFs work too",
+"örn. Turf benim.": "e.g. Turf is mine.",
+"örn. onenightsuddenly": "e.g. onenightsuddenly",
+"Rank değiştir": "Change rank",
+"Bu IP'den yeni hesap açılmasına izin ver": "Allow a new account from this IP",
+"Yeni prefix adı": "New prefix name",
+"Kullanıcı ara...": "Search users...",
+"örn. Hile kullanımı": "e.g. Cheating",
+"Çıkış yapıldı.": "Logged out.",
+"Kullanıcı adı ve şifre gerekli.": "Username and password are required.",
+"Şifreler eşleşmiyor.": "Passwords do not match.",
+"Klip silindi.": "Clip deleted.",
+"Highlight eklendi!": "Highlight added!",
+"Leaderboard güncellendi.": "Leaderboard updated.",
+"Turf güncellendi.": "Turf updated.",
+"Kategori bulunamadı.": "Category not found.",
+"Konu silindi.": "Thread deleted.",
+"Silindi.": "Deleted.",
+"Cevap gönderildi.": "Reply sent.",
+"Konu oluşturuldu!": "Thread created!",
+"Sadece resim dosyası seçebilirsin.": "You can only select an image file.",
+"Resim okunamadı.": "Could not read the image.",
+"Resim yüklendi.": "Image uploaded.",
+"Kaldırıldı.": "Removed.",
+"Profil kaydedildi.": "Profile saved.",
+"Şifre güncellendi.": "Password updated.",
+"Bu sayfa için yetkin yok.": "You don't have permission for this page.",
+"Rank güncellendi.": "Rank updated.",
+"Administrator yapıldı.": "Promoted to Administrator.",
+"Ban kaldırıldı.": "Ban removed.",
+"IP kaydı silindi.": "IP record deleted.",
+"Kullanıcı banlandı.": "User banned.",
+"Konu arşivlendi.": "Thread is archived.",
+"Arşivden çıkarıldı.": "Removed from archive.",
+"Konu oluşturmak için giriş yapmalısın.": "You must log in to create a thread.",
+"Bu klip silinsin mi?": "Delete this clip?",
+"Bu konu tamamen silinsin mi?": "Delete this thread completely?",
+"Bu mesaj silinsin mi?": "Delete this post?",
+"Prefix silinsin mi?": "Delete this prefix?",
+"Bu kullanıcının IP kaydı silinsin mi? (Aynı IP'den yeni hesap açılabilir)": "Delete this user's IP record? (A new account can be created from the same IP)",
+"JSON gerekli.": "JSON required.",
+"Geçersiz istek.": "Invalid request.",
+"Giriş yapmalısın.": "You must log in.",
+"Yetkin yok.": "You don't have permission.",
+"Çok fazla deneme. Daha sonra tekrar dene.": "Too many attempts. Try again later.",
+"Kullanıcı adı 3-20 karakter olmalı (harf, rakam, _ . -).": "Username must be 3-20 characters (letters, numbers, _ . -).",
+"Şifre en az 6 karakter olmalı.": "Password must be at least 6 characters.",
+"Bu kullanıcı adı alınmış.": "This username is already taken.",
+"Bu IP adresinden zaten bir hesap açılmış. IP başına yalnızca 1 hesap açılabilir.": "An account has already been created from this IP address. Only 1 account per IP is allowed.",
+"Çok fazla deneme. 15 dakika sonra tekrar dene.": "Too many attempts. Try again in 15 minutes.",
+"Kullanıcı adı veya şifre hatalı.": "Wrong username or password.",
+"Avatar geçerli bir http(s) bağlantısı olmalı.": "Avatar must be a valid http(s) link.",
+"Banner geçerli bir http(s) bağlantısı olmalı.": "Banner must be a valid http(s) link.",
+"Geçersiz renk.": "Invalid color.",
+"Geçersiz çerçeve efekti.": "Invalid frame effect.",
+"Geçersiz efekt.": "Invalid effect.",
+"Çok fazla yükleme. Biraz bekle.": "Too many uploads. Wait a bit.",
+"Sadece PNG, JPG veya WEBP yükleyebilirsin.": "You can only upload PNG, JPG or WEBP.",
+"Resim çok büyük.": "Image is too large.",
+"Geçersiz resim dosyası.": "Invalid image file.",
+"Resim kaydedilemedi.": "Could not save the image.",
+"Mevcut şifre yanlış.": "Current password is wrong.",
+"Yeni şifre en az 6 karakter olmalı.": "New password must be at least 6 characters.",
+"Kullanıcı bulunamadı.": "User not found.",
+"Konu bulunamadı.": "Thread not found.",
+"Kategori seçmelisin.": "You must choose a category.",
+"Başlık en az 5 karakter olmalı.": "Title must be at least 5 characters.",
+"Mesaj en az 5 karakter olmalı.": "Message must be at least 5 characters.",
+"Bu konu kilitli.": "This thread is locked.",
+"Bu konu arşivlendi.": "This thread is archived.",
+"Mesaj çok kısa.": "Message is too short.",
+"Geçersiz prefix.": "Invalid prefix.",
+"Mesaj bulunamadı.": "Post not found.",
+"Konu kilitli.": "Thread is locked.",
+"İlk mesajı sadece yetkililer silebilir.": "Only staff can delete the first post.",
+"Prefix adı çok kısa.": "Prefix name is too short.",
+"Bu prefix zaten var.": "This prefix already exists.",
+"Arşivi sadece yetkililer görebilir.": "Only staff can view the archive.",
+"Bu hesabın rankı değiştirilemez.": "This account's rank cannot be changed.",
+"Kendi rankını buradan değiştiremezsin.": "You can't change your own rank here.",
+"Senden yüksek/eşit rankı değiştiremezsin.": "You can't change the rank of someone equal to or higher than you.",
+"Kendi rankından yüksek/eşit rank veremezsin.": "You can't grant a rank equal to or higher than your own.",
+"Kullanıcı yok.": "User does not exist.",
+"Bu kullanıcıyı banlayamazsın.": "You can't ban this user.",
+"Başlık gerekli.": "Title is required.",
+"Geçerli bir YouTube bağlantısı gir.": "Enter a valid YouTube link.",
+"Klip bulunamadı.": "Clip not found.",
+"Geçersiz veri formatı!": "Invalid data format!",
+"Bulunamadı.": "Not found.",
+"Biraz yavaş! 5 saniye bekle.": "Slow down! Wait 5 seconds.",
+"Bir hata oluştu.": "Something went wrong.",
+"Hata": "Error"
+};
+const EN_RE = [
+  [/^Hoş geldin, (.+)!$/, m => 'Welcome, ' + m[1] + '!'],
+  [/^Yeni konu açmak için (\d+) dk (\d+) sn beklemelisin\.$/, m => 'To create a new thread, wait ' + m[1] + ' min ' + m[2] + ' sec.'],
+  [/^Yeni konu açmak için (\d+) dk (\d+) sn beklemelisin \(10 dakikada 1 konu\)\.$/, m => 'To create a new thread, wait ' + m[1] + ' min ' + m[2] + ' sec (1 thread per 10 minutes).'],
+  [/^konu • (\d+) mesaj$/, m => 'threads • ' + m[1] + ' posts'],
+  [/^Konu • (\d+) mesaj$/, m => 'Threads • ' + m[1] + ' posts'],
+  [/^(.+) tarafından • (.+) • (\d+) görüntülenme$/, m => 'by ' + m[1] + ' • ' + m[2] + ' • ' + m[3] + ' views'],
+  [/^(\d+) mesaj$/, m => m[1] + ' posts'],
+  [/^Katılım: (.+?) • Sebep: (.*)$/, m => 'Joined: ' + m[1] + ' • Reason: ' + m[2]],
+  [/^Katılım: (.+)$/, m => 'Joined: ' + m[1]],
+  [/^(.*) • düzenlendi (.*)$/, m => m[1] + ' • edited ' + m[2]],
+  [/^(\d+) kişi$/, m => m[1] + ' people'],
+  [/^(\d+) banlı hesap\.$/, m => m[1] + ' banned accounts.'],
+  [/^(\d+) kayıtlı hesap\. Rank ver, banla\.$/, m => m[1] + ' registered accounts. Give ranks, ban users.'],
+  [/^(.+) banlansın mı\?$/, m => 'Ban ' + m[1] + '?'],
+  [/^Ticket Arşivi \((\d+)\)$/, m => 'Ticket Archive (' + m[1] + ')'],
+  [/^Bu konu arşivlendi(?: \((.*)\))?\. Yeni cevap yazılamaz\.$/, m => 'This thread was archived' + (m[1] ? ' (' + m[1] + ')' : '') + '. New replies are not allowed.'],
+  [/^(Yetkili cevabı|Cevabın)( \(konu kilitli — sadece yetkililer yazabilir\))?$/, m => (m[1] === 'Cevabın' ? 'Your reply' : 'Staff reply') + (m[2] ? ' (thread locked — only staff can reply)' : '')],
+  [/^Bu hesap banlanmış\.(?: Sebep: (.*))?$/, m => 'This account is banned.' + (m[1] ? ' Reason: ' + m[1] : '')],
+  [/^\/ (.+)$/, m => '/ ' + tr(m[1])]
+];
+function tr(s) {
+  if (LANG !== 'en' || !s) return s;
+  const str = String(s), k = str.trim(); if (!k) return s;
+  let v = EN[k];
+  if (v === undefined) for (const [re, fn] of EN_RE) { const m = re.exec(k); if (m) { v = fn(m); break; } }
+  return v === undefined ? s : str.replace(k, () => v);
+}
+const T = tr;
+const TR_SKIP = 'textarea,script,style,[data-nt],.post-text,.t-title,.uname,.thread-title,.pstatus,.hl-title,#lb-body';
+function trTree(root) {
+  if (LANG !== 'en') return;
+  if (root.nodeType === 3) {
+    const p = root.parentElement; if (!p || p.closest(TR_SKIP)) return;
+    const n = tr(root.nodeValue); if (n !== root.nodeValue) root.nodeValue = n; return;
+  }
+  if (root.nodeType !== 1 || root.closest(TR_SKIP)) return;
+  const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT), list = []; let n;
+  while ((n = w.nextNode())) list.push(n);
+  list.forEach(trTree);
+  [root, ...root.querySelectorAll('[placeholder],[title],[aria-label]')].forEach(el => {
+    if (el.closest(TR_SKIP)) return;
+    ['placeholder', 'title', 'aria-label'].forEach(a => { const v = el.getAttribute(a); if (v) { const n2 = tr(v); if (n2 !== v) el.setAttribute(a, n2); } });
+  });
+}
+new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(trTree))).observe(document.body, { childList: true, subtree: true });
+
 /* ============================ helpers ============================ */
 const $ = (s, r = document) => r.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmt = t => esc(t).replace(/(https?:\/\/[^\s<]+)/g, u => `<a href="${u}" target="_blank" rel="noopener noreferrer nofollow">${u}</a>`).replace(/\n/g, '<br>');
 function ago(ts) {
-  const s = Math.floor((Date.now() - ts) / 1000);
-  if (s < 60) return 'şimdi';
-  if (s < 3600) return Math.floor(s / 60) + ' dk önce';
-  if (s < 86400) return Math.floor(s / 3600) + ' sa önce';
-  if (s < 2592000) return Math.floor(s / 86400) + ' gün önce';
-  return new Date(ts).toLocaleDateString('tr-TR');
+  const s = Math.floor((Date.now() - ts) / 1000), en = LANG === 'en';
+  if (s < 60) return en ? 'just now' : 'şimdi';
+  if (s < 3600) return en ? Math.floor(s / 60) + ' min ago' : Math.floor(s / 60) + ' dk önce';
+  if (s < 86400) return en ? Math.floor(s / 3600) + ' h ago' : Math.floor(s / 3600) + ' sa önce';
+  if (s < 2592000) return en ? Math.floor(s / 86400) + ' d ago' : Math.floor(s / 86400) + ' gün önce';
+  return new Date(ts).toLocaleDateString(LOC());
 }
-const dt = ts => new Date(ts).toLocaleString('tr-TR', { dateStyle: 'medium', timeStyle: 'short' });
+const dt = ts => new Date(ts).toLocaleString(LOC(), { dateStyle: 'medium', timeStyle: 'short' });
 
 async function api(method, url, body) {
   const opt = { method, credentials: 'same-origin', headers: { 'X-Requested-With': 'rebel' } };
@@ -745,7 +1048,7 @@ async function loadHighlights() {
         ${me && (me.id === h.author.id || me.can.moderate) ? `<button class="btn btn-bad btn-sm" data-del="${h.id}"><i class="fa-solid fa-trash"></i> Sil</button>` : ''}
       </div></div></div>`).join('') : `<div class="card empty" style="grid-column:1/-1">Henüz klip yok. İlk klibi sen yükle!</div>`;
   g.querySelectorAll('[data-del]').forEach(b => b.onclick = async () => {
-    if (!confirm('Bu klip silinsin mi?')) return;
+    if (!confirm(T('Bu klip silinsin mi?'))) return;
     try { await api('DELETE', '/api/highlights/' + b.dataset.del); toast('Klip silindi.', 'ok'); loadHighlights(); } catch (e) { fail(e); }
   });
 }
@@ -862,10 +1165,10 @@ async function threadView(id, token) {
       try { await api('PATCH', '/api/forum/threads/' + id, { archived: !t.archived }); toast(t.archived ? 'Arşivden çıkarıldı.' : 'Konu arşivlendi.', 'ok'); if (t.archived) route(); else go('#/forum/c/' + d.category.id); } catch (e) { fail(e); }
     };
     $('#m-prefix').onchange = e => patch({ prefix: e.target.value || null });
-    $('#m-del').onclick = async () => { if (!confirm('Bu konu tamamen silinsin mi?')) return; try { await api('DELETE', '/api/forum/threads/' + id); toast('Konu silindi.', 'ok'); go('#/forum/c/' + d.category.id); } catch (e) { fail(e); } };
+    $('#m-del').onclick = async () => { if (!confirm(T('Bu konu tamamen silinsin mi?'))) return; try { await api('DELETE', '/api/forum/threads/' + id); toast('Konu silindi.', 'ok'); go('#/forum/c/' + d.category.id); } catch (e) { fail(e); } };
   }
   view.querySelectorAll('[data-pdel]').forEach(b => b.onclick = async () => {
-    if (!confirm('Bu mesaj silinsin mi?')) return;
+    if (!confirm(T('Bu mesaj silinsin mi?'))) return;
     try { await api('DELETE', '/api/forum/posts/' + b.dataset.pdel); toast('Silindi.', 'ok'); route(); } catch (e) { fail(e); }
   });
   view.querySelectorAll('[data-pedit]').forEach(b => b.onclick = () => {
@@ -884,7 +1187,7 @@ function postHTML(p, t) {
   const a = p.author, staff = a.level >= 30;
   const own = me && me.id === a.id, canMod = me && me.can.moderate;
   return `<div class="card post ${staff ? 'staff' : ''}" style="--c:${esc(a.color)}">
-    <div class="post-side">${avatar(a, 64)}${userLink(a)}${rankBadge(a)}<small>${a.postCount} mesaj<br>Katılım: ${new Date(a.joined).toLocaleDateString('tr-TR')}</small></div>
+    <div class="post-side">${avatar(a, 64)}${userLink(a)}${rankBadge(a)}<small>${a.postCount} mesaj<br>Katılım: ${new Date(a.joined).toLocaleDateString(LOC())}</small></div>
     <div class="post-body"><div class="post-meta"><span>${dt(p.createdAt)}${p.editedAt ? ' • düzenlendi ' + ago(p.editedAt) : ''}</span><span>${p.first ? 'Konu başlatıcı' : '#' + p.id}</span></div>
       <div class="post-text" id="pt-${p.id}">${fmt(p.content)}</div>
       ${(own || canMod) && (!t.locked || canMod) ? `<div class="post-foot"><button class="btn btn-ghost btn-sm" data-pedit="${p.id}"><i class="fa-solid fa-pen"></i> Düzenle</button>${(canMod || (own && !p.first)) ? `<button class="btn btn-bad btn-sm" data-pdel="${p.id}"><i class="fa-solid fa-trash"></i> Sil</button>` : ''}</div>` : ''}
@@ -915,7 +1218,7 @@ async function newThreadView(catId) {
   $('#n-cat').onchange = setTpl; setTpl();
   const tick = () => {
     const left = Math.ceil(((me.nextThreadAt || 0) - Date.now()) / 1000);
-    if (left > 0) { $('#cd-note').innerHTML = `<div class="locked-note" style="margin-bottom:16px"><i class="fa-solid fa-hourglass-half"></i> Yeni konu açmak için <b>${Math.floor(left / 60)} dk ${left % 60} sn</b> beklemelisin.</div>`; $('#n-go').disabled = true; }
+    if (left > 0) { $('#cd-note').innerHTML = `<div class="locked-note" style="margin-bottom:16px"><i class="fa-solid fa-hourglass-half"></i> Yeni konu açmak için ${Math.floor(left / 60)} dk ${left % 60} sn beklemelisin.</div>`; $('#n-go').disabled = true; }
     else { $('#cd-note').innerHTML = ''; $('#n-go').disabled = false; clearInterval(window._cd); }
   };
   if ((me.nextThreadAt || 0) > Date.now()) { tick(); window._cd = setInterval(tick, 1000); }
@@ -1029,7 +1332,7 @@ function profileCard(u, stats, recent, opts = {}) {
     <div class="pbody"><div>
         <div class="pbox"><h3>Hakkında</h3><p class="${u.bio ? '' : 'muted'}" style="white-space:pre-wrap;overflow-wrap:anywhere">${esc(u.bio) || 'Henüz bio yazılmamış.'}</p>
           ${u.discord ? `<p class="muted" style="margin-top:14px"><i class="fa-brands fa-discord" style="color:#5865F2"></i> ${esc(u.discord)}</p>` : ''}</div></div>
-      <div><div class="pbox"><div class="pstats"><div><b>${stats.threads}</b>konu</div><div><b>${stats.posts}</b>mesaj</div><div><b>${new Date(u.createdAt).toLocaleDateString('tr-TR')}</b>katılım</div></div></div>
+      <div><div class="pbox"><div class="pstats"><div><b>${stats.threads}</b>konu</div><div><b>${stats.posts}</b>mesaj</div><div><b>${new Date(u.createdAt).toLocaleDateString(LOC())}</b>katılım</div></div></div>
         <div class="pbox" style="margin-top:14px"><h3>Son Konular</h3>${recent.length ? recent.map(t => `<p style="margin-bottom:8px"><a href="#/forum/t/${t.id}" style="color:var(--pa);text-decoration:none">${esc(t.title)}</a> <span class="muted" style="font-size:.78rem">• ${ago(t.createdAt)}</span></p>`).join('') : '<p class="muted">Henüz konu yok.</p>'}</div></div></div>
     <canvas class="pfx"></canvas></div>`;
 }
@@ -1142,7 +1445,7 @@ async function adminView() {
 
   const userRow = u => `<div class="card u-row ${u.banned ? 'banned' : ''}">
     <div class="u-main">${avatar(u, 44)}<div style="min-width:0">${userLink(u)} ${rankBadge(u)} ${u.banned ? '<span class="rank" style="--c:#ef4444">Banned</span>' : ''}
-      <small>Katılım: ${new Date(u.createdAt).toLocaleDateString('tr-TR')}${u.banned && u.banReason ? ' • Sebep: ' + esc(u.banReason) + (u.bannedBy ? ' (' + esc(u.bannedBy) + ')' : '') : ''}</small></div></div>
+      <small>Katılım: ${new Date(u.createdAt).toLocaleDateString(LOC())}${u.banned && u.banReason ? ' • Sebep: ' + esc(u.banReason) + (u.bannedBy ? ' (' + esc(u.bannedBy) + ')' : '') : ''}</small></div></div>
     <div class="u-act">
       ${me.can.siteAdmin && !u.root && u.id !== me.id && u.level < 40 && !u.banned ? `<button class="btn btn-ok btn-sm" data-quick="${u.id}"><i class="fa-solid fa-user-shield"></i> Admin Yap</button>` : ''}
       ${me.can.siteAdmin && !u.root ? `<select data-rank="${u.id}" title="Rank değiştir">${meta.ranks.map(r => `<option value="${r.id}" ${r.id === u.rank ? 'selected' : ''}>${esc(r.name)}</option>`).join('')}</select>` : ''}
@@ -1204,7 +1507,7 @@ async function adminView() {
     view.querySelectorAll('[data-rank]').forEach(s => s.onchange = async () => { try { await api('POST', `/api/admin/users/${s.dataset.rank}/rank`, { rank: s.value }); toast('Rank güncellendi.', 'ok'); } catch (e) { fail(e); } reload(); });
     view.querySelectorAll('[data-quick]').forEach(b => b.onclick = async () => { try { await api('POST', `/api/admin/users/${b.dataset.quick}/rank`, { rank: 'administrator' }); toast('Administrator yapıldı.', 'ok'); } catch (e) { fail(e); } reload(); });
     view.querySelectorAll('[data-unban]').forEach(b => b.onclick = async () => { try { await api('POST', `/api/admin/users/${b.dataset.unban}/ban`, { banned: false }); toast('Ban kaldırıldı.', 'ok'); } catch (e) { fail(e); } reload(); });
-    view.querySelectorAll('[data-clearip]').forEach(b => b.onclick = async () => { if (!confirm('Bu kullanıcının IP kaydı silinsin mi? (Aynı IP\'den yeni hesap açılabilir)')) return; try { await api('POST', `/api/admin/users/${b.dataset.clearip}/clear-ip`, {}); toast('IP kaydı silindi.', 'ok'); } catch (e) { fail(e); } reload(); });
+    view.querySelectorAll('[data-clearip]').forEach(b => b.onclick = async () => { if (!confirm(T('Bu kullanıcının IP kaydı silinsin mi? (Aynı IP\'den yeni hesap açılabilir)'))) return; try { await api('POST', `/api/admin/users/${b.dataset.clearip}/clear-ip`, {}); toast('IP kaydı silindi.', 'ok'); } catch (e) { fail(e); } reload(); });
     view.querySelectorAll('[data-ban]').forEach(b => b.onclick = () => {
       modal(`<h3><i class="fa-solid fa-ban"></i> ${esc(b.dataset.name)} banlansın mı?</h3>
         <div class="field"><label>Ban sebebi (kullanıcı giriş yapmaya çalışınca görür)</label><input id="b-reason" maxlength="200" placeholder="örn. Hile kullanımı"></div>
@@ -1224,10 +1527,19 @@ async function adminView() {
     wireRows();
     const add = $('#pf-add');
     if (add) add.onclick = async () => { try { const r = await api('POST', '/api/forum/prefixes', { name: $('#pf-name').value, color: $('#pf-color').value }); meta.prefixes = r.prefixes; draw(); } catch (e) { fail(e); } };
-    view.querySelectorAll('[data-pfdel]').forEach(b => b.onclick = async () => { if (!confirm('Prefix silinsin mi?')) return; try { const r = await api('DELETE', '/api/forum/prefixes/' + b.dataset.pfdel); meta.prefixes = r.prefixes; draw(); } catch (e) { fail(e); } });
+    view.querySelectorAll('[data-pfdel]').forEach(b => b.onclick = async () => { if (!confirm(T('Prefix silinsin mi?'))) return; try { const r = await api('DELETE', '/api/forum/prefixes/' + b.dataset.pfdel); meta.prefixes = r.prefixes; draw(); } catch (e) { fail(e); } });
   }
   draw();
 }
+
+/* ============================ dil değiştirme ============================ */
+function setLang(l) {
+  LANG = l; try { localStorage.setItem('lang', l); } catch (e) {}
+  document.documentElement.lang = l; $('#lang-lbl').textContent = l === 'en' ? 'TR' : 'EN';
+  closeModal(); renderUserArea(); route();
+}
+$('#lang-btn').onclick = () => setLang(LANG === 'en' ? 'tr' : 'en');
+document.documentElement.lang = LANG; $('#lang-lbl').textContent = LANG === 'en' ? 'TR' : 'EN';
 
 /* ============================ boot ============================ */
 (async function () {
