@@ -8,7 +8,12 @@ app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 const DATA_DIR = process.env.DATA_DIR || __dirname;
 const DB_FILE = path.join(DATA_DIR, 'data.json');
+const UPLOAD_DIR = path.join(DATA_DIR, 'uploads');
+try { fs.mkdirSync(UPLOAD_DIR, { recursive: true }); } catch (e) { console.error('uploads klasörü açılamadı:', e.message); }
+const BORDER_FX = ['none', 'neon', 'rainbow', 'gold'];
+const PROFILE_FX = ['none', 'snow', 'rain', 'embers', 'sparkle', 'matrix'];
 
+app.use('/api/me/image', express.json({ limit: '1200kb' }));   // profil/banner resmi yükleme (base64)
 app.use(express.json({ limit: '100kb' }));
 // Sadece pictures/ klasörü dışarı açık (data.json, server.js vs. asla servis edilmez)
 app.use('/pictures', express.static(path.join(__dirname, 'pictures')));
@@ -46,7 +51,10 @@ const DEFAULT_CATEGORIES = [
       description: 'Kural ihlali yapan oyuncuları kanıtla birlikte bildir.',
       template: 'Reported player:\nDate / Time:\nWhat happened?\nEvidence (clip link):\n' },
     { id: 'general', name: 'General Discussion', icon: 'fa-comments', color: '#3b82f6',
-      description: 'Sunucu hakkında her şey: öneriler, sohbet, takım arayışı.', template: '' }
+      description: 'Sunucu hakkında her şey: öneriler, sohbet, takım arayışı.', template: '' },
+    { id: 'applications', name: 'Applications', icon: 'fa-file-signature', color: '#f59e0b',
+      description: 'Yetkili ekibine (Anti Cheats, Administrator...) başvurmak için başvuru konusu aç.',
+      template: 'Discord / In-game name:\nAge:\nWhich position are you applying for?\nPrevious experience:\nWhy should we choose you?\nHow many hours can you be active per day?\n' }
 ];
 const DEFAULT_PREFIXES = [
     { id: 'on_consideration', name: 'On Consideration', color: '#f59e0b' },
@@ -77,6 +85,8 @@ try {
 
 // Eski sürümden kalan Highlights forum kategorisini ve bağlı konularını temizle
 db.categories = db.categories.filter(c => c.id !== 'highlights');
+// Yeni eklenen varsayılan kategoriler eski veritabanına da eklensin
+DEFAULT_CATEGORIES.forEach(dc => { if (!db.categories.some(c => c.id === dc.id)) db.categories.push(dc); });
 {
     const dead = db.threads.filter(t => t.categoryId === 'highlights' || t.highlightId).map(t => t.id);
     if (dead.length) {
@@ -122,11 +132,24 @@ const cleanText = (s, max) => String(s == null ? '' : s).replace(/\r\n/g, '\n').
 function publicUser(u) {
     if (!u) return { id: 0, username: '[deleted]', rank: 'member', rankName: 'Member', color: '#9ca3af', level: 0, avatar: '' };
     const r = rankOf(u.rank);
-    return { id: u.id, username: u.username, rank: r.id, rankName: r.name, color: r.color, level: r.level, avatar: u.avatar || '' };
+    return { id: u.id, username: u.username, rank: r.id, rankName: r.name, color: r.color, level: r.level, avatar: u.avatarFile ? `/img/a/${u.id}?v=${u.avatarV || 0}` : (u.avatar || '') };
+}
+function profileFields(u) {
+    return {
+        bio: u.bio || '', discord: u.discord || '', status: u.status || '', accent: u.accent || '',
+        banner: u.bannerFile ? `/img/b/${u.id}?v=${u.bannerV || 0}` : (u.banner || ''),
+        borderFx: u.borderFx || 'none', fx: u.fx || 'none'
+    };
+}
+function delImg(u, kind) {
+    const f = u[kind + 'File'];
+    if (f) fs.unlink(path.join(UPLOAD_DIR, path.basename(f)), () => {});
+    delete u[kind + 'File']; delete u[kind + 'V'];
 }
 function selfUser(u) {
     return Object.assign(publicUser(u), {
-        bio: u.bio || '', discord: u.discord || '', createdAt: u.createdAt, root: !!u.root,
+        ...profileFields(u), createdAt: u.createdAt, root: !!u.root,
+        avatarUrl: u.avatar || '', bannerUrl: u.banner || '', hasAvatarFile: !!u.avatarFile, hasBannerFile: !!u.bannerFile,
         nextThreadAt: isMod(u) ? 0 : (u.lastThreadAt || 0) + THREAD_COOLDOWN_MS,
         can: {
             moderate: levelOf(u) >= PERM.MODERATE || !!u.root,
@@ -257,23 +280,82 @@ app.get('/api/meta', (req, res) => res.json({ ranks: RANKS, prefixes: db.prefixe
 /*  PROFILE                                                            */
 /* ------------------------------------------------------------------ */
 app.patch('/api/me', needAuth, (req, res) => {
-    const u = req.user;
-    if (req.body.username !== undefined && req.body.username !== u.username) {
-        const nn = cleanText(req.body.username, 20);
+    const u = req.user, b = req.body, up = {};
+    if (b.username !== undefined && b.username !== u.username) {
+        const nn = cleanText(b.username, 20);
         if (!USERNAME_RE.test(nn)) return res.status(400).json({ error: 'Kullanıcı adı 3-20 karakter olmalı (harf, rakam, _ . -).' });
         const ex = findUserByName(nn);
         if (ex && ex.id !== u.id) return res.status(409).json({ error: 'Bu kullanıcı adı alınmış.' });
-        u.username = nn;
+        up.username = nn;
     }
-    if (req.body.bio !== undefined) u.bio = cleanText(req.body.bio, 300);
-    if (req.body.discord !== undefined) u.discord = cleanText(req.body.discord, 40);
-    if (req.body.avatar !== undefined) {
-        const a = String(req.body.avatar).trim();
-        if (a && !safeUrl(a)) return res.status(400).json({ error: 'Avatar geçerli bir http(s) bağlantısı olmalı.' });
-        u.avatar = safeUrl(a);
+    if (b.bio !== undefined) up.bio = cleanText(b.bio, 300);
+    if (b.discord !== undefined) up.discord = cleanText(b.discord, 40);
+    if (b.status !== undefined) up.status = cleanText(b.status, 80);
+    for (const k of ['avatar', 'banner']) {
+        if (b[k] === undefined) continue;
+        const a = String(b[k]).trim();
+        if (a && !safeUrl(a)) return res.status(400).json({ error: (k === 'avatar' ? 'Avatar' : 'Banner') + ' geçerli bir http(s) bağlantısı olmalı.' });
+        up[k] = safeUrl(a);
     }
+    if (b.accent !== undefined) {
+        const c = String(b.accent);
+        if (c && !/^#[0-9a-f]{6}$/i.test(c)) return res.status(400).json({ error: 'Geçersiz renk.' });
+        up.accent = c.toLowerCase();
+    }
+    if (b.borderFx !== undefined) { if (!BORDER_FX.includes(b.borderFx)) return res.status(400).json({ error: 'Geçersiz çerçeve efekti.' }); up.borderFx = b.borderFx; }
+    if (b.fx !== undefined) { if (!PROFILE_FX.includes(b.fx)) return res.status(400).json({ error: 'Geçersiz efekt.' }); up.fx = b.fx; }
+    Object.assign(u, up);
+    if (up.avatar) delImg(u, 'avatar');   // bağlantı girilirse yüklenen dosya yerine geçer
+    if (up.banner) delImg(u, 'banner');
     save();
     res.json({ user: selfUser(u) });
+});
+
+// profil / banner resmi yükleme (client küçültüp base64 gönderir)
+app.post('/api/me/image', needAuth, (req, res) => {
+    const kind = req.body.kind === 'avatar' ? 'avatar' : req.body.kind === 'banner' ? 'banner' : null;
+    if (!kind) return res.status(400).json({ error: 'Geçersiz istek.' });
+    if (limited('img:' + req.user.id, 12, 600000)) return res.status(429).json({ error: 'Çok fazla yükleme. Biraz bekle.' });
+    const m = /^data:image\/(png|jpeg|webp);base64,([A-Za-z0-9+/=]+)$/.exec(String(req.body.data || ''));
+    if (!m) return res.status(400).json({ error: 'Sadece PNG, JPG veya WEBP yükleyebilirsin.' });
+    const buf = Buffer.from(m[2], 'base64');
+    if (buf.length > (kind === 'avatar' ? 400 : 800) * 1024) return res.status(413).json({ error: 'Resim çok büyük.' });
+    const okMagic = (m[1] === 'png' && buf.slice(0, 4).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47])))
+        || (m[1] === 'jpeg' && buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff)
+        || (m[1] === 'webp' && buf.slice(0, 4).toString() === 'RIFF' && buf.slice(8, 12).toString() === 'WEBP');
+    if (!okMagic) return res.status(400).json({ error: 'Geçersiz resim dosyası.' });
+    const u = req.user;
+    delImg(u, kind);
+    const name = `${kind === 'avatar' ? 'a' : 'b'}_${u.id}_${Date.now()}.${m[1] === 'jpeg' ? 'jpg' : m[1]}`;
+    try { fs.writeFileSync(path.join(UPLOAD_DIR, name), buf); } catch (e) { return res.status(500).json({ error: 'Resim kaydedilemedi.' }); }
+    u[kind + 'File'] = name; u[kind + 'V'] = Date.now();
+    u[kind === 'avatar' ? 'avatar' : 'banner'] = '';
+    save();
+    res.json({ user: selfUser(u) });
+});
+
+app.delete('/api/me/image/:kind', needAuth, (req, res) => {
+    const kind = req.params.kind === 'avatar' ? 'avatar' : req.params.kind === 'banner' ? 'banner' : null;
+    if (!kind) return res.status(400).json({ error: 'Geçersiz istek.' });
+    delImg(req.user, kind);
+    req.user[kind === 'avatar' ? 'avatar' : 'banner'] = '';
+    save();
+    res.json({ user: selfUser(req.user) });
+});
+
+app.get('/img/:kind/:id', (req, res) => {
+    const u = db.users.find(x => x.id === +req.params.id);
+    const kind = req.params.kind === 'a' ? 'avatar' : req.params.kind === 'b' ? 'banner' : null;
+    if (!u || !kind || !u[kind + 'File']) return res.status(404).end();
+    const f = path.join(UPLOAD_DIR, path.basename(u[kind + 'File']));
+    fs.readFile(f, (err, buf) => {
+        if (err) return res.status(404).end();
+        const ext = path.extname(f).slice(1);
+        res.setHeader('Content-Type', ext === 'png' ? 'image/png' : ext === 'webp' ? 'image/webp' : 'image/jpeg');
+        res.setHeader('Cache-Control', 'public, max-age=86400');
+        res.setHeader('X-Content-Type-Options', 'nosniff');
+        res.end(buf);
+    });
 });
 
 app.post('/api/me/password', needAuth, (req, res) => {
@@ -292,10 +374,11 @@ app.get('/api/users/:username', (req, res) => {
     const u = findUserByName(req.params.username);
     if (!u) return res.status(404).json({ error: 'Kullanıcı bulunamadı.' });
     const posts = db.posts.filter(p => p.authorId === u.id).length;
-    const threads = db.threads.filter(t => t.authorId === u.id).length;
-    const recent = db.threads.filter(t => t.authorId === u.id).sort((a, b) => b.createdAt - a.createdAt).slice(0, 8)
+    const seeArc = !!req.user && (isMod(req.user) || req.user.id === u.id);
+    const threads = db.threads.filter(t => t.authorId === u.id && (seeArc || !t.archived)).length;
+    const recent = db.threads.filter(t => t.authorId === u.id && (seeArc || !t.archived)).sort((a, b) => b.createdAt - a.createdAt).slice(0, 8)
         .map(t => ({ id: t.id, title: t.title, createdAt: t.createdAt }));
-    res.json({ user: Object.assign(publicUser(u), { bio: u.bio || '', discord: u.discord || '', createdAt: u.createdAt, banned: !!u.banned }), stats: { posts, threads }, recent });
+    res.json({ user: Object.assign(publicUser(u), profileFields(u), { createdAt: u.createdAt, banned: !!u.banned }), stats: { posts, threads }, recent });
 });
 
 /* ------------------------------------------------------------------ */
@@ -309,6 +392,7 @@ function threadSummary(t) {
     const last = posts.length ? posts.reduce((a, b) => (b.createdAt > a.createdAt ? b : a)) : null;
     return {
         id: t.id, categoryId: t.categoryId, title: t.title, pinned: !!t.pinned, locked: !!t.locked,
+        archived: !!t.archived, archivedBy: t.archivedBy || '', archivedAt: t.archivedAt || 0,
         prefix: prefixOf(t.prefix), createdAt: t.createdAt, lastActivity: t.lastActivity, views: t.views || 0,
         replies: Math.max(0, posts.length - 1), author: publicUser(userById(t.authorId)),
         lastPoster: last ? publicUser(userById(last.authorId)) : null, highlightId: t.highlightId || null
@@ -317,17 +401,19 @@ function threadSummary(t) {
 
 app.get('/api/forum/categories', (req, res) => {
     res.json(db.categories.map(c => {
-        const ts = db.threads.filter(t => t.categoryId === c.id);
+        const ts = db.threads.filter(t => t.categoryId === c.id && !t.archived);
         const latest = ts.sort((a, b) => b.lastActivity - a.lastActivity)[0];
         const postCount = db.posts.filter(p => ts.some(t => t.id === p.threadId)).length;
-        return Object.assign({}, c, { threads: ts.length, posts: postCount, latest: latest ? threadSummary(latest) : null });
+        return Object.assign({}, c, { archivedCount: db.threads.filter(t => t.categoryId === c.id && t.archived).length, threads: ts.length, posts: postCount, latest: latest ? threadSummary(latest) : null });
     }));
 });
 
 app.get('/api/forum/threads', (req, res) => {
     const cat = req.query.category;
     const q = cleanText(req.query.q, 60).toLowerCase();
-    let list = db.threads.filter(t => (!cat || t.categoryId === cat) && (!q || t.title.toLowerCase().includes(q)));
+    const wantArc = req.query.archived === '1';
+    if (wantArc && !isMod(req.user)) return res.status(403).json({ error: 'Arşivi sadece yetkililer görebilir.' });
+    let list = db.threads.filter(t => !!t.archived === wantArc && (!cat || t.categoryId === cat) && (!q || t.title.toLowerCase().includes(q)));
     list.sort((a, b) => (b.pinned - a.pinned) || (b.lastActivity - a.lastActivity));
     const page = Math.max(1, parseInt(req.query.page) || 1);
     const per = 20;
@@ -337,6 +423,7 @@ app.get('/api/forum/threads', (req, res) => {
 app.get('/api/forum/threads/:id', (req, res) => {
     const t = db.threads.find(x => x.id === +req.params.id);
     if (!t) return res.status(404).json({ error: 'Konu bulunamadı.' });
+    if (t.archived && !(isMod(req.user) || (req.user && req.user.id === t.authorId))) return res.status(404).json({ error: 'Konu bulunamadı.' });
     t.views = (t.views || 0) + 1; save();
     const posts = db.posts.filter(p => p.threadId === t.id).sort((a, b) => a.id - b.id).map((p, i) => {
         const a = userById(p.authorId);
@@ -379,6 +466,7 @@ app.post('/api/forum/threads/:id/reply', needAuth, (req, res) => {
     const t = db.threads.find(x => x.id === +req.params.id);
     if (!t) return res.status(404).json({ error: 'Konu bulunamadı.' });
     if (t.locked && !isMod(req.user)) return res.status(403).json({ error: 'Bu konu kilitli.' });
+    if (t.archived && !isMod(req.user)) return res.status(403).json({ error: 'Bu konu arşivlendi.' });
     const content = cleanText(req.body.content, 5000);
     if (content.length < 2) return res.status(400).json({ error: 'Mesaj çok kısa.' });
     if (postCooldown(req, res)) return;
@@ -395,6 +483,10 @@ app.patch('/api/forum/threads/:id', needAuth, needMod, (req, res) => {
     if (!t) return res.status(404).json({ error: 'Konu bulunamadı.' });
     if (req.body.pinned !== undefined) t.pinned = !!req.body.pinned;
     if (req.body.locked !== undefined) t.locked = !!req.body.locked;
+    if (req.body.archived !== undefined) {
+        if (req.body.archived) { t.archived = true; t.archivedAt = Date.now(); t.archivedBy = req.user.username; t.pinned = false; }
+        else { delete t.archived; delete t.archivedAt; delete t.archivedBy; }
+    }
     if (req.body.prefix !== undefined) {
         if (req.body.prefix === null || req.body.prefix === '') t.prefix = null;
         else if (prefixOf(req.body.prefix)) t.prefix = req.body.prefix;
@@ -422,6 +514,7 @@ app.patch('/api/forum/posts/:id', needAuth, (req, res) => {
     const t = db.threads.find(x => x.id === p.threadId);
     if (p.authorId !== req.user.id && !isMod(req.user)) return res.status(403).json({ error: 'Yetkin yok.' });
     if (t && t.locked && !isMod(req.user)) return res.status(403).json({ error: 'Konu kilitli.' });
+    if (t && t.archived && !isMod(req.user)) return res.status(403).json({ error: 'Konu arşivlendi.' });
     const content = cleanText(req.body.content, 5000);
     if (content.length < 2) return res.status(400).json({ error: 'Mesaj çok kısa.' });
     p.content = content; p.editedAt = Date.now(); save();
@@ -480,7 +573,7 @@ app.get('/api/admin/stats', needAuth, (req, res) => {
     if (!(req.user.root || levelOf(req.user) >= PERM.BAN_USERS)) return res.status(403).json({ error: 'Yetkin yok.' });
     res.json({
         users: db.users.length, staff: db.users.filter(u => levelOf(u) >= PERM.MODERATE).length,
-        banned: db.users.filter(u => u.banned).length, threads: db.threads.length, posts: db.posts.length,
+        banned: db.users.filter(u => u.banned).length, threads: db.threads.length, archived: db.threads.filter(t => t.archived).length, posts: db.posts.length,
         newToday: db.users.filter(u => Date.now() - u.createdAt < 86400000).length,
         ranks: RANKS.map(r => ({ id: r.id, name: r.name, color: r.color, count: db.users.filter(u => u.rank === r.id).length })),
         recent: db.users.slice().sort((a, b) => b.createdAt - a.createdAt).slice(0, 6).map(u => Object.assign(publicUser(u), { createdAt: u.createdAt }))
